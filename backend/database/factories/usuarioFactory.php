@@ -3,12 +3,12 @@
 
 namespace Database\Factories;
 
-use App\Models\usuario;
+use App\Models\Usuario;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\usuario>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Usuario>
  */
 class usuarioFactory extends Factory
 {
@@ -18,7 +18,7 @@ class usuarioFactory extends Factory
      * @return array<string, mixed>
      */
 
-    protected $model = usuario::class; 
+    protected $model = Usuario::class; 
 
     public function definition(): array
     {

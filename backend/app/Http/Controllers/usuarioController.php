@@ -4,31 +4,31 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\usuario;
+use App\Models\Usuario;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
-class usuarioController extends Controller
+class UsuarioController extends Controller
 {
     public function getTodosUsuarios(){
-        $usuarios = usuario::all();
-        return response()->json(['usuario' => $usuarios]);
+        $usuarios = Usuario::all();
+        return response()->json(['Usuario' => $usuarios]);
     }
 
     public function getUsuarioPorId($id){
-        $usuario = usuario::find($id);
+        $usuario = Usuario::find($id);
 
         if (!$usuario) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        return response()->json(['usuario' => $usuario]);
+        return response()->json(['Usuario' => $usuario]);
     }
 
-    public function getUsuarioPorCasa(){
+    /*public function getUsuarioPorCasa(){
         
-    }
+    }*/
 
     public function postUsuario(Request $request){
         $validator = Validator::make($request->all(), [
@@ -45,7 +45,7 @@ class usuarioController extends Controller
         if ($validator->fails()) {
             return response(['errors' => $validator->errors()->all()], Response::HTTP_UNPROCESSABLE_ENTITY);
         } else {
-            $usuario = usuario::create([
+            $usuario = Usuario::create([
                 'nombre' => $request['nombre'],
                 'gmail' => $request['gmail'],
                 'contrasena' => bcrypt($request['contrasena']),
@@ -58,18 +58,18 @@ class usuarioController extends Controller
 
             //falta añadirle el rol
 
-            return response()->json(['usuario' => $usuario], Response::HTTP_CREATED);
+            return response()->json(['Usuario' => $usuario], Response::HTTP_CREATED);
         }
     }
 
     public function putUsuario(Request $request, $id){
-        $usuario = usuario::find($id);
+        $usuario = Usuario::find($id);
 
         if (!$usuario) {
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        $usuario = usuario::create([
+        $usuario->update([
             'nombre' => $request['nombre'],
             'gmail' => $request['gmail'],
             'contrasena' => bcrypt($request['contrasena']),
@@ -80,11 +80,11 @@ class usuarioController extends Controller
             'activo' => $request['activo'],
         ]);
 
-        return response()->json(['usuario' => $usuario], Response::HTTP_CREATED);
+        return response()->json(['Usuario' => $usuario], Response::HTTP_CREATED);
     }
 
     public function deleteUsuario($id){
-        $usuario = usuario::find($id);
+        $usuario = Usuario::find($id);
         $usuario->delete();
 
         return response()->json(['message' => 'Usuario eliminado exitosamente']);
