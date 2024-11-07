@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('idUsuario');
             $table->foreign('idRol')->references('id')->on('roles')->onDelete('cascade');
             $table->foreign('idUsuario')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->timestamps();
+            $table->rememberToken();
         });
     }
 

@@ -4,21 +4,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class usuarioRol extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
-    protected $table = 'usuarioRol';
+    protected $table = 'usuario_rol';
 
     protected $fillable = [
         'idRol',
-        'idUsuario',
+        'idUsuario'
     ];
-    public function rol()
-    {
-        return $this->belongsTo(rol::class, 'idRol');
-    }
+    // public function rol()
+    // {
+    //     return $this->belongsTo(rol::class, 'idRol');
+    // }
     public function usuario()
     {
         return $this->belongsTo(usuario::class, 'idUsuario');

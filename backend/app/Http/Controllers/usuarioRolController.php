@@ -15,7 +15,7 @@ class UsuarioRolController extends Controller
    
     public function getTodosUsuarioRoles()
     {
-        $usuarioRoles = usuarioRol::with(['idRol', 'idUsuario'])->get();
+        $usuarioRoles = usuarioRol::all();
         return response()->json(['usuarioRoles' => $usuarioRoles]);
       //  return response()->json(['hola']);
     }
@@ -23,24 +23,26 @@ class UsuarioRolController extends Controller
    
     public function getUsuarioRolPorId($id)
     {
-        $usuarioRol = UsuarioRol::with(['rol', 'usuario'])->find($id);
+        $usuarioRol = UsuarioRol::find($id);
+
         if (!$usuarioRol) {
-            return response()->json(['message' => 'Registro de UsuarioRol no encontrado'], 404);
+            return response()->json(['message' => 'UsuarioRol no encontrado'], 404);
         }
-        return response()->json(['usuarioRol' => $usuarioRol]);
+
+        return response()->json(['UsuarioRol' => $usuarioRol]);
     }
 
   
     public function postUsuarioRol(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'idRol' => 'required|exists:roles,id',
-            'idUsuario' => 'required|exists:usuarios,id',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'idRol' => 'required|exists:roles,id',
+        //     'idUsuario' => 'required|exists:usuarios,id',
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json(['errors' => $validator->errors()->all()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        // }
 
         $usuarioRol = UsuarioRol::create([
             'idRol' => $request['idRol'],
@@ -58,14 +60,14 @@ class UsuarioRolController extends Controller
             return response()->json(['message' => 'Registro de UsuarioRol no encontrado'], 404);
         }
 
-        $validator = Validator::make($request->all(), [
-            'idRol' => 'required|exists:roles,id',
-            'idUsuario' => 'required|exists:usuarios,id',
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'idRol' => 'required|exists:roles,id',
+        //     'idUsuario' => 'required|exists:usuarios,id',
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()->all()], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json(['errors' => $validator->errors()->all()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        // }
 
         $usuarioRol->update([
             'idRol' => $request['idRol'],
