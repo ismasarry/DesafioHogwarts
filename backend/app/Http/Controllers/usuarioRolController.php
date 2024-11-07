@@ -15,8 +15,9 @@ class UsuarioRolController extends Controller
    
     public function getTodosUsuarioRoles()
     {
-        $usuarioRoles = UsuarioRol::with(['rol', 'usuario'])->get();
+        $usuarioRoles = usuarioRol::with(['idRol', 'idUsuario'])->get();
         return response()->json(['usuarioRoles' => $usuarioRoles]);
+      //  return response()->json(['hola']);
     }
 
    

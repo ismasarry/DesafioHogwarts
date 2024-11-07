@@ -2,13 +2,14 @@
 //Ismael Sarrion
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\usuarioRolController;
+use Illuminate\Http\Request;
 
-Route::get('/usuarioRoles', [usuarioRolController::class, 'getTodosUsuarioRoles'])->name('usuarioRoles.index');
+Route::get('/usuarioRoles', [usuarioRolController::class, 'getTodosUsuarioRoles']);
 
-Route::get('/usuarioRoles/{id}', [usuarioRolController::class, 'getUsuarioRolPorId'])->name('usuarioRoles.show');
+Route::get('/usuarioRoles/{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
 
-Route::post('/usuarioRoles', [usuarioRolController::class, 'postUsuarioRol'])->name('usuarioRoles.store');
+Route::post('/usuarioRoles', [usuarioRolController::class, 'postUsuarioRol']);
 
-Route::put('/usuarioRoles/{id}', [usuarioRolController::class, 'putUsuarioRol'])->name('usuarioRoles.update');
+Route::put('/usuarioRoles/{id}', [usuarioRolController::class, 'putUsuarioRol']);
 
-Route::delete('/usuarioRoles/{id}', [usuarioRolController::class, 'deleteUsuarioRol'])->name('usuarioRoles.destroy');
+Route::delete('/usuarioRoles/{id}', [usuarioRolController::class, 'deleteUsuarioRol']);
