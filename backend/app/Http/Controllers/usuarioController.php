@@ -31,7 +31,7 @@ class UsuarioController extends Controller
     }*/
 
     public function postUsuario(Request $request){
-        $validator = Validator::make($request->all(), [
+        /*$validator = Validator::make($request->all(), [
             'nombre' => 'required|string|max:255',
             'gmail' => 'required|string|email|max:255|unique:users',
             'contrasena' => 'required|string|min:5',
@@ -44,7 +44,7 @@ class UsuarioController extends Controller
 
         if ($validator->fails()) {
             return response(['errors' => $validator->errors()->all()], Response::HTTP_UNPROCESSABLE_ENTITY);
-        } else {
+        } else {*/
             $usuario = Usuario::create([
                 'nombre' => $request['nombre'],
                 'gmail' => $request['gmail'],
@@ -59,7 +59,7 @@ class UsuarioController extends Controller
             //falta añadirle el rol
 
             return response()->json(['Usuario' => $usuario], Response::HTTP_CREATED);
-        }
+        //}
     }
 
     public function putUsuario(Request $request, $id){

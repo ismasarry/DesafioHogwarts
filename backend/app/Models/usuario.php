@@ -11,7 +11,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Usuario extends Model
 {
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
+
+    protected $table = 'usuario';
 
     protected $fillable = [
         'nombre',
