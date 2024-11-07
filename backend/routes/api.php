@@ -1,17 +1,21 @@
 <?php
-
-use Illuminate\Http\Request;
+//Ismael Sarrion
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\usuarioRolController;
+use Illuminate\Http\Request;
 use App\Http\Controllers\UsuarioController;
 
-/*Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');*/
+Route::get('/usuarioRoles', [usuarioRolController::class, 'getTodosUsuarioRoles']);
+
+Route::get('/usuarioRoles/{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
+
+Route::post('/usuarioRoles', [usuarioRolController::class, 'postUsuarioRol']);
+
+Route::put('/usuarioRoles/{id}', [usuarioRolController::class, 'putUsuarioRol']);
+
+Route::delete('/usuarioRoles/{id}', [usuarioRolController::class, 'deleteUsuarioRol']);
 
 //Raul Gutierrez
-
-
-
 
 Route::get('/usuario', [UsuarioController::class, 'getTodosUsuarios']);
 Route::get('usuario/{id}', [UsuarioController::class, 'getUsuarioPorId']);
