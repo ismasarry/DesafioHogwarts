@@ -1,33 +1,22 @@
 //Raul Gutierrez
-import { constantes } from "../classes/constantes.js"
+import { getBuscarUsuario } from "../api/usuarioAPI.js"
+import { getBuscarCasa } from "../api/casaAPI.js"
 
-/*const mainImage = document.getElementById("mainImage")
-const dynamicText = document.getElementById("dynamicText")
-const progressBar = document.getElementById("progressBar")
+verUsuario()
 
-const usuario = parseInt(sessionStorage.getItem("usuario"))
+async function verUsuario() {
+    const idUsuario = sessionStorage.getItem("id")//id usuario
+    const usuario = await getBuscarUsuario(idUsuario)
+    const casa = await getBuscarCasa(usuario.idCasa)
 
-let niveles = tablaNivel.find(nivel => usuario.nivel >= nivel.minExp && usuario.exp < nivel.maxExp)
-
-let nivelMinExp = niveles.minExp
-let nevelMaxExp = niveles.maxExp
-let progressInLevel = ((usuario.exp - nivelMinExp) / (nevelMaxExp - nivelMinExp)) * 100
-
-progressBar.style.width = `${progressInLevel}%`
-progressBar.setAttribute("aria-valuenow", progressInLevel)
-progressBar.textContent = `Nivel ${usuario.nivel} - ${progressInLevel.toFixed(1)}%`
-
-let img = "./../assets/Gryffindor.png"
-
-if (usuario.foto == "Gryffindor.png") {
-    img = "./../assets/Gryffindor.png"
-}else if(usuario.foto == "Hufflepuff.png"){
-    img = "./../assets/Hufflepuff.png"
-}else if(usuario.foto == "Ravenclaw.png"){
-    img = "./../assets/Ravenclaw.png"
-}else if(usuario.foto == "Slytherin.png"){
-    img = "./../assets/Slytherin.png"
+    const fotoCasa = document.getElementById("fotoCasa")
+    const puntosCasa = document.getElementById("puntosCasa")
+    const nivel = document.getElementById("nivel")
+    const exp = document.getElementById("exp")
+    
+    fotoCasa.src = './../assets/' + casa.nombre + '.png'
+    
+    puntosCasa.textContent = `Puntos de la Casa: ${casa.puntos}`
+    nivel.textContent = `Nivel del Usuario: ${usuario.nivel}`
+    exp.textContent = `Experiencia Total: ${usuario.exp}`
 }
-
-mainImage.src = img
-dynamicText.textContent = "¡Bienvenido al dashboard! Aquí puedes ver tu progreso y nivel actuales."*/

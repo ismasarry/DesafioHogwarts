@@ -25,3 +25,17 @@
     right: 0;
     left: auto;
 }
+.main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 100px);
+    padding: 20px;
+    text-align: center;
+  }
+  .house-image {
+    max-width: 80%;
+    height: auto;
+    margin-bottom: 20px;
+  }
