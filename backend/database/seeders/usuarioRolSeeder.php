@@ -18,18 +18,18 @@ class usuarioRolSeeder extends Seeder
         //Usuario::factory(5)->create();
         $datos = [
             [
-                'idUsuario' => 1,
-                'idRol' => 1
-            ],
-            
+                'idRol' => 1,
+                'idUsuario' => 1
+            ]/*,
+
             [
-                'idUsuario' => 2,
-                'idRol' => 2
+                'idRol' => 2,
+                'idUsuario' => 2
             ],
             [
-                'idUsuario' => 3,
-                'idRol' => 3
-            ]
+                'idRol' => 3,
+                'idUsuario' => 3
+            ]*/
         ];
 
         DB::table('usuario_rol')->insert($datos);
