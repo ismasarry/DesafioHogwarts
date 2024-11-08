@@ -16,7 +16,7 @@ class Casa extends Model
         'puntos'
     ];
 
-    public function usuariosCasa() {
-        return $this->hasMany(Usuario::class);
-    }
+    // public function usuariosCasa() {
+    //     return $this->hasMany(Usuario::class);
+    // }
 }

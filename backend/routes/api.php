@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //Jaime Ortega
-Route::middleware(['auth:sactum'])->group(function () {
+// Route::middleware(['auth:sactum'])->group(function () {
     Route::prefix('casa')->group(function () {
         Route::get('/', [casaController::class, 'getAllCasas']);
         Route::get('/{id}', [casaController::class, 'getCasa']);
@@ -14,4 +14,4 @@ Route::middleware(['auth:sactum'])->group(function () {
         Route::put('/{id}', [casaController::class, 'updateCasa']);
         Route::delete('/{id}', [casaController::class, 'deleteCasa']);
     });
-});
+// });
