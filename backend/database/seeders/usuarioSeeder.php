@@ -19,9 +19,9 @@ class usuarioSeeder extends Seeder
         //Usuario::factory(5)->create();
         $datos = [
             [
-                'nombre' => 'Dumbeldor',
-                'gmail' => 'dumbeldor_hogwards@gmail.com',
-                'contrasena' => bcrypt('dumbeldor1234'),
+                'nombre' => 'Dumbledore',
+                'gmail' => 'dumbledore_hogwards@gmail.com',
+                'contrasena' => bcrypt('dumbledore1234'),
                 'idCasa' => 1,
                 'nivel' => 5,
                 'exp' => 999,

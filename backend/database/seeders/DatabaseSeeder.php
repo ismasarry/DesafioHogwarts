@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Database\Factories\usuarioFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,9 +13,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        $this->call(usuarioRolSeeder::class);
-        $this->call(usuarioSeeder::class);
+        $this->call([
+            RolSeeder::class,
+            casaSeeder::class,
+            usuarioSeeder::class,
+            usuarioRolSeeder::class
+        ]);
     }
 }

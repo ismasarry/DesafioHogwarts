@@ -16,12 +16,12 @@ class usuarioRol extends Model
         'idRol',
         'idUsuario'
     ];
-    // public function rol()
-    // {
-    //     return $this->belongsTo(rol::class, 'idRol');
-    // }
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class, 'id');
+    }
     public function usuario()
     {
-        return $this->belongsTo(usuario::class, 'idUsuario');
+        return $this->belongsTo(Usuario::class, 'id');
     }
 }
