@@ -1,7 +1,7 @@
 //Raul Gutierrez
-import { tablaNivel } from "../classes/constantes.js"
+import { constantes } from "../classes/constantes.js"
 
-const mainImage = document.getElementById("mainImage")
+/*const mainImage = document.getElementById("mainImage")
 const dynamicText = document.getElementById("dynamicText")
 const progressBar = document.getElementById("progressBar")
 
@@ -19,7 +19,7 @@ progressBar.textContent = `Nivel ${usuario.nivel} - ${progressInLevel.toFixed(1)
 
 let img = "./../assets/Gryffindor.png"
 
-/*if (usuario.foto == "Gryffindor.png") {
+if (usuario.foto == "Gryffindor.png") {
     img = "./../assets/Gryffindor.png"
 }else if(usuario.foto == "Hufflepuff.png"){
     img = "./../assets/Hufflepuff.png"
@@ -27,7 +27,7 @@ let img = "./../assets/Gryffindor.png"
     img = "./../assets/Ravenclaw.png"
 }else if(usuario.foto == "Slytherin.png"){
     img = "./../assets/Slytherin.png"
-}*/
+}
 
 mainImage.src = img
-dynamicText.textContent = "¡Bienvenido al dashboard! Aquí puedes ver tu progreso y nivel actuales."
+dynamicText.textContent = "¡Bienvenido al dashboard! Aquí puedes ver tu progreso y nivel actuales."*/
