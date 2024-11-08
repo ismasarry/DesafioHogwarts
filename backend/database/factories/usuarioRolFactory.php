@@ -21,9 +21,9 @@ class usuarioRolFactory extends Factory
     public function definition(): array
     {
         return [
-            'idRol' => rol::inRandomOrder()->first()->id ?? rol::factory(),
-            
             'idUsuario' => usuario::inRandomOrder()->first()->id ?? usuario::factory(),
+
+            'idRol' => rol::inRandomOrder()->first()->id ?? rol::factory(),
         ];
     }
 }

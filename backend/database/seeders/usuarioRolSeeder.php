@@ -18,8 +18,14 @@ class usuarioRolSeeder extends Seeder
         //Usuario::factory(5)->create();
         $datos = [
             [
+                'idUsuario' => 1,
                 'idRol' => 1,
-                'idUsuario' => 1
+                
+            ],
+            [
+                'idUsuario' => 1,
+                'idRol' => 2,
+                
             ]/*,
 
             [

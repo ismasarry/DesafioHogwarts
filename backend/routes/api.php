@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\rolController;
 use App\Http\Controllers\casaController;
 use App\Http\Controllers\usuarioRolController;
@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //Jaime Ortega
-// Route::middleware(['auth:sactum'])->group(function () {
+ Route::middleware(['auth:sactum'])->group(function () {
+
     Route::prefix('rol')->group(function () {
         Route::get('/', [rolController::class, 'getAllRoles']);
         Route::get('/{id}', [rolController::class, 'getRol']);
@@ -44,3 +45,16 @@ Route::get('usuario/{id}', [UsuarioController::class, 'getUsuarioPorId']);
 Route::post('usuario', [UsuarioController::class, 'postUsuario']);
 Route::put('usuario/{id}', [UsuarioController::class, 'putUsuario']);
 Route::delete('usuario/{id}', [UsuarioController::class, 'deleteUsuario']);
+
+
+ });
+
+//ismael sarrion
+
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
+Route::post('register', [AuthController::class, 'register']);
+
+ Route::get('/nologin', function () {
+    return response()->json("No autorizado",203);
+});
