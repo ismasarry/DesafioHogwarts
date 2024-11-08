@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\rolController;
 use App\Http\Controllers\casaController;
 use App\Http\Controllers\usuarioRolController;
 use App\Http\Controllers\UsuarioController;
@@ -8,6 +9,15 @@ use Illuminate\Support\Facades\Route;
 
 //Jaime Ortega
 // Route::middleware(['auth:sactum'])->group(function () {
+    Route::prefix('rol')->group(function () {
+        Route::get('/', [rolController::class, 'getAllRoles']);
+        Route::get('/{id}', [rolController::class, 'getRol']);
+        Route::get('/integrantes/{id}', [rolController::class, 'getUsuariosRol']);
+        Route::post('/', [rolController::class, 'createRol']);
+        Route::put('/{id}', [rolController::class, 'updateRol']);
+        Route::delete('/{id}', [rolController::class, 'deleteRol']);
+    });
+
     Route::prefix('casa')->group(function () {
         Route::get('/', [casaController::class, 'getAllCasas']);
         Route::get('/{id}', [casaController::class, 'getCasa']);
@@ -35,4 +45,3 @@ Route::get('usuario/{id}', [UsuarioController::class, 'getUsuarioPorId']);
 Route::post('usuario', [UsuarioController::class, 'postUsuario']);
 Route::put('usuario/{id}', [UsuarioController::class, 'putUsuario']);
 Route::delete('usuario/{id}', [UsuarioController::class, 'deleteUsuario']);
-
