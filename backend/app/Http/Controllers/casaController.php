@@ -20,6 +20,8 @@ class casaController extends Controller
 
         if (!$casa) {
             return response()->json(['message' => 'Casa no encontrada'], 404);
+        } else {
+            return response()->json(['casa' => $casa]);
         }
     }
 
@@ -29,6 +31,8 @@ class casaController extends Controller
 
         if (!$casa) {
             return response()->json(['message' => 'Casa no encontrada'], 404);
+        } else {
+
         }
     }
 
@@ -60,8 +64,8 @@ class casaController extends Controller
         if (!$casa) {
             return response()->json(['message' => 'Casa no encontrada'], 404);
         } else {
-            $casa->nombre = ['nombre'];
-            $casa->puntos = ['puntos'];
+            $casa->nombre = $input['nombre'];
+            $casa->puntos = $input['puntos'];
             $casa->save();
 
             return response()->json(['success' => true, 'data' => $casa, 'msg' => 'Casa actualizada'], 200);
@@ -76,7 +80,7 @@ class casaController extends Controller
             return response()->json(['message' => 'Casa no encontrada'], 404);
         } else {
             $casa->delete();
-            return response()->json(['success' => true,'msg' => 'Casa eliminada'], 204);
+            return response()->json(['success' => true,'msg' => 'Casa eliminada'], 200);
         }
     }
 }
