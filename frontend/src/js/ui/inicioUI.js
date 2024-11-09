@@ -5,9 +5,10 @@ import { getBuscarCasa } from "../api/casaAPI.js"
 verUsuario()
 
 async function verUsuario() {
-    const idUsuario = sessionStorage.getItem("id")//id usuario
+    const idUsuario = 1//sessionStorage.getItem("id")//id usuario
     const usuario = await getBuscarUsuario(idUsuario)
-    const casa = await getBuscarCasa(usuario.idCasa)
+    const casa = await getBuscarCasa(1)//usuario.idCasa)
+    console.log(casa)
 
     const fotoCasa = document.getElementById("fotoCasa")
     const puntosCasa = document.getElementById("puntosCasa")
