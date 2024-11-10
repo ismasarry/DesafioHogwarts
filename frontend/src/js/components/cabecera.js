@@ -1,6 +1,6 @@
 //Raul Gutierrez
 
-import { getBuscarUsuario } from "../api/usuarioAPI.js";
+import { getBuscarUsuario } from "../api/usuarioAPI.js"
 
 document.addEventListener("DOMContentLoaded", async function() {
   let usuario
@@ -8,9 +8,8 @@ document.addEventListener("DOMContentLoaded", async function() {
   async function ensenarCabecera() {
     const headerContainer = document.getElementById("header-container")
   
-    const idUsuario = 1; // sessionStorage.getItem("id")
+    const idUsuario = 1; // sessionStorage.getItem("id") Falta la parte del login para ver el id del usuario logeado
     usuario = await getBuscarUsuario(idUsuario)
-    console.log(usuario["nombre"])
 
     if (usuario) {
       headerContainer.innerHTML = `
@@ -22,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async function() {
           </div>
           
           <div class="dropdown">
-            <span class="me-2 text-white">${usuario["nombre"]}</span>
+            <span class="me-2 text-white">${usuario.Usuario.nombre}</span>
             <img src="./../assets/pruebaHarry.webp" alt="Imagen de usuario" class="user-img dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; cursor: pointer;">
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
               <li><a class="dropdown-item" href="#" id="botonPerfil">Perfil</a></li>
@@ -36,7 +35,7 @@ document.addEventListener("DOMContentLoaded", async function() {
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modalPerfilLabel">Perfil de ${usuario["nombre"]}</h5>
+                <h5 class="modal-title" id="modalPerfilLabel">Perfil de ${usuario.Usuario.nombre}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
               </div>
               <div class="modal-body">
@@ -90,8 +89,8 @@ document.addEventListener("DOMContentLoaded", async function() {
   document.getElementById("header-container").addEventListener("click", (event) => {
     if (event.target && event.target.id === "botonPerfil") {
       if (usuario) {
-        document.getElementById("nombre").value = usuario["nombre"]
-        document.getElementById("correo").value = usuario["gmail"]
+        document.getElementById("nombre").value = usuario.Usuario.nombre
+        document.getElementById("correo").value = usuario.Usuario.gmail
         const modalPerfil = new bootstrap.Modal(document.getElementById('modalPerfil'))
         modalPerfil.show()
       }
