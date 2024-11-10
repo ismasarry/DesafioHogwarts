@@ -17,6 +17,7 @@ export async function getTodosUsuarios() {
         }
 
         const usuarios = await respuesta.json()
+        console.log(usuarios)
         return usuarios.usuario
 
     } catch (error) {
@@ -41,6 +42,7 @@ export async function getBuscarUsuario(id_usuario) {
         }
 
         const usuario = await respuesta.json();
+        console.log(usuario)
         return usuario;
     } catch (error) {
         console.error('Error en la función getBuscarUsuario:', error.message)
