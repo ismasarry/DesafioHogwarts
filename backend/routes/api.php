@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\rolController;
 use App\Http\Controllers\casaController;
 use App\Http\Controllers\usuarioRolController;
@@ -27,6 +27,9 @@ use Illuminate\Support\Facades\Route;
         Route::put('/{id}', [casaController::class, 'updateCasa']);
         Route::delete('/{id}', [casaController::class, 'deleteCasa']);
     });
+
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('logout', [AuthController::class, 'logout']);
 // });
 
 //Ismael Sarrion
