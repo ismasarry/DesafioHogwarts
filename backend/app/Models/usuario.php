@@ -36,7 +36,7 @@ class Usuario extends Model
         'contrasena' => 'hashed',
     ];
 
-    /*public function roles(){
-        return $this->belongsToMany(Rol::class , 'idRol');
-    }*/
+    public function roles(){
+        return $this->belongsToMany(Rol::class , 'usuario_rol', 'idRol', 'id');
+    }
 }
