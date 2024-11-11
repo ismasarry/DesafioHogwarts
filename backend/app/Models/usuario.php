@@ -35,8 +35,11 @@ class Usuario extends Authenticatable // Cambiamos a Authenticatable
         'contrasena' => 'hashed',
     ];
 
-    public function getAuthPassword()
-    {
+    public function roles(){
+        return $this->belongsToMany(Rol::class , 'usuario_rol', 'idRol', 'id');
+    }
+  
+    public function getAuthPassword(){
         return $this->contrasena;
     }
 }

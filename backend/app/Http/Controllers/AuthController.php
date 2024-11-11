@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class AuthController extends Controller
                 'gmail' => 'required|email|max:255|unique:usuario',
                 'contrasena' => 'required|min:8',
                 'confirm_contrasena' => 'required|same:contrasena',
-                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+                'foto' => 'nullable|string'
             ];
             $messages = [
                 'unique' => 'El :attribute ya está registrado en la base de datos.',
@@ -37,23 +38,31 @@ class AuthController extends Controller
             ];
 
             $validator = Validator::make($request->all(), $rules, $messages);
+
             if($validator->fails()){
-                return response()->json($validator->errors(),422);
+                return response()->json($validator->errors(),400);
             }
             $input = $request->all();
             $input['contrasena'] = bcrypt($input['contrasena']);
             $user = Usuario::create($input);
+            $user->remember_token = $user->createToken('LaravelSanctumAuth', ['alumno'])->plainTextToken;
+            $user->save();
+
+            DB::table('usuario_rol')->insert([
+                'idRol' => 4,
+                'idUsuario' => $user->id,
+            ]);
 
             $success = [
-                'token' => $user->createToken('LaravelSanctumAuth')->plainTextToken,
+                'token' => $user->remember_token,
                 'nombre' => $user->nombre,
                 'id' => $user->id
             ];
 
-            if ($request->hasFile('foto')) {
-                $filePath = $request->file('foto')->store('fotos', 'public');
-                $input['foto'] = $filePath;
-            }
+            // if ($request->hasFile('foto')) {
+            //     $filePath = $request->file('foto')->store('fotos', 'public');
+            //     $input['foto'] = $filePath;
+            // }
 
             return response()->json(["success"=>true,"data"=>$success, "message" => "Usuario registrado correctamente"],201);
         } catch (\Exception $e) {

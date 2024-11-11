@@ -27,7 +27,7 @@ class UsuarioController extends Controller
     }
 
     /*public function getUsuarioPorCasa(){
-        
+
     }*/
 
     public function postUsuario(Request $request){

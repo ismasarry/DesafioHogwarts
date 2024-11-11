@@ -63,14 +63,39 @@ export async function postUsuario(usuarioCreado) {
             body: JSON.stringify(usuarioCreado),
         })
         if (!respuesta.ok) {
-
             throw new Error(`Error al añadir el usuario. Código de estado: ${respuesta.status}`);
         }
+
         const resultado = await respuesta.json();
         return resultado;
     } catch (error) {
         console.error('Error en la función postUsuario:', error.message);
+        throw error;
+    }
+}
 
+//Jaime Ortega (postFormUsuario)
+export async function postFormUsuario(usuarioCreado) {
+    const rutaUsuario = constantes.urlApi + constantes.registro
+    
+    try {
+        const respuesta = await fetch(rutaUsuario, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(usuarioCreado),
+            // body: usuarioCreado,
+        })
+        if (!respuesta.ok) {
+            throw new Error(`Error al añadir el usuario. Código de estado: ${respuesta.status}`);
+        }
+
+        const resultado = await respuesta.json();
+        return resultado;
+    } catch (error) {
+        console.error('Error en la función postFormUsuario:', error.message);
         throw error;
     }
 }
