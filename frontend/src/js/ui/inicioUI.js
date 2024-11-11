@@ -5,9 +5,10 @@ import { getBuscarCasa } from "../api/casaAPI.js"
 verUsuario()
 
 async function verUsuario() {
-    const idUsuario = 1//sessionStorage.getItem("id") Falta la parte del login para ver el id del usuario logeado
+    const idUsuario = sessionStorage.getItem("userId")
     const usuario = await getBuscarUsuario(idUsuario)
     const casa = await getBuscarCasa(usuario.Usuario.idCasa)
+    console.log(casa)
 
     const fotoCasa = document.getElementById("fotoCasa")
     const puntosCasa = document.getElementById("puntosCasa")
