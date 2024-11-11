@@ -105,16 +105,16 @@ class AuthController extends Controller
             if ($usuarioRol) {
                 switch ($usuarioRol->idRol) {
                     case 1:
-                        $abilities = ['alumno'];
+                        $abilities = ['Dumbledore'];
                         break;
                     case 2:
-                        $abilities = ['profesor'];
-                        break;
-                    case 3:
                         $abilities = ['admin'];
                         break;
+                    case 3:
+                        $abilities = ['profesor'];
+                        break;
                     case 4:
-                        $abilities = ['Dumbledore'];
+                        $abilities = ['alumno'];
                         break;
                     default:
                         $abilities = [];
