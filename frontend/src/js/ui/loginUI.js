@@ -1,13 +1,15 @@
+import {constantes } from "../classes/constantes"
 document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('.login-form');
     
+
     form.addEventListener('submit', async function (event) {
       event.preventDefault(); 
-
+      const rutaLogIn = constantes.urlApi + constantes.log
       const gmail = form.querySelector('input[type="text"]').value;
       const contrasena = form.querySelector('input[type="password"]').value;
 
-      const response = await fetch('http://127.0.0.1:8000/api/login', {
+      const response = await fetch(rutaLogIn, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -16,9 +18,14 @@ document.addEventListener('DOMContentLoaded', function () {
           gmail: gmail, 
           contrasena: contrasena
         }),
+
+        
       });
 
+
       const data = await response.json();
+
+
 
       if (response.ok && data.success) {
         sessionStorage.setItem('userId', data.data.id);
