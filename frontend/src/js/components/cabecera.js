@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async function() {
   async function ensenarCabecera() {
     const headerContainer = document.getElementById("header-container")
   
-    const idUsuario = 1; // sessionStorage.getItem("id") Falta la parte del login para ver el id del usuario logeado
+    const idUsuario = sessionStorage.getItem("userId")
     usuario = await getBuscarUsuario(idUsuario)
 
     if (usuario) {

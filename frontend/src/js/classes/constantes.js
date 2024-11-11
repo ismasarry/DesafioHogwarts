@@ -1,3 +1,4 @@
+
 //Raul Gutierrez
 export const constantes ={
     tablaNivel : [
@@ -11,5 +12,6 @@ export const constantes ={
     urlApi: 'http://127.0.0.1:8000/api/',
     usu: 'usuario/',
     casa: 'casa/',
-    registro: 'register',
+    registro: 'register/',
+    log:'login/',
 }

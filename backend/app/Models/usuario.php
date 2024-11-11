@@ -1,15 +1,14 @@
 <?php
 //Raul Gutierrez
-
+// models/Usuario.php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable; // Cambiamos a Authenticatable
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-//use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Usuario extends Model
+class Usuario extends Authenticatable // Cambiamos a Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -38,5 +37,9 @@ class Usuario extends Model
 
     public function roles(){
         return $this->belongsToMany(Rol::class , 'usuario_rol', 'idRol', 'id');
+    }
+  
+    public function getAuthPassword(){
+        return $this->contrasena;
     }
 }

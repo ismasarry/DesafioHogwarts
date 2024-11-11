@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //Jaime Ortega
-// Route::middleware(['auth:sactum'])->group(function () {
+ //Route::middleware(['auth:sanctum'])->group(function () {
+
     Route::prefix('rol')->group(function () {
         Route::get('/', [rolController::class, 'getAllRoles']);
         Route::get('/{id}', [rolController::class, 'getRol']);
@@ -18,7 +19,7 @@ use Illuminate\Support\Facades\Route;
         Route::put('/{id}', [rolController::class, 'updateRol']);
         Route::delete('/{id}', [rolController::class, 'deleteRol']);
     });
-
+//});
     Route::prefix('casa')->group(function () {
         Route::get('/', [casaController::class, 'getAllCasas']);
         Route::get('/{id}', [casaController::class, 'getCasa']);
@@ -28,13 +29,8 @@ use Illuminate\Support\Facades\Route;
         Route::delete('/{id}', [casaController::class, 'deleteCasa']);
     });
 
-    Route::post('register', [AuthController::class, 'register']);
-    Route::post('logout', [AuthController::class, 'logout']);
-// });
-
 //Ismael Sarrion
 
-Route::get('/usuarioRoles', [usuarioRolController::class, 'getTodosUsuarioRoles']);
 Route::get('/usuarioRoles', [usuarioRolController::class, 'getTodosUsuarioRoles']);
 Route::get('/usuarioRoles/{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
 Route::post('/usuarioRoles', [usuarioRolController::class, 'postUsuarioRol']);
@@ -47,3 +43,17 @@ Route::get('usuario/{id}', [UsuarioController::class, 'getUsuarioPorId']);
 Route::post('usuario', [UsuarioController::class, 'postUsuario']);
 Route::put('usuario/{id}', [UsuarioController::class, 'putUsuario']);
 Route::delete('usuario/{id}', [UsuarioController::class, 'deleteUsuario']);
+
+
+
+
+
+//ismael sarrion
+
+Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
+Route::post('register', [AuthController::class, 'register']);
+
+ Route::get('/nologin', function () {
+    return response()->json("No autorizado",203);
+});
