@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //Jaime Ortega
- Route::middleware(['auth:sactum'])->group(function () {
+ Route::middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('rol')->group(function () {
         Route::get('/', [rolController::class, 'getAllRoles']);
@@ -28,11 +28,10 @@ use Illuminate\Support\Facades\Route;
         Route::put('/{id}', [casaController::class, 'updateCasa']);
         Route::delete('/{id}', [casaController::class, 'deleteCasa']);
     });
-// });
+//
 
 //Ismael Sarrion
 
-Route::get('/usuarioRoles', [usuarioRolController::class, 'getTodosUsuarioRoles']);
 Route::get('/usuarioRoles', [usuarioRolController::class, 'getTodosUsuarioRoles']);
 Route::get('/usuarioRoles/{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
 Route::post('/usuarioRoles', [usuarioRolController::class, 'postUsuarioRol']);
@@ -47,7 +46,8 @@ Route::put('usuario/{id}', [UsuarioController::class, 'putUsuario']);
 Route::delete('usuario/{id}', [UsuarioController::class, 'deleteUsuario']);
 
 
- });
+});
+
 
 //ismael sarrion
 
