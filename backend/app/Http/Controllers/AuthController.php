@@ -45,7 +45,7 @@ class AuthController extends Controller
             $user->save();
 
             DB::table('usuario_rol')->insert([
-                'idRol' => 1,
+                'idRol' => 4,
                 'idUsuario' => $user->id,
             ]);
 
