@@ -62,8 +62,9 @@ return [
 
     'providers' => [
         'users' => [
-            'driver' => 'eloquent',  // Usamos Eloquent como proveedor
-            'model' => env('AUTH_MODEL', App\Models\Usuario::class),  // Aquí es donde debes especificar tu modelo de Usuario
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\Usuario::class),
+
         ],
 
         // También puedes usar otro tipo de proveedor como 'database' si prefieres

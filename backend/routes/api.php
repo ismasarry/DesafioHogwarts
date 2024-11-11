@@ -28,7 +28,6 @@ use Illuminate\Support\Facades\Route;
         Route::put('/{id}', [casaController::class, 'updateCasa']);
         Route::delete('/{id}', [casaController::class, 'deleteCasa']);
     });
-//
 
 //Ismael Sarrion
 

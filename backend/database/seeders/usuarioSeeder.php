@@ -16,8 +16,7 @@ class usuarioSeeder extends Seeder
      */
     public function run(): void
     {
-        //Usuario::factory(5)->create();
-        $datos = [
+        $usuarios = [
             [
                 'nombre' => 'Dumbledore',
                 'gmail' => 'dumbledore_hogwards@gmail.com',
@@ -28,9 +27,45 @@ class usuarioSeeder extends Seeder
                 'foto' => 'mago',
                 'activo' => true,
                 'remember_token' => Str::random(10)
+            ],
+            [
+                'nombre' => 'Snape',
+                'gmail' => 'snape_hogwards@gmail.com',
+                'contrasena' => bcrypt('snape1234'),
+                'idCasa' => 4,
+                'nivel' => 5,
+                'exp' => 999,
+                'foto' => 'mago',
+                'activo' => true,
+                'remember_token' => Str::random(10)
+            ],
+            [
+                'nombre' => 'Remus Lupin',
+                'gmail' => 'remus_lupin_hogwards@gmail.com',
+                'contrasena' => bcrypt('remus_lupin1234'),
+                'idCasa' => 1,
+                'nivel' => 4,
+                'exp' => 450,
+                'foto' => 'mago',
+                'activo' => true,
+                'remember_token' => Str::random(10)
+            ],
+            [
+                'nombre' => 'Cho Chang',
+                'gmail' => 'cho_chang_hogwards@gmail.com',
+                'contrasena' => bcrypt('cho_chang1234'),
+                'idCasa' => 2,
+                'nivel' => 3,
+                'exp' => 200,
+                'foto' => 'mago',
+                'activo' => true,
+                'remember_token' => Str::random(10)
             ]
         ];
 
-        DB::table('usuario')->insert($datos);
+        foreach ($usuarios as $datos) {
+            Usuario::create($datos);
+        }
+        //DB::table('usuario')->insert($datos);
     }
 }
