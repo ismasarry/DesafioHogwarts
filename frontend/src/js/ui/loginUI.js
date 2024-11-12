@@ -1,3 +1,4 @@
+// ismael sarrion
 import { constantes } from "../classes/constantes.js";
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -15,12 +16,26 @@ document.addEventListener('DOMContentLoaded', function () {
     event.preventDefault(); 
     console.log("Evento submit capturado.");
 
+    // Obtener los valores de los campos
+    const email = form.querySelector('input[type="email"]').value;
+    const contrasena = form.querySelector('input[type="password"]').value;
+
+    // Validación de correo electrónico
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      alert('Por favor, ingresa un correo electrónico válido.');
+      return;  // Detener la ejecución si el correo no es válido
+    }
+
+    // Validación de contraseña
+    if (!contrasena) {
+      alert('Por favor, ingresa tu contraseña.');
+      return;  // Detener la ejecución si la contraseña está vacía
+    }
+
+    console.log("Datos capturados - Correo:", email, "Contraseña:", contrasena);
+
     const rutaLogIn = constantes.urlApi + constantes.log;
     console.log("Ruta para login:", rutaLogIn);
-
-    const gmail = form.querySelector('input[type="text"]').value;
-    const contrasena = form.querySelector('input[type="password"]').value;
-    console.log("Datos capturados - Gmail:", gmail, "Contraseña:", contrasena);
 
     try {
       const response = await fetch(rutaLogIn, {
@@ -29,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          gmail: gmail, 
+          gmail: email,  // Usamos 'gmail' aunque puede ser un email genérico
           contrasena: contrasena
         }),
       });
