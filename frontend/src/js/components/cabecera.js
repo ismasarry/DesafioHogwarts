@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         <!-- Cabecera -->
         <header class="header p-3 d-flex align-items-center justify-content-between shadow" style="background-color: #007bff; color: white;">
           <div class="d-flex align-items-center">
-            <a class="h4 mb-0 me-3 text-white" href="inicio.html">Hogarwts</a>
+            <a class="h4 mb-0 me-3 text-white" href="inicio.html">Hogwarts</a>
             <a class="btn" href="ranking.html" style="background-color: #0056b3; color: white;">Ranking de Casas</a>
           </div>
           
