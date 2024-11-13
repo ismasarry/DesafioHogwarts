@@ -1,16 +1,16 @@
 <?php
-//Raul Gutierrez
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class asignaturaAlumno extends Model
+class asignaturaProfesor extends Model
 {
-    protected $table = 'asignaturaAlumno';
+    protected $table = 'asignaturaProfesor';
 
     protected $fillable = [
         'idAsignatura',
-        'idAlumno'
+        'idProfesor'
     ];
 
     public function asignatura()

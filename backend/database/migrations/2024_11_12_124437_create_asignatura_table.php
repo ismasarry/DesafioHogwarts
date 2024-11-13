@@ -14,8 +14,6 @@ return new class extends Migration
         Schema::create('asignatura', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->unsignedBigInteger('idProfesor');
-            $table->foreign('idProfesor')->references('id')->on('usuario')->onDelete('cascade');
             $table->timestamps();
         });
     }

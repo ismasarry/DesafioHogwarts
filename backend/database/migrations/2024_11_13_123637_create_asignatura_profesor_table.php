@@ -1,5 +1,5 @@
 <?php
-//Raul Gutierrez
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('asignaturaAlumno', function (Blueprint $table) {
+        Schema::create('asignaturaProfesor', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('idAsignatura');
-            $table->unsignedBigInteger('idAlumno');
+            $table->unsignedBigInteger('idProfesor');
             $table->foreign('idAsignatura')->references('id')->on('asignatura')->onDelete('cascade');
-            $table->foreign('idAlumno')->references('id')->on('usuario')->onDelete('cascade');
+            $table->foreign('idProfesor')->references('id')->on('usuario')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('asignaturaAlumno');
+        Schema::dropIfExists('asignaturaProfesor');
     }
 };

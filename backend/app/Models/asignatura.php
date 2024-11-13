@@ -9,12 +9,6 @@ class asignatura extends Model
     protected $table = 'asignatura';
 
     protected $fillable = [
-        'nombre',
-        'idProfesor'
+        'nombre'
     ];
-
-    public function usuario()
-    {
-        return $this->belongsTo(Usuario::class, 'id');   
-    }
 }

@@ -1,13 +1,12 @@
 <?php
-//Raul Gutierrez
+
 namespace Database\Seeders;
 
-use App\Models\asignaturaAlumno;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class asignaturaAlumnoSeeder extends Seeder
+class asignaturaProfesorSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,14 +16,22 @@ class asignaturaAlumnoSeeder extends Seeder
         $datos = [
             [
                 'idAsignatura' => 1,
-                'idAlumno' => 4
+                'idProfesor' => 1
             ],
             [
                 'idAsignatura' => 2,
-                'idAlumno' => 4
+                'idProfesor' => 1
+            ],
+            [
+                'idAsignatura' => 1,
+                'idProfesor' => 2
+            ],
+            [
+                'idAsignatura' => 2,
+                'idProfesor' => 3
             ]
         ];
 
-        DB::table('asignaturaAlumno')->insert($datos);
+        DB::table('asignaturaProfesor')->insert($datos);
     }
 }
