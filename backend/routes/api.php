@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\asignaturaAlumnoController;
+use App\Http\Controllers\asignaturaController;
+use App\Http\Controllers\asignaturaProfesorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\rolController;
 use App\Http\Controllers\casaController;
@@ -44,9 +47,26 @@ Route::post('usuario', [UsuarioController::class, 'postUsuario']);
 Route::put('usuario/{id}', [UsuarioController::class, 'putUsuario']);
 Route::delete('usuario/{id}', [UsuarioController::class, 'deleteUsuario']);
 
+//Raul Gutierrez
+Route::get('/asignatura', [asignaturaController::class, 'getTodosAsignaturas']);
+Route::get('asignatura/{id}', [asignaturaController::class, 'getAsignaturaPorId']);
+Route::post('asignatura', [asignaturaController::class, 'postAsignatura']);
+Route::put('asignatura/{id}', [asignaturaController::class, 'putAsignatura']);
+Route::delete('asignatura/{id}', [asignaturaController::class, 'deleteAsignatura']);
 
+//Raul Gutierrez
+Route::get('/asignaturaAlumno', [asignaturaAlumnoController::class, 'getTodosAsignaturaAlumnos']);
+Route::get('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorId']);
+Route::post('asignaturaAlumno', [asignaturaAlumnoController::class, 'postAsignaturaAlumno']);
+Route::put('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'putAsignaturaAlumno']);
+Route::delete('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumno']);
 
-
+//Raul Gutierrez
+Route::get('/asignaturaProfesor', [asignaturaProfesorController::class, 'getTodosAsignaturaProfesores']);
+Route::get('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'getAsignaturaProfesorPorId']);
+Route::post('asignaturaProfesor', [asignaturaProfesorController::class, 'postAsignaturaProfesor']);
+Route::put('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'putAsignaturaProfesor']);
+Route::delete('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesor']);
 
 //ismael sarrion
 

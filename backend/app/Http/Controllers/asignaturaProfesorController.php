@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\asignatura;
+use App\Models\asignaturaProfesor;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class asignaturaController extends Controller
+class asignaturaProfesorController extends Controller
 {
-    public function getTodosAsignaturas()
+    public function getTodosAsignaturaProfesores()
     {
-        $asignatura = asignatura::all();
+        $asignatura = asignaturaProfesor::all();
         return response()->json(['asignatura' => $asignatura]);
     }
 
-    public function getAsignaturaPorId($id)
+    public function getAsignaturaProfesorPorId($id)
     {
-        $asignatura = asignatura::find($id);
+        $asignatura = asignaturaProfesor::find($id);
 
         if (!$asignatura) {
             return response()->json(['message' => 'asignatura no encontrada'], 404);
@@ -26,32 +26,34 @@ class asignaturaController extends Controller
         return response()->json(['asignatura' => $asignatura]);
     }
 
-    public function postAsignatura(Request $request)
+    public function postAsignaturaProfesor(Request $request)
     {
-        $asignatura = asignatura::create([
-            'nombre' => $request['nombre']
+        $asignatura = asignaturaProfesor::create([
+            'idAsignatura' => $request['idAsignatura'],
+            'idProfesora' => $request['idProfesora']
         ]);
 
         return response()->json(['asignatura' => $asignatura], Response::HTTP_CREATED);
     }
 
-    public function putAsignatura(Request $request, $id)
+    public function putAsignaturaProfesor(Request $request, $id)
     {
-        $asignatura = asignatura::find($id);
+        $asignatura = asignaturaProfesor::find($id);
         if (!$asignatura) {
             return response()->json(['message' => 'Registro de asignatura no encontrado'], 404);
         }
 
         $asignatura->update([
-            'nombre' => $request['nombre']
+            'idAsignatura' => $request['idAsignatura'],
+            'idProfesora' => $request['idProfesora']
         ]);
 
         return response()->json(['asignatura' => $asignatura], Response::HTTP_OK);
     }
 
-    public function deleteAsignatura($id)
+    public function deleteAsignaturaProfesor($id)
     {
-        $asignatura = asignatura::find($id);
+        $asignatura = asignaturaProfesor::find($id);
         if (!$asignatura) {
             return response()->json(['message' => 'Registro de asignatura no encontrado'], 404);
         }
