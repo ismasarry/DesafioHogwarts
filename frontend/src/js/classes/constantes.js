@@ -14,4 +14,7 @@ export const constantes ={
     casa: 'casa/',
     registro: 'register/',
     log:'login/',
+    asignatura: 'asignatura/',
+    asignaturaAlumno: 'asignaturaAlumno/',
+    asignaturaProfesor: 'asignaturaProfesor/'
 }
