@@ -37,7 +37,7 @@ export async function getBuscarIntegrantesCasa(id_casa) {
         })
 
         if (!respuesta.ok) {
-            throw new Error(`Error al obtener el Casa. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al obtener la Casa. Código de estado: ${respuesta.status}`);
         }
 
         const Casa = await respuesta.json();
@@ -60,7 +60,7 @@ export async function getBuscarCasa(id_casa) {
         })
 
         if (!respuesta.ok) {
-            throw new Error(`Error al obtener el Casa. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al obtener la Casa. Código de estado: ${respuesta.status}`);
         }
 
         const Casa = await respuesta.json();
@@ -85,7 +85,7 @@ export async function postCasa(casaCreado) {
         })
         if (!respuesta.ok) {
 
-            throw new Error(`Error al añadir el Casa. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al añadir la Casa. Código de estado: ${respuesta.status}`);
         }
         const resultado = await respuesta.json();
         return resultado;
@@ -110,7 +110,7 @@ export async function putCasa(id_casa, casa) {
 
         if (!respuesta.ok) {
 
-            throw new Error(`Error al editar el Casa. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al editar la Casa. Código de estado: ${respuesta.status}`);
         }
 
         const resultado = await respuesta.json();
@@ -133,7 +133,7 @@ export async function deleteCasa(id_casa) {
         });
 
         if (!respuesta.ok) {
-            throw new Error(`Error al eliminar el Casa. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al eliminar la Casa. Código de estado: ${respuesta.status}`);
         }
 
         const resultado = await respuesta.json();

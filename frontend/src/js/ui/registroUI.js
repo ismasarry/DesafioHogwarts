@@ -1,6 +1,6 @@
 //Jaime Ortega
 import { postFormUsuario } from "../api/usuarioAPI.js"
-import { getTodosCasas } from "../api/casaAPI.js"
+import { getTodosCasas, getBuscarIntegrantesCasa } from "../api/casaAPI.js"
 import { constantes } from "../classes/constantes.js"
 
 const nombreInput = document.getElementById('nombre')
@@ -112,11 +112,11 @@ const registro = () => {
             }
         }
 
-        if (casasSeleccionadas.length === 0) {
+        if (casasSeleccionadas.length > 0 && casasSeleccionadas.length < 4) {
             if (!errorMessage) {
                 errorMessage = document.createElement('span')
                 errorMessage.style.color = 'red'
-                errorMessage.textContent = 'Seleccione al menos una casa.'
+                errorMessage.textContent = 'Seleccione todas las casas en orden de prioridad de mayor ↑ a menor ↓ o quite todas y que el sombrero seleccionador decida tu destino.'
                 prioridadInput.insertAdjacentElement('afterend', errorMessage)
             }
             return
@@ -132,10 +132,10 @@ const registro = () => {
             gmail: formData.get('gmail'),
             contrasena: contrasena,
             confirm_contrasena: confirm_contrasena,
-            idCasa: gorroSeleccionador(),
+            idCasa: await gorroSeleccionador(),
             foto: formData.get('foto')
         }
-        
+
         try {
             const resultado = await postFormUsuario(usuarioCreado)
             window.location.href = '../html/login.html'
@@ -186,52 +186,58 @@ const removeListaPrioridad = (event) => {
     }
 }
 
-const gorroSeleccionador = () => {
+const gorroSeleccionador = async () => {
+    const casas = document.getElementById('casa').options
     const prioridad = document.getElementById('prioridad')
     const seleccionados = Array.from(prioridad.selectedOptions)
 
+    let casaSeleccionada
+
     if (seleccionados.length === 0) {
-        return 'No se ha seleccionado ninguna casa'
+        let casaMasIntegrantes = null
+        let casaIntegrantes = 0
+        let casasEmpatadas = []
+
+        for (let c of casas) {
+            const respuesta = await getBuscarIntegrantesCasa(c.value)
+            const conteoIntegrantes = respuesta.conteoUsuarios
+
+            if (conteoIntegrantes > casaIntegrantes) {
+                casaIntegrantes = conteoIntegrantes
+                casaMasIntegrantes = c.value
+                casasEmpatadas = [c.value]
+            } else if (conteoIntegrantes === casaIntegrantes) {
+                casasEmpatadas.push(c.value)
+            }
+        }
+        
+        if (casasEmpatadas.length > 0) {
+            casaSeleccionada = casasEmpatadas[Math.floor(Math.random() * casasEmpatadas.length)]
+        } else {
+            casaSeleccionada = casaMasIntegrantes
+        }
     }
 
     const alea = Math.floor(Math.random() * 100) + 1
-    let casaSeleccionada
 
-    switch (seleccionados.length) {
-        case 1:
+    if (seleccionados.length === 4) {
+        if (alea <= 40) {
             casaSeleccionada = seleccionados[0].value
-            break
-        case 2:
-            casaSeleccionada = alea <= 80 ? seleccionados[0].value : seleccionados[1].value
-            break
-        case 3:
-            if (alea <= 50) {
-                casaSeleccionada = seleccionados[0].value
-            } else if (alea > 50 && alea <= 80) {
-                casaSeleccionada = seleccionados[1].value
-            } else {
-                casaSeleccionada = seleccionados[2].value
-            }
-            break
-        case 4:
-            if (alea <= 40) {
-                casaSeleccionada = seleccionados[0].value
-            } else if (alea > 40 && alea <= 65) {
-                casaSeleccionada = seleccionados[1].value
-            } else if (alea > 65 && alea <= 85) {
-                casaSeleccionada = seleccionados[2].value
-            } else {
-                casaSeleccionada = seleccionados[3].value
-            }
-            break
-        default:
-            return 'No se ha seleccionado ninguna casa'
+        } else if (alea > 40 && alea <= 65) {
+            casaSeleccionada = seleccionados[1].value
+        } else if (alea > 65 && alea <= 85) {
+            casaSeleccionada = seleccionados[2].value
+        } else {
+            casaSeleccionada = seleccionados[3].value
+        }
     }
-
+    console.log(casaSeleccionada)
     return casaSeleccionada
 }
 
 export {
+    validacionNombre,
+    validacionGmail,
     validacionContrasena,
     mostrarErrores
 }

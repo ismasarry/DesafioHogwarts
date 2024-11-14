@@ -27,13 +27,18 @@ class casaController extends Controller
 
     public function getUsuariosCasa($id)
     {
-        $casa = Casa::find($id);
+        $casa = Casa::with('usuariosCasa')->find($id);
 
         if (!$casa) {
             return response()->json(['message' => 'Casa no encontrada'], 404);
-        } else {
-
         }
+
+        $conteoUsuarios = $casa->usuariosCasa->count();
+
+        return response()->json([
+            'casa' => $casa,
+            'conteoUsuarios' => $conteoUsuarios
+        ]);
     }
 
     public function createCasa(Request $request)
@@ -80,7 +85,7 @@ class casaController extends Controller
             return response()->json(['message' => 'Casa no encontrada'], 404);
         } else {
             $casa->delete();
-            return response()->json(['success' => true,'msg' => 'Casa eliminada'], 200);
+            return response()->json(['success' => true, 'msg' => 'Casa eliminada'], 200);
         }
     }
 }
