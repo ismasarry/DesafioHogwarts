@@ -26,6 +26,12 @@ class asignaturaProfesorController extends Controller
         return response()->json(['asignatura' => $asignatura]);
     }
 
+    public function getAsignaturaProfesorPorIdProfesor($idProfesor)
+    {
+        $asignaturas = AsignaturaProfesor::where('idProfesor', $idProfesor)->get();
+        return response()->json($asignaturas);
+    }
+
     public function postAsignaturaProfesor(Request $request)
     {
         $asignatura = asignaturaProfesor::create([

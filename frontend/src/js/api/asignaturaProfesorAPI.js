@@ -48,6 +48,29 @@ export async function getBuscarAsignaturaProfesor(id_asignaturaProfesor) {
     }
 }
 
+export async function getBuscarAsignaturaProfesorPorProfesor(id_profesor) {
+    const rutaAsignaturaProfesor = constantes.urlApi + constantes.asignaturaProfesor + 'profesor/'
+
+    try {
+        const respuesta = await fetch(rutaAsignaturaProfesor + id_profesor, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok) {
+            throw new Error(`Error al obtener la asignaturaProfesor. Código de estado: ${respuesta.status}`);
+        }
+
+        const asignaturaProfesor = await respuesta.json();
+        return asignaturaProfesor;
+    } catch (error) {
+        console.error('Error en la función getBuscarAsignaturaProfesor:', error.message)
+        throw error
+    }
+}
+
 export async function postAsignaturaProfesor(asignaturaProfesorCreada) {
     const rutaAsignaturaProfesor = constantes.urlApi + constantes.asignaturaProfesor
     
