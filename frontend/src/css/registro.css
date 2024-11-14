@@ -63,22 +63,22 @@ label {
     font-size: 1em;
 }
 
-#casa option[value="Gryffindor"], #prioridad option[value="Gryffindor"] {
+#casa option[value="1"], #prioridad option[value="1"] {
     background-color: #ae0001; 
     color: white;
 }
 
-#casa option[value="Hufflepuff"], #prioridad option[value="Hufflepuff"] {
+#casa option[value="2"], #prioridad option[value="2"] {
     background-color: #ecb939;
     color: black;
 }
 
-#casa option[value="Ravenclaw"], #prioridad option[value="Ravenclaw"] {
+#casa option[value="3"], #prioridad option[value="3"] {
     background-color: #0e1a40;
     color: white;
 }
 
-#casa option[value="Slytherin"], #prioridad option[value="Slytherin"] {
+#casa option[value="4"], #prioridad option[value="4"] {
     background-color: #2a623d; 
     color: white;
 }
