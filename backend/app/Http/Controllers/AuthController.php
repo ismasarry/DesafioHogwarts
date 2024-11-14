@@ -1,6 +1,5 @@
 <?php
-
-
+//Jaime Ortega
 namespace App\Http\Controllers;
 
 use App\Models\Usuario;
@@ -10,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
@@ -91,25 +91,22 @@ class AuthController extends Controller
     }
 
 //ismael sarrion
-
-
-    
     public function login(Request $request)
     {
         $request->validate([
             'gmail' => 'required|string|email',
             'contrasena' => 'required|string',
         ]);
-    
+
         $user = Usuario::where('gmail', $request->gmail)->first();
-    
+
         if ($user && Hash::check($request->contrasena, $user->contrasena)) {
             $usuarioRol = DB::table('usuario_rol')
                 ->where('idUsuario', $user->id)
                 ->first();
-    
+
             $abilities = [];
-    
+
             if ($usuarioRol) {
                 switch ($usuarioRol->idRol) {
                     case 1:
@@ -128,19 +125,19 @@ class AuthController extends Controller
                         $abilities = [];
                 }
             }
-    
+
             $token = $user->createToken('access_token', $abilities)->plainTextToken;
-    
+
             $success = [
                 'token' => $token,
                 'id' => $user->id,
                 'nombre' => $user->nombre
             ];
-    
+
             return response()->json(["success" => true, "data" => $success, "message" => "¡Has iniciado sesión!"]);
         } else {
             return response()->json(["success" => false, "message" => "No autorizado"], 401);
         }
     }
-    
+
 }
