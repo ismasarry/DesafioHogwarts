@@ -12,6 +12,10 @@ export const constantes ={
     urlApi: 'http://127.0.0.1:8000/api/',
     usu: 'usuario/',
     casa: 'casa/',
-    registro: 'register/',
+    registro: 'register',
     log:'login/',
+
+    nombreRegex: /^[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]{2,50}$/,
+    gmailRegex: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+    contrasenaRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
 }
