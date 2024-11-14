@@ -195,14 +195,14 @@ const gorroSeleccionador = async () => {
 
     if (seleccionados.length === 0) {
         let casaMasIntegrantes = null
-        let casaIntegrantes = 0
+        let casaIntegrantes = Infinity
         let casasEmpatadas = []
 
         for (let c of casas) {
             const respuesta = await getBuscarIntegrantesCasa(c.value)
             const conteoIntegrantes = respuesta.conteoUsuarios
 
-            if (conteoIntegrantes > casaIntegrantes) {
+            if (conteoIntegrantes < casaIntegrantes) {
                 casaIntegrantes = conteoIntegrantes
                 casaMasIntegrantes = c.value
                 casasEmpatadas = [c.value]
