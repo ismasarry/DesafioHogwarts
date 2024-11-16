@@ -127,6 +127,13 @@ body {
   margin-left: 250px;
 }
 
-.main-content {
+#wrapper.sidebar-open header.header {
+  margin-left: 250px;
   transition: margin-left 0.3s ease;
 }
+
+header.header {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+

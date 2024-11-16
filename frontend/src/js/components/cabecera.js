@@ -83,6 +83,9 @@ document.addEventListener("DOMContentLoaded", async function() {
     } else {
       console.error("No se pudo cargar la información del usuario.");
     }
+
+    const event = new Event('headerTerminado');
+    document.dispatchEvent(event);
   }
 
   await ensenarCabecera()
