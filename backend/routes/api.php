@@ -62,6 +62,7 @@ Route::delete('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'dele
 //Raul Gutierrez
 Route::get('/asignaturaProfesor', [asignaturaProfesorController::class, 'getTodosAsignaturaProfesores']);
 Route::get('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'getAsignaturaProfesorPorId']);
+Route::get('asignaturaProfesor/profesor/{id}', [asignaturaProfesorController::class, 'getAsignaturaProfesorPorIdProfesor']);
 Route::post('asignaturaProfesor', [asignaturaProfesorController::class, 'postAsignaturaProfesor']);
 Route::put('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'putAsignaturaProfesor']);
 Route::delete('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesor']);

@@ -16,6 +16,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         <!-- Cabecera -->
         <header class="header p-3 d-flex align-items-center justify-content-between shadow" style="background-color: #007bff; color: white;">
           <div class="d-flex align-items-center">
+            <button id="openSidebar" class="btn btn-outline-light me-3" style="font-size: 1.2em;">☰</button>
             <a class="h4 mb-0 me-3 text-white" href="inicio.html">Hogwarts</a>
             <a class="btn" href="ranking.html" style="background-color: #0056b3; color: white;">Ranking de Casas</a>
           </div>
@@ -82,6 +83,9 @@ document.addEventListener("DOMContentLoaded", async function() {
     } else {
       console.error("No se pudo cargar la información del usuario.");
     }
+
+    const event = new Event('headerTerminado');
+    document.dispatchEvent(event);
   }
 
   await ensenarCabecera()

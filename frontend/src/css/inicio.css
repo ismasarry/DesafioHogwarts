@@ -103,3 +103,37 @@ body {
     }
   }
   
+  /*Raul Gutierrez*/
+
+  /*Isma, no toques este css que es para la sideBar xD*/
+  
+#sidebar-wrapper {
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  height: 100%;
+  background-color: #343a40;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+#wrapper.sidebar-open #sidebar-wrapper {
+  left: 0;
+}
+
+#wrapper.sidebar-open .main-content {
+  margin-left: 250px;
+}
+
+#wrapper.sidebar-open header.header {
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+header.header {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
