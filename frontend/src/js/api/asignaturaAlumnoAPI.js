@@ -48,6 +48,29 @@ export async function getBuscarAsignaturaAlumno(id_asignaturaAlumno) {
     }
 }
 
+export async function getBuscarAsignaturaAlumnoPorAlumno(id_alumno) {
+    const rutaAsignaturaAlumno = constantes.urlApi + constantes.asignaturaAlumno + 'alumnoPorId/'
+
+    try {
+        const respuesta = await fetch(rutaAsignaturaAlumno + id_alumno, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok) {
+            throw new Error(`Error al obtener la asignaturaAlumno. Código de estado: ${respuesta.status}`);
+        }
+
+        const asignaturaAlumno = await respuesta.json();
+        return asignaturaAlumno;
+    } catch (error) {
+        console.error('Error en la función getBuscarAsignaturaAlumno:', error.message)
+        throw error
+    }
+}
+
 export async function postAsignaturaAlumno(asignaturaAlumnoCreada) {
     const rutaAsignaturaAlumno = constantes.urlApi + constantes.asignaturaAlumno
     
