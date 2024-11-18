@@ -34,6 +34,17 @@ const crearBarraLateral = async () => {
           <div class="collapse" id="asignaturaCollapse">
             <!-- Aquí se añadirán las asignaturas -->
           </div>
+              <a href="#" class="list-group-item list-group-item-action bg-transparent second-tex fw-bold"
+              data-bs-toggle="collapse" data-bs-target="#prueba" aria-expanded="false">
+              <i class="fas fa-cogs me-2"></i>Usuario
+              <i class="fas fa-chevron-down ms-auto"></i>
+          </a>
+
+          <div class="collapse" id="prueba">
+                <a href="gestionUsuario.html" class="list-group-item list-group-item-action fw-bold">
+                    <i class="far fa-keyboard me-2 ms-3"></i> Gestion usuario
+                </a>
+          </div>
         </div>
       </div>
     `

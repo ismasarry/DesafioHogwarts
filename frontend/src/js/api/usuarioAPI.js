@@ -18,7 +18,7 @@ export async function getTodosUsuarios() {
 
         const usuarios = await respuesta.json()
         console.log(usuarios)
-        return usuarios.usuario
+        return usuarios
 
     } catch (error) {
         console.error('Error en la función getTodosUsuarios:', error.message);
@@ -116,7 +116,7 @@ export async function putUsuario(id_usuario, usuario) {
             throw new Error(`Error al editar el usuario. Código de estado: ${respuesta.status}`);
         }
 
-        const resultado = await respuesta.json();
+        const resultado = await respuesta.json()
         return resultado;
     } catch (error) {
         console.error('Error en la función putUsuario:', error.message);
