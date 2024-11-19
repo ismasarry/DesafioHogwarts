@@ -1,6 +1,7 @@
-
+//ismael sarrion
 import { getTodosAsignaturas } from "../api/asignaturaAPI.js"
-//import { getBuscarAsignaturaProfesorPorProfesor } from "../api/asignaturaProfesorAPI.js"
+import { getBuscarAsignaturaProfesorPorProfesor } from "../api/asignaturaProfesorAPI.js"
+import { getTodosUsuarios } from "../api/usuarioAPI.js"
 
 document.addEventListener('headerTerminado', () => {
     crearBarraLateral()
@@ -28,13 +29,39 @@ const crearBarraLateral = async () => {
         <div class="list-group list-group-flush my-3">
           <a href="#" class="list-group-item list-group-item-action bg-transparent second-tex fw-bold"
               data-bs-toggle="collapse" data-bs-target="#asignaturaCollapse" aria-expanded="false">
-              <i class="fas fa-cogs me-2"></i>Asignatura
+              <i class="fas fa-cogs me-2"></i>Asignatura ▼
               <i class="fas fa-chevron-down ms-auto"></i>
           </a>
           <div class="collapse" id="asignaturaCollapse">
             <!-- Aquí se añadirán las asignaturas -->
           </div>
         </div>
+
+         <div class="list-group list-group-flush my-3">
+          <a href="#" class="list-group-item list-group-item-action bg-transparent second-tex fw-bold"
+              data-bs-toggle="collapse" data-bs-target="#gestionCollapse" aria-expanded="false">
+              <i class="fas fa-cogs me-2"></i>Gestion ▼
+              <i class="fas fa-chevron-down ms-auto"></i>
+          </a>
+           <div class="collapse" id="gestionCollapse">
+            
+        <a href="gestionUsuario.html" class="list-group-item list-group-item-action fw-bold">
+                <i class="far fa-keyboard me-2 ms-3"></i> Gestión de Usuarios
+        </a>
+
+        <a href="gestionAsignatura.html" class="list-group-item list-group-item-action fw-bold">
+                <i class="far fa-keyboard me-2 ms-3"></i> Gestión de Asignaturas
+            </a>
+
+          </div>
+
+          <div class="list-group list-group-flush my-3">
+          <a href="mapaMerodeador.html" class="list-group-item list-group-item-action bg-transparent second-tex fw-bold"
+            aria-expanded="false">
+            <i class="fas fa-cogs me-2"></i>Mapa de Merodeador
+            <i class="fas fa-chevron-down ms-auto"></i>
+          </a>
+          </div>
       </div>
     `
 
@@ -42,7 +69,7 @@ const crearBarraLateral = async () => {
         wrapper.insertAdjacentHTML("beforeend", barraLateralHTML)
     }
 
-    /*const asignaturaCollapse = document.getElementById('asignaturaCollapse')
+    const asignaturaCollapse = document.getElementById('asignaturaCollapse')
     let barraLateralAsig = ``
 
     const idProfesor = sessionStorage.getItem("userId")
@@ -52,10 +79,10 @@ const crearBarraLateral = async () => {
     for (let i = 0; i < asignaturasProfesor.length; i++) {
         let nombreAsig = asignaturasProfesor[i].idAsignatura
         barraLateralAsig += `
-            <a href="${asignaturas[nombreAsig].nombre}.html" class="list-group-item list-group-item-action fw-bold">
-                <i class="far fa-keyboard me-2 ms-3"></i> ${asignaturas[nombreAsig].nombre}
+            <a href="${asignaturas[nombreAsig-1].nombre}.html" class="list-group-item list-group-item-action fw-bold">
+                <i class="far fa-keyboard me-2 ms-3"></i> ${asignaturas[nombreAsig-1].nombre}
             </a>
         `
     }
-    asignaturaCollapse.innerHTML = barraLateralAsig*/
+    asignaturaCollapse.innerHTML = barraLateralAsig
 }
