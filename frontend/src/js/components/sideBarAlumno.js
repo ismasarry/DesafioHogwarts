@@ -2,7 +2,7 @@
 import { getTodosAsignaturas } from "../api/asignaturaAPI.js"
 import { getBuscarAsignaturaAlumnoPorAlumno } from "../api/asignaturaAlumnoAPI.js";
 
-const crearBarraLateral = async () => {
+export const crearBarraLateral = async () => {
     const wrapper = document.getElementById('wrapper')
     
     const barraLateralHTML = `

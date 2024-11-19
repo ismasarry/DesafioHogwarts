@@ -1,9 +1,8 @@
 //ismael sarrion
 import { getTodosAsignaturas } from "../api/asignaturaAPI.js"
 import { getBuscarAsignaturaProfesorPorProfesor } from "../api/asignaturaProfesorAPI.js"
-import { getTodosUsuarios } from "../api/usuarioAPI.js"
 
-const crearBarraLateral = async () => {
+export const crearBarraLateral = async () => {
     const wrapper = document.getElementById('wrapper')
 
     const barraLateralHTML = `
@@ -84,4 +83,4 @@ document.addEventListener('headerTerminado', () => {
             }
         })
     }
-});
+})

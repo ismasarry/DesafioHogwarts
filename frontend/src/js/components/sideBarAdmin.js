@@ -1,5 +1,5 @@
 //Jaime Ortega
-const crearBarraLateral = () => {
+export const crearBarraLateral = () => {
     const wrapper = document.getElementById('wrapper')
 
     const barraLateralHTML = `
