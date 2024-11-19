@@ -12,17 +12,17 @@ const init = () => {
     ocultarBotones()
 
     mostrarRolesUsuario(idUsuario).then(data => {
-        const roles = data.roles;
+        const roles = data.roles
 
         roles.forEach(rol => {
             if (rol.nombre === "Dumbledore") {
-                btnDumbledore.hidden = false;
+                btnDumbledore.hidden = false
             } else if (rol.nombre === "admin") {
-                btnAdministrador.hidden = false;
+                btnAdministrador.hidden = false
             } else if (rol.nombre === "profesor") {
-                btnProfesor.hidden = false;
+                btnProfesor.hidden = false
             } else if (rol.nombre === "alumno") {
-                btnAlumno.hidden = false;
+                btnAlumno.hidden = false
             }
         })
     })
@@ -30,10 +30,10 @@ const init = () => {
 }
 
 export const ocultarBotones = () => {
-    btnDumbledore.hidden = true;
-    btnAdministrador.hidden = true;
-    btnProfesor.hidden = true;
-    btnAlumno.hidden = true;
+    btnDumbledore.hidden = true
+    btnAdministrador.hidden = true
+    btnProfesor.hidden = true
+    btnAlumno.hidden = true
 }
 
 btnDumbledore.addEventListener('click', function (e) {
