@@ -9,11 +9,19 @@ use Symfony\Component\HttpFoundation\Response;
 
 class asignaturaAlumnoController extends Controller
 {
+    
+//ismael sarrion (
+    public function getAsignaturaAlumnoPorIdAlumno($idAlumno)
+    {
+        $asignaturas = asignaturaAlumno::where('idAlumno', $idAlumno)->get();
+        return response()->json($asignaturas);
+    }
     public function getTodosAsignaturaAlumnos()
     {
         $asignatura = asignaturaAlumno::all();
         return response()->json(['asignatura' => $asignatura]);
     }
+//ismael sarrion )
 
     public function getAsignaturaAlumnoPorId($id)
     {
