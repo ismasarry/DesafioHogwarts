@@ -2,10 +2,10 @@
 
 import { getBuscarUsuario } from "../api/usuarioAPI.js"
 
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", async () => {
   let usuario
 
-  async function ensenarCabecera() {
+  const ensenarCabecera = async () => {
     const headerContainer = document.getElementById("header-container")
   
     const idUsuario = sessionStorage.getItem("userId")

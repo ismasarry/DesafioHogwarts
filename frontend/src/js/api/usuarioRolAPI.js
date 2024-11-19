@@ -1,8 +1,8 @@
 //Jaime Ortega
 import { constantes } from "../classes/constantes"
 
-export async function mostrarRolesUsuario($idUsuario) {
-    const rutaUsuario = constantes.urlApi + constantes.usuRol + $idUsuario
+export const mostrarRolesUsuario = async (idUsuario) => {
+    const rutaUsuario = constantes.urlApi + constantes.usuRol + idUsuario
 
     try {
         const respuesta = await fetch(rutaUsuario, {

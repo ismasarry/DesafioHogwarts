@@ -4,7 +4,7 @@ import { getBuscarCasa } from "../api/casaAPI.js"
 
 verUsuario()
 
-async function verUsuario() {
+const verUsuario = async () => {
     const idUsuario = sessionStorage.getItem("userId")
     const usuario = await getBuscarUsuario(idUsuario)
     const casa = await getBuscarCasa(usuario.Usuario.idCasa)
