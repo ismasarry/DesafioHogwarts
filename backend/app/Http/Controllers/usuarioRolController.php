@@ -12,27 +12,36 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UsuarioRolController extends Controller
 {
-   
+
     public function getTodosUsuarioRoles()
     {
         $usuarioRoles = usuarioRol::all();
         return response()->json(['usuarioRoles' => $usuarioRoles]);
-      //  return response()->json(['hola']);
+        //  return response()->json(['hola']);
     }
 
-   
+    //Jaime Ortega
     public function getUsuarioRolPorId($id)
     {
-        $usuarioRol = UsuarioRol::find($id);
+        $usuarioRoles = UsuarioRol::where('idUsuario', $id)->get();
 
-        if (!$usuarioRol) {
-            return response()->json(['message' => 'UsuarioRol no encontrado'], 404);
+        if ($usuarioRoles->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron roles para el usuario'], 404);
         }
 
-        return response()->json(['UsuarioRol' => $usuarioRol]);
+        $roles = $usuarioRoles->map(function ($usuarioRol) {
+            return Rol::find($usuarioRol->idRol);
+        });
+        $rolesId = $usuarioRoles->pluck('idRol');
+
+        return response()->json([
+            'usuario' => Usuario::find($id),
+            'roles' => $roles,
+            'rolesId' => $rolesId,
+        ]);
     }
 
-  
+
     public function postUsuarioRol(Request $request)
     {
         // $validator = Validator::make($request->all(), [
@@ -52,7 +61,7 @@ class UsuarioRolController extends Controller
         return response()->json(['usuarioRol' => $usuarioRol], Response::HTTP_CREATED);
     }
 
-  
+
     public function putUsuarioRol(Request $request, $id)
     {
         $usuarioRol = UsuarioRol::find($id);

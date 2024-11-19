@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
         sessionStorage.setItem('token', data.data.token); 
 
         console.log("Datos guardados en sessionStorage. Redirigiendo...");
-        window.location.href = '../html/inicio.html'; 
+        window.location.href = '../html/preInicio.html'; 
       } else {
         console.warn("Inicio de sesión fallido. Mensaje del servidor:", data.message);
         alert(data.message || 'Error al iniciar sesión');
