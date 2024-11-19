@@ -11,7 +11,7 @@ class rolController extends Controller
     public function getAllRoles()
     {
         $roles = Rol::all();
-        return response()->json(['casa' => $roles]);
+        return response()->json(['roles' => $roles]);
     }
     public function getRol($id)
     {
@@ -28,7 +28,8 @@ class rolController extends Controller
         if (!$rol) {
             return response()->json(['message' => 'Rol no encontrado'], 404);
         } else {
-
+            $usuarios = $rol->usuarios;
+            return response()->json(['usuarios' => $usuarios]);
         }
     }
     public function createRol(Request $request)
@@ -45,7 +46,7 @@ class rolController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         } else {
             $rol = Rol::create($input);
-            return response()->json(['sucess' => true, 'data' => $rol, 'msg' => 'Rol creado'], 201);
+            return response()->json(['success' => true, 'data' => $rol, 'msg' => 'Rol creado'], 201);
         }
     }
     public function updateRol($id, Request $request)
