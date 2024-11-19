@@ -1,5 +1,5 @@
 
-//Raul Gutierrez
+//Raul Gutierrez, Jaime Ortea, Ismael Sarrion
 export const constantes ={
     tablaNivel : [
         { nivel: 1, minExp: 0, maxExp: 50 },
@@ -12,8 +12,10 @@ export const constantes ={
     urlApi: 'http://127.0.0.1:8000/api/',
     usu: 'usuario/',
     casa: 'casa/',
+    usuRol: 'usuarioRoles/',
     registro: 'register',
     log:'login/',
+    logout: 'logout/',
 
     nombreRegex: /^[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]{2,50}$/,
     gmailRegex: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
