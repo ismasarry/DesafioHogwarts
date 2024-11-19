@@ -2,8 +2,6 @@
 import { getBuscarUsuario } from "../api/usuarioAPI.js"
 import { getBuscarCasa } from "../api/casaAPI.js"
 
-verUsuario()
-
 const verUsuario = async () => {
     const idUsuario = sessionStorage.getItem("userId")
     const usuario = await getBuscarUsuario(idUsuario)
@@ -22,27 +20,29 @@ const verUsuario = async () => {
     exp.textContent = `Experiencia Total: ${usuario.Usuario.exp}`
 }
 
+verUsuario()
+
 //Jaime Ortega
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     const rol = sessionStorage.getItem('rol')
 
-    if (rol === 'Dumbledore') {
-        import('../components/sideBarDumbledore.js').then(module => {
+    try {
+        if (rol === 'Dumbledore') {
+            const module = await import('../components/sideBarDumbledore.js')
             module.crearBarraLateral()
-        })
-    } else if (rol === 'admin') {
-        import('../components/sideBarAdmin.js').then(module => {
+        } else if (rol === 'admin') {
+            const module = await import('../components/sideBarAdmin.js')
             module.crearBarraLateral()
-        })
-    } else if (rol === 'profesor') {
-        import('../components/sideBarProfesor.js').then(module => {
+        } else if (rol === 'profesor') {
+            const module = await import('../components/sideBarProfesor.js')
             module.crearBarraLateral()
-        })
-    } else if (rol === 'alumno') {
-        import('../components/sideBarAlumno.js').then(module => {
+        } else if (rol === 'alumno') {
+            const module = await import('../components/sideBarAlumno.js')
             module.crearBarraLateral()
-        })
-    } else {
-        console.error('Rol no reconocido')
+        } else {
+            console.error('Rol no reconocido')
+        }
+    } catch (error) {
+        console.error('Error al cargar el módulo de la barra lateral:', error)
     }
 })
