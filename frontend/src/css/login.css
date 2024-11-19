@@ -81,7 +81,7 @@ p {
 }
 
 .btn {
-  background: #ff5555; 
+  background: #7289da; 
   color: #fff;
   border: none;
   font-weight: bold;
@@ -92,7 +92,7 @@ p {
 }
 
 .btn:hover {
-  background: #d43f3f; 
+  background: #7289da; 
 }
 
 a {
