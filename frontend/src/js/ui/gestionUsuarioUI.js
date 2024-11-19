@@ -2,6 +2,7 @@
 import { getBuscarUsuario, getTodosUsuarios, postUsuario, putUsuario } from "../api/usuarioAPI.js";
 import { getTodosCasas } from "../api/casaAPI.js";
 
+
 document.addEventListener("DOMContentLoaded", function () {
     async function rellenarUsuarios() {
         const usuarios = await getTodosUsuarios()
@@ -18,7 +19,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     usu.nivel,
                     usu.exp,
                     `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${usu.id}"><i class="fas fa-edit"></i> Editar</button>` +
-                    `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${usu.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>`
+                    `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${usu.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>` +
+                    `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rolModal${usu.id}" ><i class="fas fa-trash-alt"></i> Roles</button>`
                 ]).draw()
     
                 const editarUsuario = `
@@ -58,6 +60,45 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 </div>
                 `
+                /*let roles = 1
+
+                const editarRol = `
+                <div class="modal" id="myModal${usu.id}">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Editar rol de ${usu.nombre}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" id="nombre${usu.id}" name="nombre${usu.id}" class="form-control" value=${usu.nombre}>
+                                    <div class="invalid-feedback" id="mensajeNombre"></div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="gmail" class="form-label">Gmail</label>
+                                    <input type="text" id="gmail${usu.id}" name="gmail${usu.id}" class="form-control" value=${usu.gmail}>
+                                    <div class="invalid-feedback" id="mensajegmail"></div>
+                                </div>
+            
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="contra" class="form-label">Contraseña</label>
+                                    <div class="input-group">
+                                        <input type="password" id="contra${usu.id}" name="contra${usu.id}" class="form-control" >
+                                    <div class="invalid-feedback" id="mensajeContrasena"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${usu.id}">Editar usuario</button>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+            `*/
                 const eliminarUsuario = 
                 `
                     <div class="modal" id="deleteModal${usu.id}">
