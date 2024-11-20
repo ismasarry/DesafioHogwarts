@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarRolBtn${usu.id}">Editar usuario</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarRolBtn${usu.id}">Editar roles</button>
                         </div>
                     </div>                
                 </div>
@@ -125,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 eliminarUsuarioUI(usu.id)
                 document.body.insertAdjacentHTML('beforeend', editarRol)
                 editarRolesUI(usu.id)
+
     
                 row.nodes().to$().data('usuarios', usu)
 
@@ -145,8 +146,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         meterAdmin.checked = true
                     }
                 }
-
-                //meterRol.innerHTML = rol
 
             } else {
                 const row = tabla.row.add([
@@ -335,19 +334,46 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function editarRolesUI(id) {
-        const modificarBtn = document.getElementById(`editarBtn${id}`)
+        const modificarRolBtn = document.getElementById(`editarRolBtn${id}`)
         const roles = await mostrarRolesUsuario(id)
         console.log(roles)
-        const usuarioRoles = roles.roles[0].nombre
-        console.log(usuarioRoles)
 
-        if (modificarBtn) {
+        if (modificarRolBtn) {
 
-            modificarBtn.addEventListener('click', async () => {
+            modificarRolBtn.addEventListener('click', async () => {
                 try {
+                    console.log("hola")
+                    const modalElement = document.getElementById(`#rolModal${id}`)
+                    const checkedAdmin = document.getElementById(`#alumno${id}`)
+                    const checkedProfe = document.getElementById(`#profesor${id}`)
+                    const checkedAlumn = document.getElementById(`#administrador${id}`)
 
-                    const modalElement = document.getElementById(`rolModal${id}`)
 
+                    if (roles.roles.find((rol) => rol.nombre === "admin") && checkedAdmin.checked == false) {
+                        //decir de eliminar rol admin   
+                        console.log("admin nuevo")
+                    }else if (roles.roles.find((rol) => rol.nombre != "admin") && checkedAdmin.checked == true){
+                        //decir de añadir rol admin
+                        console.log("admin eliminado")
+                    }
+
+                    if (roles.roles.find((rol) => rol.nombre === "profesor") && checkedProfe.checked == false) {
+                        //decir de eliminar rol profe
+                        console.log("profe nuevo")  
+                    }else if (roles.roles.find((rol) => rol.nombre != "profesor") && checkedProfe.checked == true){
+                        //decir de añadir rol profe
+                        console.log("profe eliminado") 
+                    }
+
+                    if (roles.roles.find((rol) => rol.nombre === "alumno") && checkedAlumn.checked == false) {
+                        //decir de eliminar rol alumn  
+                        console.log("alumn nuevo") 
+                    }else if (roles.roles.find((rol) => rol.nombre != "alumno") && checkedAlumn.checked == true){
+                        //decir de añadir rol alumn
+                        console.log("alumn eliminado")
+                    }
+
+                    
                     /*const usuarioObjeto = {
                         nombre: nombreUsu,
                         gmail: gmailUsu,
