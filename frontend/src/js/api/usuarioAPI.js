@@ -1,7 +1,7 @@
 //Raul Gutierrez
 import { constantes } from "../classes/constantes.js"
 
-export async function getTodosUsuarios() {
+export const getTodosUsuarios = async () => {
     const rutaUsuario = constantes.urlApi + constantes.usu
 
     try {
@@ -26,7 +26,7 @@ export async function getTodosUsuarios() {
     }
 }
 
-export async function getBuscarUsuario(id_usuario) {
+export const getBuscarUsuario = async (id_usuario) => {
     const rutaUsuario = constantes.urlApi + constantes.usu
 
     try {
@@ -50,7 +50,7 @@ export async function getBuscarUsuario(id_usuario) {
     }
 }
 
-export async function postUsuario(usuarioCreado) {
+export const postUsuario = async (usuarioCreado) => {
     const rutaUsuario = constantes.urlApi + constantes.usu
     
     try {
@@ -75,7 +75,7 @@ export async function postUsuario(usuarioCreado) {
 }
 
 //Jaime Ortega (postFormUsuario)
-export async function postFormUsuario(usuarioCreado) {
+export const postFormUsuario = async (usuarioCreado) => {
     const rutaUsuario = constantes.urlApi + constantes.registro
     
     try {
@@ -99,7 +99,7 @@ export async function postFormUsuario(usuarioCreado) {
     }
 }
 
-export async function putUsuario(id_usuario, usuario) {
+export const putUsuario = async (id_usuario, usuario) => {
     const rutaUsuario = constantes.urlApi + constantes.usu
     try {
         const respuesta = await fetch(rutaUsuario + id_usuario, {
@@ -124,7 +124,7 @@ export async function putUsuario(id_usuario, usuario) {
     }
 }
 
-export async function deleteUsuario(id_usuario) {
+export const deleteUsuario = async (id_usuario) => {
     const rutaUsuario = constantes.urlApi + constantes.usu
 
     try {

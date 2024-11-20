@@ -1,7 +1,7 @@
 //Raul Gutierrez
 import { constantes } from "../classes/constantes.js"
 
-export async function getTodosAsignaturaProfesores() {
+export const getTodosAsignaturaProfesores = async () => {
     const rutaAsignaturaProfesor = constantes.urlApi + constantes.asignaturaProfesor
 
     try {
@@ -25,7 +25,7 @@ export async function getTodosAsignaturaProfesores() {
     }
 }
 
-export async function getBuscarAsignaturaProfesor(id_asignaturaProfesor) {
+export const getBuscarAsignaturaProfesor = async (id_asignaturaProfesor) => {
     const rutaAsignaturaProfesor = constantes.urlApi + constantes.asignaturaProfesor
 
     try {
@@ -48,7 +48,7 @@ export async function getBuscarAsignaturaProfesor(id_asignaturaProfesor) {
     }
 }
 
-export async function getBuscarAsignaturaProfesorPorProfesor(id_profesor) {
+export const getBuscarAsignaturaProfesorPorProfesor = async (id_profesor) => {
     const rutaAsignaturaProfesor = constantes.urlApi + constantes.asignaturaProfesor + 'profesor/'
 
     try {
@@ -71,7 +71,7 @@ export async function getBuscarAsignaturaProfesorPorProfesor(id_profesor) {
     }
 }
 
-export async function postAsignaturaProfesor(asignaturaProfesorCreada) {
+export const postAsignaturaProfesor = async (asignaturaProfesorCreada) => {
     const rutaAsignaturaProfesor = constantes.urlApi + constantes.asignaturaProfesor
     
     try {
@@ -95,7 +95,7 @@ export async function postAsignaturaProfesor(asignaturaProfesorCreada) {
     }
 }
 
-export async function putAsignaturaProfesor(id_asignaturaProfesor, asignaturaProfesor) {
+export const putAsignaturaProfesor = async (id_asignaturaProfesor, asignaturaProfesor) => {
     const rutaAsignaturaProfesor = constantes.urlApi + constantes.asignaturaProfesor
     try {
         const respuesta = await fetch(rutaAsignaturaProfesor + id_asignaturaProfesor, {
@@ -120,7 +120,7 @@ export async function putAsignaturaProfesor(id_asignaturaProfesor, asignaturaPro
     }
 }
 
-export async function deleteAsignaturaProfesor(id_asignaturaProfesor) {
+export const deleteAsignaturaProfesor = async (id_asignaturaProfesor) => {
     const rutaAsignaturaProfesor = constantes.urlApi + constantes.asignaturaProfesor
 
     try {

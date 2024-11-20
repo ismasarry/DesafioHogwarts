@@ -3,9 +3,7 @@ import { getBuscarUsuario } from "../api/usuarioAPI.js"
 import { getBuscarCasa } from "../api/casaAPI.js"
 import { cargarSideBar } from "../components/cargarSideBar.js"
 
-verUsuario()
-
-async function verUsuario() {
+const verUsuario = async () => {
     const idUsuario = sessionStorage.getItem("userId")
     const usuario = await getBuscarUsuario(idUsuario)
     const casa = await getBuscarCasa(usuario.Usuario.idCasa)
@@ -24,3 +22,4 @@ async function verUsuario() {
 }
 
 cargarSideBar()
+verUsuario()

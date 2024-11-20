@@ -1,7 +1,7 @@
 //Raul Gutierrez Merino
 import { getTodosCasas } from "../api/casaAPI.js";
 
-document.addEventListener("DOMContentLoaded", async function () {
+document.addEventListener("DOMContentLoaded", async () => {
     const casas = await getTodosCasas()
     casas.forEach(casa => {
         const mostrarTop = `
