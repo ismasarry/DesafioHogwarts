@@ -74,7 +74,17 @@ document.addEventListener("DOMContentLoaded", function () {
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body" id="roles${usu.id}">
+                                <label>
+                                    <input type="checkbox" id="alumno${usu.id}"> Alumno
+                                </label><br>
 
+                                <label>  
+                                    <input type="checkbox" id="profesor${usu.id}"> Profesor
+                                </label><br>
+
+                                <label>
+                                    <input type="checkbox" id="administrador${usu.id}"> Administrador
+                                </label><br>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -118,54 +128,25 @@ document.addEventListener("DOMContentLoaded", function () {
     
                 row.nodes().to$().data('usuarios', usu)
 
-                const meterRol = document.getElementById(`roles${usu.id}`)
-                let rol =``
+                const meterAdmin = document.getElementById(`alumno${usu.id}`)
+                const meterProfe = document.getElementById(`profesor${usu.id}`)
+                const meterAlumn = document.getElementById(`administrador${usu.id}`)
 
                 for (let i = 0; i < roles.usuarioRoles.length; i++) {
                     if (roles.usuarioRoles[i].idUsuario == usu.id && roles.usuarioRoles[i].idRol == 2) {
-                        rol += `
-                            <label>
-                                <input type="checkbox" id="administrador${usu.id}" checked> Administrador
-                            </label><br>
-                        `
-                    }else if (roles.usuarioRoles[i].idUsuario == usu.id && roles.usuarioRoles[i].idRol != 2){
-                        rol += `
-                            <label>
-                                <input type="checkbox" id="administrador${usu.id}"> Administrador
-                            </label><br>
-                    `
+                        meterAlumn.checked = true
                     }
 
                     if (roles.usuarioRoles[i].idUsuario == usu.id && roles.usuarioRoles[i].idRol == 3) {
-                        rol += `
-                            <label>  
-                                <input type="checkbox" id="profesor${usu.id}" checked> Profesor
-                            </label><br>
-                        `
-                    }else if (roles.usuarioRoles[i].idUsuario == usu.id && roles.usuarioRoles[i].idRol != 3){
-                        rol += `
-                            <label>  
-                                <input type="checkbox" id="profesor${usu.id}"> Profesor
-                            </label><br>
-                        `
+                        meterProfe.checked = true
                     }
 
                     if (roles.usuarioRoles[i].idUsuario == usu.id && roles.usuarioRoles[i].idRol == 4) {
-                        rol += `
-                            <label>
-                                <input type="checkbox" id="alumno${usu.id}" checked> Alumno
-                            </label><br>
-                        `
-                    }else if (roles.usuarioRoles[i].idUsuario == usu.id && roles.usuarioRoles[i].idRol != 4){
-                        rol += `
-                            <label>
-                                <input type="checkbox" id="alumno${usu.id}"> Alumno
-                            </label><br>
-                        `
+                        meterAdmin.checked = true
                     }
                 }
 
-                meterRol.innerHTML = rol
+                //meterRol.innerHTML = rol
 
             } else {
                 const row = tabla.row.add([
