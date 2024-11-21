@@ -77,6 +77,7 @@ Route::delete('asignaturaProfesor/{id}', [asignaturaProfesorController::class, '
 //Raul Gutierrez
 Route::get('hechizos', [hechizosController::class, 'getTodosHechizos']);
 Route::get('hechizos/{id}', [hechizosController::class, 'getHechizoPorId']);
+Route::get('hechizos/nivel/{id}', [hechizosController::class, 'getHechizoPorNivelMenor']);
 Route::post('hechizos', [hechizosController::class, 'postHechizo']);
 Route::put('hechizos/{id}', [hechizosController::class, 'putHechizo']);
 Route::delete('hechizos/{id}', [hechizosController::class, 'deleteHechizo']);

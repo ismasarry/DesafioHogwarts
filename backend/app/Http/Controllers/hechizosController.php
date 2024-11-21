@@ -1,5 +1,5 @@
 <?php
-
+//Raul Gutierrez
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -21,6 +21,16 @@ class hechizosController extends Controller
             return response()->json(['message' => 'hechizo no encontrado'], 404);
         }
 
+        return response()->json(['hechizos' => $hechizos]);
+    }
+
+    public function getHechizoPorNivelMenor($nivel){
+        $hechizos = hechizos::where('nivel', '<=', $nivel)->get();
+
+        if ($hechizos->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron hechizos para el nivel especificado o menor.'], 404);
+        }
+    
         return response()->json(['hechizos' => $hechizos]);
     }
 
