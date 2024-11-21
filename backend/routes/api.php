@@ -37,6 +37,8 @@ Route::get('/usuarioRoles/{id}', [usuarioRolController::class, 'getUsuarioRolPor
 Route::post('/usuarioRoles', [usuarioRolController::class, 'postUsuarioRol']);
 Route::put('/usuarioRoles/{id}', [usuarioRolController::class, 'putUsuarioRol']);
 Route::delete('/usuarioRoles/{id}', [usuarioRolController::class, 'deleteUsuarioRol']);
+//Raul Gutierrez
+Route::delete('/usuarioRoles/{idUsuario}/{idRol}', [usuarioRolController::class, 'deleteUsuarioRolPorIds']);
 
 //Raul Gutierrez
 Route::get('/usuario', [UsuarioController::class, 'getTodosUsuarios']);

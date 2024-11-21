@@ -1,7 +1,7 @@
 //Raul Gutierrez
 import { getBuscarUsuario, getTodosUsuarios, postUsuario, putUsuario } from "../api/usuarioAPI.js";
 import { getTodosCasas } from "../api/casaAPI.js";
-import { getTodosUsuariosRoles, mostrarRolesUsuario } from "../api/usuarioRolAPI.js";
+import { getTodosUsuariosRoles, mostrarRolesUsuario, deleteUsuarioRol, postUsuarioRol } from "../api/usuarioRolAPI.js";
 import { cargarSideBar } from "../components/cargarSideBar.js"
 
 cargarSideBar
@@ -86,9 +86,9 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <input type="checkbox" id="administrador${usu.id}"> Administrador
                                 </label><br>
                             </div>
-                        </div>
-                        <div class="modal-footer">
+                            <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarRolBtn${usu.id}">Editar roles</button>
+                        </div>
                         </div>
                     </div>                
                 </div>
@@ -257,6 +257,23 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     await putUsuario(id, usuarioObjeto)
 
+                    // const tabla = $('#usuarios').DataTable();
+                    // const fila = tabla.row((idx, data, node) => data.usuarios.id === id);
+    
+                    // if (fila.length > 0) {
+                    //     fila.data([
+                    //         usuarioObjeto.foto,
+                    //         usuarioObjeto.nombre,
+                    //         usuarioObjeto.gmail,
+                    //         casas[usuarioObjeto.idCasa - 1].nombre,
+                    //         usuarioObjeto.nivel,
+                    //         usuarioObjeto.exp,
+                    //         `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${id}"><i class="fas fa-edit"></i> Editar</button>` +
+                    //         `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>` +
+                    //         `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#rolModal${id}" ><i class="fas fa-trash-alt"></i> Roles</button>`
+                    //     ]).draw();
+                    // }
+
                     const modal = new bootstrap.Modal(modalElement)
                     modal.hide();
                     location.reload()
@@ -342,49 +359,56 @@ document.addEventListener("DOMContentLoaded", function () {
 
             modificarRolBtn.addEventListener('click', async () => {
                 try {
-                    console.log("hola")
-                    const modalElement = document.getElementById(`#rolModal${id}`)
-                    const checkedAdmin = document.getElementById(`#alumno${id}`)
-                    const checkedProfe = document.getElementById(`#profesor${id}`)
-                    const checkedAlumn = document.getElementById(`#administrador${id}`)
+                    
+                    const modalElement = document.getElementById(`rolModal${id}`)
+                    const checkedAlumn = document.getElementById(`alumno${id}`)
+                    const checkedProfe = document.getElementById(`profesor${id}`)
+                    const checkedAdmin = document.getElementById(`administrador${id}`)
 
-
+                    console.log(roles.roles.find((rol) => rol.nombre))
                     if (roles.roles.find((rol) => rol.nombre === "admin") && checkedAdmin.checked == false) {
-                        //decir de eliminar rol admin   
-                        console.log("admin nuevo")
+                        //decir de eliminar rol admin
+                        await deleteUsuarioRol(id, 2)
                     }else if (roles.roles.find((rol) => rol.nombre != "admin") && checkedAdmin.checked == true){
                         //decir de añadir rol admin
-                        console.log("admin eliminado")
+                        const rolObjeto = {
+                            idUsuario: id,
+                            idRol: 2
+                        }
+                        await postUsuarioRol(rolObjeto)
                     }
 
                     if (roles.roles.find((rol) => rol.nombre === "profesor") && checkedProfe.checked == false) {
                         //decir de eliminar rol profe
-                        console.log("profe nuevo")  
+                        await deleteUsuarioRol(id, 3) 
                     }else if (roles.roles.find((rol) => rol.nombre != "profesor") && checkedProfe.checked == true){
                         //decir de añadir rol profe
-                        console.log("profe eliminado") 
+                        const rolObjeto = {
+                            idUsuario: id,
+                            idRol: 3
+                        }
+                        await postUsuarioRol(rolObjeto)
                     }
 
                     if (roles.roles.find((rol) => rol.nombre === "alumno") && checkedAlumn.checked == false) {
-                        //decir de eliminar rol alumn  
-                        console.log("alumn nuevo") 
+                        //decir de eliminar rol alumn 
+                        await deleteUsuarioRol(id, 4)
                     }else if (roles.roles.find((rol) => rol.nombre != "alumno") && checkedAlumn.checked == true){
                         //decir de añadir rol alumn
-                        console.log("alumn eliminado")
+                        const rolObjeto = {
+                            idUsuario: id,
+                            idRol: 4
+                        }
+                        await postUsuarioRol(rolObjeto)
                     }
 
-                    
-                    /*const usuarioObjeto = {
-                        nombre: nombreUsu,
-                        gmail: gmailUsu,
-                        contrasena: contraUsu,
-                        idCasa: usuarioU.idCasa,
-                        nivel: usuarioU.nivel,
-                        exp: usuarioU.exp,
-                        foto: usuarioU.foto,
-                        activo: usuarioU.activo
+                    if (roles.roles.find((rol) => rol.nombre != "alumno") && roles.roles.find((rol) => rol.nombre != "profesor") && roles.roles.find((rol) => rol.nombre != "admin") && roles.roles.find((rol) => rol.nombre != "Dumbledore")){
+                        const rolObjeto = {
+                            idUsuario: id,
+                            idRol: 4
+                        }
+                        await postUsuarioRol(rolObjeto)
                     }
-                    await putUsuario(id, usuarioObjeto)*/
 
                     const modal = new bootstrap.Modal(modalElement)
                     modal.hide();

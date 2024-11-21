@@ -27,7 +27,7 @@ export const mostrarRolesUsuario = async (idUsuario) => {
         throw error;
     }
 }
-
+//Raul Gutierrez
 export async function getTodosUsuariosRoles() {
     const rutaUsuario = constantes.urlApi + constantes.usuRol
 
@@ -49,6 +49,53 @@ export async function getTodosUsuariosRoles() {
 
     } catch (error) {
         console.error('Error en la función getTodosUsuariosRoles:', error.message);
+        throw error;
+    }
+}
+//Raul Gutierrez
+export const deleteUsuarioRol = async (id_usuarioRol, id_rol) => {
+    const rutaUsuario = constantes.urlApi + constantes.usuRol
+
+    try {
+        const respuesta = await fetch(rutaUsuario + id_usuarioRol + '/' + id_rol, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error al eliminar el rol del usuario. Código de estado: ${respuesta.status}`);
+        }
+
+        const resultado = await respuesta.json();
+        return resultado;
+    } catch (error) {
+        console.error('Error en la función deleteUsuarioRol:', error.message)
+        throw error
+    }
+}
+//Raul Gutierrez
+export const postUsuarioRol = async (usuarioCreado) => {
+    const rutaUsuario = constantes.urlApi + constantes.usuRol
+    
+    try {
+        const respuesta = await fetch(rutaUsuario, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                //'Accept': 'application/json'
+            },
+            body: JSON.stringify(usuarioCreado),
+        })
+        if (!respuesta.ok) {
+            throw new Error(`Error al añadir el usuario. Código de estado: ${respuesta.status}`);
+        }
+
+        const resultado = await respuesta.json();
+        return resultado;
+    } catch (error) {
+        console.error('Error en la función postUsuarioRol:', error.message);
         throw error;
     }
 }
