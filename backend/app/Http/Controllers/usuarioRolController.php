@@ -97,4 +97,18 @@ class UsuarioRolController extends Controller
         $usuarioRol->delete();
         return response()->json(['message' => 'Registro de UsuarioRol eliminado exitosamente']);
     }
+//Raul Gutierrez
+    public function deleteUsuarioRolPorIds($idUsuario, $idRol)
+    {
+        $usuarioRol = UsuarioRol::where('idUsuario', $idUsuario)
+                                ->where('idRol', $idRol)
+                                ->first();
+
+        if ($usuarioRol) {
+            $usuarioRol->delete();
+            return response()->json(['message' => 'Registro eliminado correctamente'], 200);
+        } else {
+            return response()->json(['message' => 'Registro no encontrado'], 404);
+        }
+    }
 }
