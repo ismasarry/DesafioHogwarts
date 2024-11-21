@@ -6,6 +6,7 @@ use App\Http\Controllers\asignaturaProfesorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\rolController;
 use App\Http\Controllers\casaController;
+use App\Http\Controllers\hechizosController;
 use App\Http\Controllers\usuarioRolController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
@@ -71,6 +72,14 @@ Route::get('asignaturaProfesor/profesor/{id}', [asignaturaProfesorController::cl
 Route::post('asignaturaProfesor', [asignaturaProfesorController::class, 'postAsignaturaProfesor']);
 Route::put('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'putAsignaturaProfesor']);
 Route::delete('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesor']);
+
+
+//Raul Gutierrez
+Route::get('hechizos', [hechizosController::class, 'getTodosHechizos']);
+Route::get('hechizos/{id}', [hechizosController::class, 'getHechizoPorId']);
+Route::post('hechizos', [hechizosController::class, 'postHechizo']);
+Route::put('hechizos/{id}', [hechizosController::class, 'putHechizo']);
+Route::delete('hechizos/{id}', [hechizosController::class, 'deleteHechizo']);
 
 //ismael sarrion
 Route::post('login', [AuthController::class, 'login']);
