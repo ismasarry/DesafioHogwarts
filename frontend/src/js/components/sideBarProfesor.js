@@ -34,8 +34,8 @@ export const crearBarraLateral = async () => {
     for (let i = 0; i < asignaturasProfesor.length; i++) {
         let nombreAsig = asignaturasProfesor[i].idAsignatura
         barraLateralAsig += `
-            <a href="${asignaturas[nombreAsig].nombre}.html" class="list-group-item list-group-item-action fw-bold">
-                <i class="far fa-keyboard me-2 ms-3"></i> ${asignaturas[nombreAsig].nombre}
+            <a href="${asignaturas[nombreAsig-1].nombre}.html" class="list-group-item list-group-item-action fw-bold">
+                <i class="far fa-keyboard me-2 ms-3"></i> ${asignaturas[nombreAsig-1].nombre}
             </a>
         `
     }
