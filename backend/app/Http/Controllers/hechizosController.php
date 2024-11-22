@@ -39,8 +39,7 @@ class hechizosController extends Controller
                 'nombre' => $request['nombre'],
                 'estadisticas' => $request['estadisticas'],
                 'idUsuario' => $request['idUsuario'],
-                'nivel' => $request['nivel'],
-                'veri' => $request['veri']
+                'nivel' => $request['nivel']
             ]);
 
             return response()->json(['hechizos' => $hechizos], Response::HTTP_CREATED);
@@ -59,7 +58,8 @@ class hechizosController extends Controller
             'estadisticas' => $request['estadisticas'],
             'idUsuario' => $request['idUsuario'],
             'nivel' => $request['nivel'],
-            'veri' => $request['veri']
+            'veri' => $request['veri'],
+            'veriD' => $request['veriD']
         ]);
 
         return response()->json(['hechizos' => $hechizos], Response::HTTP_CREATED);

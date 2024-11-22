@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('idUsuario');
             //$table->unsignedBigInteger('idUsuario');
             $table->integer('nivel');
-            $table->boolean('veri');
+            $table->integer('veri')->default(0);
+            $table->integer('veriD')->default(0);
             //$table->foreign('idUsuario')->references('id')->on('usuario')->onDelete('cascade');
             $table->timestamps();
         });
