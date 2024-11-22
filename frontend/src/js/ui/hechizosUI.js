@@ -180,7 +180,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
             //Dumbledore
-            }else if (roles.roles.nombre == "Dumbledore" && hec.veri == 1){
+            }else if (roles.roles[0].nombre == "Dumbledore" && hec.veri == 1 && hec.veriD == 0){
+                
                 const esta = (hec.estadisticas).split(',')
                 let creador = 0
                 if(hec.idUsuario == 0){
@@ -469,7 +470,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 row.nodes().to$().data('hechizos', hec)
 
             //Dumbledore pero ya verificado
-            }else if (roles.roles.nombre == "Dumbledore" && hec.veriD == 1){
+            }else if (roles.roles[0].nombre == "Dumbledore" && hec.veriD == 1){
                 const esta = (hec.estadisticas).split(',')
                 let creador = 0
                 if(hec.idUsuario == 0){
@@ -601,7 +602,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 row.nodes().to$().data('hechizos', hec)
 
             //Alumno si es menor de nivel 1
-            }else if (roles.roles.nombre == "alumno" && roles.roles.nivel == 1) {
+            }else if (roles.roles[0].nombre == "alumno" && roles.usuario.nivel == 1) {
                 const esta = (hec.estadisticas).split(',')
                 let creador = 0
                 if(hec.idUsuario == 0){
@@ -629,7 +630,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 row.nodes().to$().data('hechizos', hec)
 
             //Alumno nivel 2 o superior
-            }else if (roles.roles.nombre == "alumno" && roles.roles.nivel > 1) {
+            }else if (roles.roles[0].nombre == "alumno" && roles.usuario.nivel > 1) {
                 const esta = (hec.estadisticas).split(',')
                 let creador = 0
                 if(hec.idUsuario == 0){
@@ -917,13 +918,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function veriDHechizoUI(id) {
-        const modificarBtn = document.getElementById(`confirmarVerificacion${id}`)
+        const modificarBtn = document.getElementById(`confirmarVerificacionD${id}`)
         if (modificarBtn) {
 
             modificarBtn.addEventListener('click', async () => {
                 try {
 
-                    const modalElement = document.getElementById(`veriModal${id}`)
+                    const modalElement = document.getElementById(`veriDModal${id}`)
                     const hechizo = await getBuscarHechizo(id)
                     console.log(hechizo.hechizos.nombre)
 
