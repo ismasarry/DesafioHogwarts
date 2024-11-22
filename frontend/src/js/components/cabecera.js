@@ -55,21 +55,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                     <label for="contrasena" class="form-label">Contraseña:</label>
                     <input class="form-control" type="password" id="contrasena" name="contrasena" required>
                   </div>
-
-                  <div class="col-md-6">
-                    <label for="casa" class="form-label">Casa de Harry Potter:</label>
-                    <select id="casa" name="casa" class="form-select" required>
-                      <option value="gryffindor">Gryffindor</option>
-                      <option value="hufflepuff">Hufflepuff</option>
-                      <option value="ravenclaw">Ravenclaw</option>
-                      <option value="slytherin">Slytherin</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-12">
-                    <label for="foto" class="form-label">Foto:</label>
-                    <input class="form-control" type="file" id="foto" name="foto" accept="image/*">
-                  </div>
                 </form>
               </div>
               <div class="modal-footer">
@@ -107,4 +92,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       window.location.href = "./../index.html";
     }
   });
+
+  async function editarPerfil(id) {
+    const modificarBtn = document.getElementById('guardarCambios')
+    //copialo del modal de editar de gestionUsuario (del Pinoxx para el Pinoxx)
+  }
 });
