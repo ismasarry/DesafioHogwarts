@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('idUsuario');
             //$table->unsignedBigInteger('idUsuario');
             $table->integer('nivel');
+            $table->boolean('veri');
             //$table->foreign('idUsuario')->references('id')->on('usuario')->onDelete('cascade');
             $table->timestamps();
         });

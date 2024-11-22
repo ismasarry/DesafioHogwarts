@@ -16,7 +16,8 @@ class hechizos extends Model
         'nombre',
         'estadisticas',
         'idUsuario',
-        'nivel'
+        'nivel',
+        'veri'
     ];
 
     // public function usuario(){
