@@ -1,7 +1,10 @@
 //Raul Gutierrez Merino
 import { getTodosCasas } from "../api/casaAPI.js";
+import { cargarSideBar } from "../components/cargarSideBar.js"
 
 document.addEventListener("DOMContentLoaded", async () => {
+    cargarSideBar()
+    
     const casas = await getTodosCasas()
     casas.forEach(casa => {
         const mostrarTop = `
