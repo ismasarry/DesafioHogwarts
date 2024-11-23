@@ -1,5 +1,6 @@
 body {
-    background: url('https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif') no-repeat center center fixed;
+    background: url('./../assets/pusheen-harry-potter.gif') no-repeat center center fixed;
+    background-color: black;
     background-size: cover;
 
     display: flex;
