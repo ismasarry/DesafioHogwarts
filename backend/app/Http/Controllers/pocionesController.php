@@ -8,7 +8,7 @@ use App\Models\Pociones;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
 
-class PocionController extends Controller
+class PocionesController extends Controller
 {
     public function getTodasPociones() {
         $pociones = Pociones::all();

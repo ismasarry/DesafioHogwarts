@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Recetas;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class RecetaSeeder extends Seeder
 {
@@ -32,7 +33,7 @@ class RecetaSeeder extends Seeder
         ];
 
         foreach ($recetas as $datos) {
-            Recetas::create($datos);
+            recetas::create($datos);
         }
     }
 }

@@ -4,8 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\Pociones;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class PocionSeeder extends Seeder
+class PocionesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -37,7 +38,7 @@ class PocionSeeder extends Seeder
         ];
 
         foreach ($pociones as $datos) {
-            Pociones::create($datos);
+            pociones::create($datos);
         }
     }
 }

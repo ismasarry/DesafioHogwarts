@@ -15,12 +15,13 @@ class CreatePocionesTable extends Migration
             $table->id(); 
           
             $table->string('nombre');
-            $table->string('estadisticas')->nullable(); 
             $table->string('descripcion')->nullable();
+            $table->string('estadisticas')->nullable(); 
             $table->unsignedBigInteger('idUsuario'); 
+            $table->foreign('idUsuario')->references('id')->on('usuario')->onDelete('cascade');
             $table->string('foto')->nullable(); 
             $table->timestamps();
-            $table->foreign('idUsuario')->references('id')->on('users')->onDelete('cascade');
+            
         });
     }
 

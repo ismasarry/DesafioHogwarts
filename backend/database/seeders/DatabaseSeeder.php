@@ -23,7 +23,10 @@ class DatabaseSeeder extends Seeder
             asignaturaSeeder::class,
             asignaturaAlumnoSeeder::class,
             asignaturaProfesorSeeder::class,
-            hechizosSeeder::class
+            hechizosSeeder::class,
+            PocionesSeeder::class,
+            IngredienteSeeder::class,
+            RecetaSeeder::class
         ]);
     }
 }

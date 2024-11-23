@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Ingredientes;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class IngredienteSeeder extends Seeder
 {
@@ -28,7 +29,7 @@ class IngredienteSeeder extends Seeder
         ];
 
         foreach ($ingredientes as $datos) {
-            Ingredientes::create($datos);
+            ingredientes::create($datos);
         }
     }
 }

@@ -31,8 +31,8 @@ class Pociones extends Model
         return $this->belongsToMany(Ingredientes::class, 'recetas', 'idPocion', 'idIngrediente');
     }
    
-//     public function usuario()
-//     {
-//         return $this->belongsTo(User::class, 'idUsuario');
-//     }
+    public function usuario()
+    {
+        return $this->belongsTo(usuario::class, 'idUsuario');
+    }
 }
