@@ -1,7 +1,7 @@
 //Raul Gutierrez
 import { constantes } from "../classes/constantes.js"
 
-export async function getTodosAsignaturas() {
+export const getTodosAsignaturas = async () => {
     const rutaAsignatura = constantes.urlApi + constantes.asignatura
 
     try {
@@ -25,7 +25,7 @@ export async function getTodosAsignaturas() {
     }
 }
 
-export async function getBuscarAsignatura(id_asignatura) {
+export const getBuscarAsignatura = async (id_asignatura) => {
     const rutaAsignatura = constantes.urlApi + constantes.asignatura
 
     try {
@@ -49,7 +49,7 @@ export async function getBuscarAsignatura(id_asignatura) {
     }
 }
 
-export async function postAsignatura(asignaturaCreada) {
+export const postAsignatura = async (asignaturaCreada) => {
     const rutaAsignatura = constantes.urlApi + constantes.asignatura
     
     try {
@@ -73,7 +73,7 @@ export async function postAsignatura(asignaturaCreada) {
     }
 }
 
-export async function putAsignatura(id_asignatura, asignatura) {
+export const putAsignatura = async (id_asignatura, asignatura) => {
     const rutaAsignatura = constantes.urlApi + constantes.asignatura
     try {
         const respuesta = await fetch(rutaAsignatura + id_asignatura, {
@@ -98,7 +98,7 @@ export async function putAsignatura(id_asignatura, asignatura) {
     }
 }
 
-export async function deleteAsignatura(id_asignatura) {
+export const deleteAsignatura = async (id_asignatura) => {
     const rutaAsignatura = constantes.urlApi + constantes.asignatura
 
     try {

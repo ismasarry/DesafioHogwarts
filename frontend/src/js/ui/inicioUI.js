@@ -1,10 +1,9 @@
 //Raul Gutierrez
 import { getBuscarUsuario } from "../api/usuarioAPI.js"
 import { getBuscarCasa } from "../api/casaAPI.js"
+import { cargarSideBar } from "../components/cargarSideBar.js"
 
-verUsuario()
-
-async function verUsuario() {
+const verUsuario = async () => {
     const idUsuario = sessionStorage.getItem("userId")
     const usuario = await getBuscarUsuario(idUsuario)
     const casa = await getBuscarCasa(usuario.Usuario.idCasa)
@@ -22,27 +21,5 @@ async function verUsuario() {
     exp.textContent = `Experiencia Total: ${usuario.Usuario.exp}`
 }
 
-//Jaime Ortega
-document.addEventListener('DOMContentLoaded', () => {
-    const rol = sessionStorage.getItem('rol')
-
-    if (rol === 'Dumbledore') {
-        import('../components/sideBarDumbledore.js').then(module => {
-            module.crearBarraLateral()
-        })
-    } else if (rol === 'admin') {
-        import('../components/sideBarAdmin.js').then(module => {
-            module.crearBarraLateral()
-        })
-    } else if (rol === 'profesor') {
-        import('../components/sideBarProfesor.js').then(module => {
-            module.crearBarraLateral()
-        })
-    } else if (rol === 'alumno') {
-        import('../components/sideBarAlumno.js').then(module => {
-            module.crearBarraLateral()
-        })
-    } else {
-        console.error('Rol no reconocido')
-    }
-})
+cargarSideBar()
+verUsuario()

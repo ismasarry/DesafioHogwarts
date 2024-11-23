@@ -1,5 +1,5 @@
 //Jaime Ortega
-const crearBarraLateral = () => {
+export const crearBarraLateral = () => {
     const wrapper = document.getElementById('wrapper')
 
     const barraLateralHTML = `
@@ -23,7 +23,7 @@ const crearBarraLateral = () => {
 
     const administracionCollapse = document.getElementById('administracionCollapse')
     let barraLateralAdmin = `
-            <a href="../html/gestionUsuarios.html" class="list-group-item list-group-item-action fw-bold">
+            <a href="../html/gestionUsuario.html" class="list-group-item list-group-item-action fw-bold">
                 <i class="far fa-keyboard me-2 ms-3">Gestión usuarios</i>
             </a>
             <a href="../html/gestionAsignaturas.html" class="list-group-item list-group-item-action fw-bold">
