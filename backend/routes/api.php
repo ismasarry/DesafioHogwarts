@@ -7,12 +7,15 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\rolController;
 use App\Http\Controllers\casaController;
 use App\Http\Controllers\hechizosController;
+use App\Http\Controllers\gmailController;
 use App\Http\Controllers\usuarioRolController;
 use App\Http\Controllers\UsuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //Jaime Ortega
+
+// AQUI EMPIEZAN LAS RUTAS AGRUPADAS POR REL AUTH SANCTUM
 //Route::middleware(['auth:sanctum'])->group(function () {
 Route::prefix('rol')->group(function () {
     Route::get('/', [rolController::class, 'getAllRoles']);
@@ -85,9 +88,21 @@ Route::delete('hechizos/{id}', [hechizosController::class, 'deleteHechizo']);
 //ismael sarrion
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
+
 //Jaime Ortega (register)
 Route::post('register', [AuthController::class, 'register']);
 
 Route::get('/nologin', function () {
     return response()->json("No autorizado", 203);
+}); 
+
+//ismael sarrion 
+
+//Route::middleware('guest')->group(function () {
+Route::get('formulario', function () {
+    return view('formularioRecuperacion');
 });
+
+Route::post('envia', [gmailController::class, 'enviar']);
+//});
+
