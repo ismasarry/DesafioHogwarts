@@ -26,7 +26,7 @@ export const crearBarraLateral = () => {
             <a href="../html/gestionUsuario.html" class="list-group-item list-group-item-action fw-bold">
                 <i class="far fa-keyboard me-2 ms-3">Gestión usuarios</i>
             </a>
-            <a href="../html/gestionAsignaturas.html" class="list-group-item list-group-item-action fw-bold">
+            <a href="../html/gestionAsignatura.html" class="list-group-item list-group-item-action fw-bold">
                 <i class="far fa-keyboard me-2 ms-3">Gestión asignaturas</i>
             </a>
         `
