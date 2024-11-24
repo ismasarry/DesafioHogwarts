@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             usuarioRolSeeder::class,
             asignaturaSeeder::class,
             asignaturaAlumnoSeeder::class,
-            asignaturaProfesorSeeder::class
+            asignaturaProfesorSeeder::class,
+            hechizosSeeder::class
         ]);
     }
 }

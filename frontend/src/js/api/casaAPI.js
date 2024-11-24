@@ -1,7 +1,7 @@
 //Raul Gutierrez
 import { constantes } from "../classes/constantes.js"
 
-export async function getTodosCasas() {
+export const getTodosCasas = async () => {
     const rutaCasa = constantes.urlApi + constantes.casa
 
     try {
@@ -25,7 +25,7 @@ export async function getTodosCasas() {
     }
 }
 
-export async function getBuscarIntegrantesCasa(id_casa) {
+export const getBuscarIntegrantesCasa = async (id_casa) => {
     const rutaCasa = constantes.urlApi + constantes.casa + 'integrantes/'
 
     try {
@@ -48,7 +48,7 @@ export async function getBuscarIntegrantesCasa(id_casa) {
     }
 }
 
-export async function getBuscarCasa(id_casa) {
+export const getBuscarCasa = async (id_casa) => {
     const rutaCasa = constantes.urlApi + constantes.casa
 
     try {
@@ -71,7 +71,7 @@ export async function getBuscarCasa(id_casa) {
     }
 }
 
-export async function postCasa(casaCreado) {
+export const postCasa = async (casaCreado) => {
     const rutaCasa = constantes.urlApi + constantes.casa
     
     try {
@@ -96,7 +96,7 @@ export async function postCasa(casaCreado) {
     }
 }
 
-export async function putCasa(id_casa, casa) {
+export const putCasa = async (id_casa, casa) => {
     const rutaCasa = constantes.urlApi + constantes.casa
     try {
         const respuesta = await fetch(rutaCasa + id_casa, {
@@ -121,7 +121,7 @@ export async function putCasa(id_casa, casa) {
     }
 }
 
-export async function deleteCasa(id_casa) {
+export const deleteCasa = async (id_casa) => {
     const rutaCasa = constantes.urlApi + constantes.casa
 
     try {
