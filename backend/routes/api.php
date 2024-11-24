@@ -6,6 +6,7 @@ use App\Http\Controllers\asignaturaProfesorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\rolController;
 use App\Http\Controllers\casaController;
+use App\Http\Controllers\hechizosController;
 use App\Http\Controllers\gmailController;
 use App\Http\Controllers\usuarioRolController;
 use App\Http\Controllers\UsuarioController;
@@ -40,6 +41,8 @@ Route::get('/usuarioRoles/{id}', [usuarioRolController::class, 'getUsuarioRolPor
 Route::post('/usuarioRoles', [usuarioRolController::class, 'postUsuarioRol']);
 Route::put('/usuarioRoles/{id}', [usuarioRolController::class, 'putUsuarioRol']);
 Route::delete('/usuarioRoles/{id}', [usuarioRolController::class, 'deleteUsuarioRol']);
+//Raul Gutierrez
+Route::delete('/usuarioRoles/{idUsuario}/{idRol}', [usuarioRolController::class, 'deleteUsuarioRolPorIds']);
 
 //Raul Gutierrez
 Route::get('/usuario', [UsuarioController::class, 'getTodosUsuarios']);
@@ -62,6 +65,9 @@ Route::post('asignaturaAlumno', [asignaturaAlumnoController::class, 'postAsignat
 Route::put('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'putAsignaturaAlumno']);
 Route::delete('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumno']);
 
+//ismael sarrion
+Route::get('/asignaturaAlumno/alumnoPorId/{id}',[asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorIdAlumno']);
+
 //Raul Gutierrez
 Route::get('/asignaturaProfesor', [asignaturaProfesorController::class, 'getTodosAsignaturaProfesores']);
 Route::get('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'getAsignaturaProfesorPorId']);
@@ -69,6 +75,15 @@ Route::get('asignaturaProfesor/profesor/{id}', [asignaturaProfesorController::cl
 Route::post('asignaturaProfesor', [asignaturaProfesorController::class, 'postAsignaturaProfesor']);
 Route::put('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'putAsignaturaProfesor']);
 Route::delete('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesor']);
+
+
+//Raul Gutierrez
+Route::get('hechizos', [hechizosController::class, 'getTodosHechizos']);
+Route::get('hechizos/{id}', [hechizosController::class, 'getHechizoPorId']);
+Route::get('hechizos/nivel/{id}', [hechizosController::class, 'getHechizoPorNivelMenor']);
+Route::post('hechizos', [hechizosController::class, 'postHechizo']);
+Route::put('hechizos/{id}', [hechizosController::class, 'putHechizo']);
+Route::delete('hechizos/{id}', [hechizosController::class, 'deleteHechizo']);
 
 //ismael sarrion
 Route::post('login', [AuthController::class, 'login']);

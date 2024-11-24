@@ -1,7 +1,7 @@
 //Raul Gutierrez
 import { constantes } from "../classes/constantes.js"
 
-export async function getTodosAsignaturaAlumnos() {
+export const getTodosAsignaturaAlumnos = async () => {
     const rutaAsignaturaAlumno = constantes.urlApi + constantes.asignaturaAlumno
 
     try {
@@ -25,7 +25,7 @@ export async function getTodosAsignaturaAlumnos() {
     }
 }
 
-export async function getBuscarAsignaturaAlumno(id_asignaturaAlumno) {
+export const getBuscarAsignaturaAlumno = async (id_asignaturaAlumno) => {
     const rutaAsignaturaAlumno = constantes.urlApi + constantes.asignaturaAlumno
 
     try {
@@ -48,7 +48,30 @@ export async function getBuscarAsignaturaAlumno(id_asignaturaAlumno) {
     }
 }
 
-export async function postAsignaturaAlumno(asignaturaAlumnoCreada) {
+export const getBuscarAsignaturaAlumnoPorAlumno = async (id_alumno) => {
+    const rutaAsignaturaAlumno = constantes.urlApi + constantes.asignaturaAlumno + 'alumnoPorId/'
+
+    try {
+        const respuesta = await fetch(rutaAsignaturaAlumno + id_alumno, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok) {
+            throw new Error(`Error al obtener la asignaturaAlumno. Código de estado: ${respuesta.status}`);
+        }
+
+        const asignaturaAlumno = await respuesta.json();
+        return asignaturaAlumno;
+    } catch (error) {
+        console.error('Error en la función getBuscarAsignaturaAlumno:', error.message)
+        throw error
+    }
+}
+
+export const postAsignaturaAlumno = async (asignaturaAlumnoCreada) => {
     const rutaAsignaturaAlumno = constantes.urlApi + constantes.asignaturaAlumno
     
     try {
@@ -72,7 +95,7 @@ export async function postAsignaturaAlumno(asignaturaAlumnoCreada) {
     }
 }
 
-export async function putAsignaturaAlumno(id_asignaturaAlumno, asignaturaAlumno) {
+export const putAsignaturaAlumno = async (id_asignaturaAlumno, asignaturaAlumno) => {
     const rutaAsignaturaAlumno = constantes.urlApi + constantes.asignaturaAlumno
     try {
         const respuesta = await fetch(rutaAsignaturaAlumno + id_asignaturaAlumno, {
@@ -97,7 +120,7 @@ export async function putAsignaturaAlumno(id_asignaturaAlumno, asignaturaAlumno)
     }
 }
 
-export async function deleteAsignaturaAlumno(id_asignaturaAlumno) {
+export const deleteAsignaturaAlumno = async (id_asignaturaAlumno) => {
     const rutaAsignaturaAlumno = constantes.urlApi + constantes.asignaturaAlumno
 
     try {

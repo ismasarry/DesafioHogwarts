@@ -1,10 +1,10 @@
 //Raul Gutierrez
 import { getTodosAsignaturas } from "../api/asignaturaAPI.js"
-import { getBuscarAsignaturaProfesorPorProfesor } from "../api/asignaturaProfesorAPI.js"
+import { getBuscarAsignaturaAlumnoPorAlumno } from "../api/asignaturaAlumnoAPI.js";
 
 export const crearBarraLateral = async () => {
     const wrapper = document.getElementById('wrapper')
-
+    
     const barraLateralHTML = `
         <div id="sidebar-wrapper">
             <div class="list-group list-group-flush my-3">
@@ -27,12 +27,15 @@ export const crearBarraLateral = async () => {
     const asignaturaCollapse = document.getElementById('asignaturaCollapse')
     let barraLateralAsig = ``
 
-    const idProfesor = sessionStorage.getItem("userId")
+    const idAlumno = sessionStorage.getItem("userId")
     const asignaturas = await getTodosAsignaturas()
-    const asignaturasProfesor = await getBuscarAsignaturaProfesorPorProfesor(idProfesor)
+    const asignaturasAlumno = await getBuscarAsignaturaAlumnoPorAlumno(idAlumno)
 
-    for (let i = 0; i < asignaturasProfesor.length; i++) {
-        let nombreAsig = asignaturasProfesor[i].idAsignatura
+    console.log(asignaturas)
+    console.log(asignaturasAlumno)
+
+    for (let i = 0; i < asignaturasAlumno.length; i++) {
+        let nombreAsig = asignaturasAlumno[i].idAsignatura
         barraLateralAsig += `
             <a href="${asignaturas[nombreAsig-1].nombre}.html" class="list-group-item list-group-item-action fw-bold">
                 <i class="far fa-keyboard me-2 ms-3"></i> ${asignaturas[nombreAsig-1].nombre}
