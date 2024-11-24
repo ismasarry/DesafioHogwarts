@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\asignatura;
 use App\Models\asignaturaAlumno;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class asignaturaAlumnoController extends Controller
 {
-    
-//ismael sarrion (
+
+    //ismael sarrion (
     public function getAsignaturaAlumnoPorIdAlumno($idAlumno)
     {
         $asignaturas = asignaturaAlumno::where('idAlumno', $idAlumno)->get();
@@ -21,17 +23,27 @@ class asignaturaAlumnoController extends Controller
         $asignatura = asignaturaAlumno::all();
         return response()->json(['asignatura' => $asignatura]);
     }
-//ismael sarrion )
-
+    //ismael sarrion )
+    //Jaime Ortega (modifica)
     public function getAsignaturaAlumnoPorId($id)
     {
-        $asignatura = asignaturaAlumno::find($id);
+        $asignaturaAlumnos = AsignaturaAlumno::where('idAsignatura', $id)->get();
 
-        if (!$asignatura) {
-            return response()->json(['message' => 'asignatura no encontrada'], 404);
+        if ($asignaturaAlumnos->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron alumnos para la asignatura'], 404);
         }
 
-        return response()->json(['asignatura' => $asignatura]);
+        $alumnos = $asignaturaAlumnos->map(function ($asignaturaAlumno) {
+            return Usuario::find($asignaturaAlumno->idAlumno);
+        });
+
+        $conteoAlumnos = $alumnos->count();
+
+        return response()->json([
+            'asignatura' => asignatura::find($id),
+            'alumnos' => $alumnos,
+            'conteoAlumnos' => $conteoAlumnos,
+        ]);
     }
 
     public function postAsignaturaAlumno(Request $request)
