@@ -19,7 +19,9 @@ class Pociones extends Model
         'estadisticas',
         'descripcion',
         'idUsuario',
-        'foto',
+       // 'foto',
+        'veri',
+        'veriD'
     ];
     public function recetas()
     {
