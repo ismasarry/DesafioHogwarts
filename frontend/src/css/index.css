@@ -1,0 +1,19 @@
+body {
+    background: url('./../assets/pusheen-harry-potter.gif') no-repeat center center fixed;
+    background-color: black;
+    background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .button-container {
+    text-align: center;
+  }
+
+  .button-container a {
+    margin: 10px;
+  }
