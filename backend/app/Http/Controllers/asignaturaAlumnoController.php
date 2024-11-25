@@ -3,45 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\asignatura;
 use App\Models\asignaturaAlumno;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class asignaturaAlumnoController extends Controller
 {
-    
-//ismael sarrion (
-    public function getAsignaturaAlumnoPorIdAlumno($idAlumno)
-    {
-        $asignaturas = asignaturaAlumno::where('idAlumno', $idAlumno)->get();
-        return response()->json($asignaturas);
-    }
+    //Jaime Ortega (modifica)
     public function getTodosAsignaturaAlumnos()
     {
-        $asignatura = asignaturaAlumno::all();
-        return response()->json(['asignatura' => $asignatura]);
-    }
-//ismael sarrion )
+        $asignaturaAlumnos = asignaturaAlumno::with('usuario')->get();
 
+        return response()->json(['asignaturaAlumnos' => $asignaturaAlumnos]);
+    }
+
+    //ismael sarrion )
+    //Jaime Ortega (modifica)
     public function getAsignaturaAlumnoPorId($id)
     {
-        $asignatura = asignaturaAlumno::find($id);
+        $asignaturaAlumnos = AsignaturaAlumno::where('idAsignatura', $id)->get();
 
-        if (!$asignatura) {
-            return response()->json(['message' => 'asignatura no encontrada'], 404);
+        if ($asignaturaAlumnos->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron alumnos para la asignatura'], 404);
         }
 
-        return response()->json(['asignatura' => $asignatura]);
+        $alumnos = $asignaturaAlumnos->map(function ($asignaturaAlumno) {
+            return Usuario::find($asignaturaAlumno->idAlumno);
+        });
+
+        $conteoAlumnos = $alumnos->count();
+
+        return response()->json([
+            'asignatura' => asignatura::find($id),
+            'alumnos' => $alumnos,
+            'conteoAlumnos' => $conteoAlumnos,
+        ]);
     }
 
+    //ismael sarrion (
+    public function getAsignaturaAlumnoPorIdAlumno($idAlumno)
+    {
+        $asignaturaAlumno = asignaturaAlumno::where('idAlumno', $idAlumno)->get();
+
+        return response()->json(['asignaturaAlumno' => $asignaturaAlumno]);
+    }
+
+    //Jaime Ortega (modifica)
     public function postAsignaturaAlumno(Request $request)
     {
-        $asignatura = asignaturaAlumno::create([
-            'idAsignatura' => $request['idAsignatura'],
-            'idAlumno' => $request['idAlumno']
-        ]);
+        foreach ($request['idAlumno'] as $idAlumno) {
+            $asignaturaAlumno = asignaturaAlumno::create([
+                'idAsignatura' => $request['idAsignatura'],
+                'idAlumno' => $idAlumno
+            ]);
+        }
 
-        return response()->json(['asignatura' => $asignatura], Response::HTTP_CREATED);
+        return response()->json(['asignaturaAlumno' => $asignaturaAlumno], Response::HTTP_CREATED);
     }
 
     public function putAsignaturaAlumno(Request $request, $id)
