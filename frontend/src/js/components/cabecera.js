@@ -1,6 +1,6 @@
 //Raul Gutierrez
 
-import { getBuscarUsuario } from "../api/usuarioAPI.js"
+import { getBuscarUsuario, putUsuario } from "../api/usuarioAPI.js"
 
 document.addEventListener("DOMContentLoaded", async () => {
   let usuario
@@ -43,32 +43,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <form id="perfilUsuarioForm">
                   <div class="col-md-6">
                     <label for="nombre" class="form-label">Nombre:</label>
-                    <input class="form-control" type="text" id="nombre" name="nombre" required>
+                    <input class="form-control" type="text" id="nombre" name="nombre">
                   </div>
                   
                   <div class="col-md-6">
-                    <label class="form-label" for="correo">Correo Electrónico:</label>
-                    <input class="form-control" type="email" id="correo" name="correo" required>
+                    <label class="form-label" for="gmail">Correo Electrónico:</label>
+                    <input class="form-control" type="email" id="gmail" name="gmail">
                   </div>
 
                   <div class="col-md-6">
                     <label for="contrasena" class="form-label">Contraseña:</label>
-                    <input class="form-control" type="password" id="contrasena" name="contrasena" required>
-                  </div>
-
-                  <div class="col-md-6">
-                    <label for="casa" class="form-label">Casa de Harry Potter:</label>
-                    <select id="casa" name="casa" class="form-select" required>
-                      <option value="gryffindor">Gryffindor</option>
-                      <option value="hufflepuff">Hufflepuff</option>
-                      <option value="ravenclaw">Ravenclaw</option>
-                      <option value="slytherin">Slytherin</option>
-                    </select>
-                  </div>
-
-                  <div class="col-md-12">
-                    <label for="foto" class="form-label">Foto:</label>
-                    <input class="form-control" type="file" id="foto" name="foto" accept="image/*">
+                    <input class="form-control" type="password" id="contrasena" name="contrasena">
                   </div>
                 </form>
               </div>
@@ -86,6 +71,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const event = new Event('headerTerminado');
     document.dispatchEvent(event);
+    
+    editarPerfil(idUsuario)
   }
 
   await ensenarCabecera()
@@ -94,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (event.target && event.target.id === "botonPerfil") {
       if (usuario) {
         document.getElementById("nombre").value = usuario.Usuario.nombre
-        document.getElementById("correo").value = usuario.Usuario.gmail
+        document.getElementById("gmail").value = usuario.Usuario.gmail
         const modalPerfil = new bootstrap.Modal(document.getElementById('modalPerfil'))
         modalPerfil.show()
       }
@@ -107,4 +94,57 @@ document.addEventListener("DOMContentLoaded", async () => {
       window.location.href = "./../index.html";
     }
   });
+
+
+  async function editarPerfil(id) {
+    const modificarBtn = document.getElementById('guardarCambios')
+    const usuario = await getBuscarUsuario(id)
+    const usuarioU = usuario.Usuario
+
+    if (modificarBtn) {
+
+        modificarBtn.addEventListener('click', async () => {
+            try {
+
+                const modalElement = document.getElementById(`modalPerfil`)
+                const nombreUsu = modalElement.querySelector(`#nombre`).value
+                const gmailUsu = modalElement.querySelector(`#gmail`).value
+                const contraUsu = modalElement.querySelector(`#contrasena`).value
+
+                let usuarioObjeto
+
+                if (contraUsu.type == undefined) {
+                  usuarioObjeto = {
+                    nombre: nombreUsu,
+                    gmail: gmailUsu,
+                    contrasena: usuarioU.contrasena,
+                    idCasa: usuarioU.idCasa,
+                    nivel: usuarioU.nivel,
+                    exp: usuarioU.exp,
+                    foto: usuarioU.foto,
+                    activo: usuarioU.activo
+                  }
+                }else{
+                  usuarioObjeto = {
+                    nombre: nombreUsu,
+                    gmail: gmailUsu,
+                    contrasena: contraUsu,
+                    idCasa: usuarioU.idCasa,
+                    nivel: usuarioU.nivel,
+                    exp: usuarioU.exp,
+                    foto: usuarioU.foto,
+                    activo: usuarioU.activo
+                  }
+                }
+                await putUsuario(id, usuarioObjeto)
+
+                const modal = new bootstrap.Modal(modalElement)
+                modal.hide();
+                location.reload()
+            } catch (error) {
+                console.error('Error al confirmar la modificación:', error)
+            }
+        });
+    }
+  }
 });
