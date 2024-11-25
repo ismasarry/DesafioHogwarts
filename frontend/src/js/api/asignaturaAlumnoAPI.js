@@ -17,7 +17,7 @@ export const getTodosAsignaturaAlumnos = async () => {
         }
 
         const asignaturaAlumnos = await respuesta.json()
-        return asignaturaAlumnos.asignaturaAlumno
+        return asignaturaAlumnos.asignaturaAlumnos
 
     } catch (error) {
         console.error('Error en la función getTodosAsignaturaAlumnos:', error.message)

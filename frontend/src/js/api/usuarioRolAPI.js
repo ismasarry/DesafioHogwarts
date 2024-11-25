@@ -28,7 +28,34 @@ export const mostrarRolesUsuario = async (idUsuario) => {
     }
 }
 
-export async function getTodosUsuariosRoles() {
+export const mostrarUsuariosRolPorIdRol = async (idRol) => {
+    const rutaUsuario = constantes.urlApi + constantes.usuRol + 'integrantes/' + idRol
+
+    try {
+        const respuesta = await fetch(rutaUsuario, {
+            method: 'GET',
+            headers: {
+                "Authorization": "Bearer " + sessionStorage.getItem("token"),
+                "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*"
+            }
+        
+        })
+
+        if (!respuesta.ok) {
+            throw new Error(`Error al obtener la lista de usuarios del rol. Código de estado: ${respuesta.status}`);
+        }
+
+        const resultado = await respuesta.json()
+        return resultado
+
+    } catch (error) {
+        console.error('Error en la función getTodosUsuariosRolPorIdRol:', error.message);
+        throw error;
+    }
+}
+
+export const getTodosUsuariosRoles = async () => {
     const rutaUsuario = constantes.urlApi + constantes.usuRol
 
     try {
