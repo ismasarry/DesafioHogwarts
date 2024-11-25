@@ -4,7 +4,7 @@ import { getTodosCasas } from "../api/casaAPI.js";
 import { getTodosUsuariosRoles, mostrarRolesUsuario, deleteUsuarioRol, postUsuarioRol } from "../api/usuarioRolAPI.js";
 import { cargarSideBar } from "../components/cargarSideBar.js"
 
-cargarSideBar
+await cargarSideBar()
 document.addEventListener("DOMContentLoaded", function () {
     async function rellenarUsuarios() {
         const usuarios = await getTodosUsuarios()

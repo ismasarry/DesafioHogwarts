@@ -1,0 +1,19 @@
+* {
+    color: white !important;
+}
+
+i, li a, h4, .modal-body label, input[type="text"], h5, ul li {
+    color: black !important;
+}
+
+.btn-editar, .btn-eliminar, .btn-editar i {
+    width: 5rem;
+    height: 2rem;
+    color: white !important;
+}
+
+.no-puntos {
+        list-style-type: none;
+        padding: 0; 
+        margin: 0;
+}
