@@ -11,18 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class asignaturaAlumnoController extends Controller
 {
-
-    //ismael sarrion (
-    public function getAsignaturaAlumnoPorIdAlumno($idAlumno)
-    {
-        $asignaturas = asignaturaAlumno::where('idAlumno', $idAlumno)->get();
-        return response()->json($asignaturas);
-    }
+    //Jaime Ortega (modifica)
     public function getTodosAsignaturaAlumnos()
     {
-        $asignatura = asignaturaAlumno::all();
-        return response()->json(['asignatura' => $asignatura]);
+        $asignaturaAlumnos = asignaturaAlumno::with('usuario')->get();
+
+        return response()->json(['asignaturaAlumnos' => $asignaturaAlumnos]);
     }
+
     //ismael sarrion )
     //Jaime Ortega (modifica)
     public function getAsignaturaAlumnoPorId($id)
@@ -46,14 +42,25 @@ class asignaturaAlumnoController extends Controller
         ]);
     }
 
+    //ismael sarrion (
+    public function getAsignaturaAlumnoPorIdAlumno($idAlumno)
+    {
+        $asignaturaAlumno = asignaturaAlumno::where('idAlumno', $idAlumno)->get();
+
+        return response()->json(['asignaturaAlumno' => $asignaturaAlumno]);
+    }
+
+    //Jaime Ortega (modifica)
     public function postAsignaturaAlumno(Request $request)
     {
-        $asignatura = asignaturaAlumno::create([
-            'idAsignatura' => $request['idAsignatura'],
-            'idAlumno' => $request['idAlumno']
-        ]);
+        foreach ($request['idAlumno'] as $idAlumno) {
+            $asignaturaAlumno = asignaturaAlumno::create([
+                'idAsignatura' => $request['idAsignatura'],
+                'idAlumno' => $idAlumno
+            ]);
+        }
 
-        return response()->json(['asignatura' => $asignatura], Response::HTTP_CREATED);
+        return response()->json(['asignaturaAlumno' => $asignaturaAlumno], Response::HTTP_CREATED);
     }
 
     public function putAsignaturaAlumno(Request $request, $id)

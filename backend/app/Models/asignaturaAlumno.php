@@ -17,8 +17,10 @@ class asignaturaAlumno extends Model
     {
         return $this->belongsTo(asignatura::class, 'id');
     }
+
+    //Jaime Ortega (modifica)
     public function usuario()
     {
-        return $this->belongsTo(Usuario::class, 'id');
+        return $this->belongsTo(Usuario::class, 'idAlumno', 'id');
     }
 }

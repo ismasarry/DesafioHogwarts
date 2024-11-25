@@ -34,6 +34,8 @@ Route::prefix('casa')->group(function () {
 //Ismael Sarrion
 Route::get('/usuarioRoles', [usuarioRolController::class, 'getTodosUsuarioRoles']);
 Route::get('/usuarioRoles/{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
+//Jaime Ortega
+Route::get('/usuarioRoles/integrantes/{id}', [usuarioRolController::class, 'getTodosUsuarioRolPorIdRol']);
 Route::post('/usuarioRoles', [usuarioRolController::class, 'postUsuarioRol']);
 Route::put('/usuarioRoles/{id}', [usuarioRolController::class, 'putUsuarioRol']);
 Route::delete('/usuarioRoles/{id}', [usuarioRolController::class, 'deleteUsuarioRol']);
