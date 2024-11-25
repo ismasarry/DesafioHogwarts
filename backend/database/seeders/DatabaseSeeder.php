@@ -1,7 +1,9 @@
 <?php
-
+//Raul Gutierrez
 namespace Database\Seeders;
 
+use App\Models\asignatura;
+use App\Models\asignaturaAlumno;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,7 +19,11 @@ class DatabaseSeeder extends Seeder
             RolSeeder::class,
             casaSeeder::class,
             usuarioSeeder::class,
-            usuarioRolSeeder::class
+            usuarioRolSeeder::class,
+            asignaturaSeeder::class,
+            asignaturaAlumnoSeeder::class,
+            asignaturaProfesorSeeder::class,
+            hechizosSeeder::class
         ]);
     }
 }

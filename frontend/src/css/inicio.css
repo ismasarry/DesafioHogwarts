@@ -8,11 +8,31 @@ body {
     padding: 0;
   }
   
-  
+
+  /*NO TOCAR*/
+  header.header {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    z-index: 1000; 
+    margin-left: 0; 
+}
+
+.main-content {
+    margin-top: 100px; 
+}
+
+.user-container {
+  margin-top: 20px; 
+}
+  /*ya puedes tocar*/
+
   .header {
     background-color: #007bff; 
     color: white;
     padding: 20px 0;
+    width: 100vw;
   }
   
   .header .user-img {
@@ -103,3 +123,40 @@ body {
     }
   }
   
+  /*Raul Gutierrez*/
+
+  /*Isma, no toques este css que es para la sideBar xD*/
+  
+#sidebar-wrapper {
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  height: 100%;
+  background-color: #343a40;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+#wrapper.sidebar-open #sidebar-wrapper {
+  left: 0;
+}
+
+#wrapper.sidebar-open .main-content {
+  margin-left: 250px;
+}
+
+#wrapper.sidebar-open header.header {
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+header.header {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+.icon-desplegable:hover {
+  color: black !important;
+}

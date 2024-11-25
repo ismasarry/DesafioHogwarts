@@ -1,7 +1,7 @@
 //Raul Gutierrez
 import { constantes } from "../classes/constantes.js"
 
-export async function getTodosUsuarios() {
+export const getTodosUsuarios = async () => {
     const rutaUsuario = constantes.urlApi + constantes.usu
 
     try {
@@ -18,7 +18,7 @@ export async function getTodosUsuarios() {
 
         const usuarios = await respuesta.json()
         console.log(usuarios)
-        return usuarios.usuario
+        return usuarios
 
     } catch (error) {
         console.error('Error en la función getTodosUsuarios:', error.message);
@@ -26,7 +26,7 @@ export async function getTodosUsuarios() {
     }
 }
 
-export async function getBuscarUsuario(id_usuario) {
+export const getBuscarUsuario = async (id_usuario) => {
     const rutaUsuario = constantes.urlApi + constantes.usu
 
     try {
@@ -50,7 +50,7 @@ export async function getBuscarUsuario(id_usuario) {
     }
 }
 
-export async function postUsuario(usuarioCreado) {
+export const postUsuario = async (usuarioCreado) => {
     const rutaUsuario = constantes.urlApi + constantes.usu
     
     try {
@@ -75,15 +75,14 @@ export async function postUsuario(usuarioCreado) {
 }
 
 //Jaime Ortega (postFormUsuario)
-export async function postFormUsuario(usuarioCreado) {
+export const postFormUsuario = async (usuarioCreado) => {
     const rutaUsuario = constantes.urlApi + constantes.registro
     
     try {
         const respuesta = await fetch(rutaUsuario, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(usuarioCreado),
             // body: usuarioCreado,
@@ -100,7 +99,7 @@ export async function postFormUsuario(usuarioCreado) {
     }
 }
 
-export async function putUsuario(id_usuario, usuario) {
+export const putUsuario = async (id_usuario, usuario) => {
     const rutaUsuario = constantes.urlApi + constantes.usu
     try {
         const respuesta = await fetch(rutaUsuario + id_usuario, {
@@ -117,7 +116,7 @@ export async function putUsuario(id_usuario, usuario) {
             throw new Error(`Error al editar el usuario. Código de estado: ${respuesta.status}`);
         }
 
-        const resultado = await respuesta.json();
+        const resultado = await respuesta.json()
         return resultado;
     } catch (error) {
         console.error('Error en la función putUsuario:', error.message);
@@ -125,7 +124,7 @@ export async function putUsuario(id_usuario, usuario) {
     }
 }
 
-export async function deleteUsuario(id_usuario) {
+export const deleteUsuario = async (id_usuario) => {
     const rutaUsuario = constantes.urlApi + constantes.usu
 
     try {

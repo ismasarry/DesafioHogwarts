@@ -38,7 +38,11 @@ class Usuario extends Authenticatable // Cambiamos a Authenticatable
     public function roles(){
         return $this->belongsToMany(Rol::class , 'usuario_rol', 'idRol', 'id');
     }
-  
+
+    public function casaUsuario(){
+        return $this->belongsTo(Casa::class, 'idCasa');
+    }
+
     public function getAuthPassword(){
         return $this->contrasena;
     }
