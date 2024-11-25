@@ -86,11 +86,11 @@ Route::put('hechizos/{id}', [hechizosController::class, 'putHechizo']);
 Route::delete('hechizos/{id}', [hechizosController::class, 'deleteHechizo']);
 
 //ismael sarrion
-Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [AuthController::class, 'logout']);
+// Route::post('login', [AuthController::class, 'login']);
+// Route::post('logout', [AuthController::class, 'logout']);
 
-//Jaime Ortega (register)
-Route::post('register', [AuthController::class, 'register']);
+// //Jaime Ortega (register)
+// Route::post('register', [AuthController::class, 'register']);
 
 Route::get('/nologin', function () {
     return response()->json("No autorizado", 203);

@@ -29,6 +29,17 @@ class usuarioSeeder extends Seeder
                 'remember_token' => Str::random(10)
             ],
             [
+                'nombre' => 'ismael',
+                'gmail' => 'ismael22012004@gmail.com',
+                'contrasena' => bcrypt('JaMorant1234'),
+                'idCasa' => 1,
+                'nivel' => 5,
+                'exp' => 999,
+                'foto' => 'mago',
+                'activo' => true,
+                'remember_token' => Str::random(10)
+            ],
+            [
                 'nombre' => 'Snape',
                 'gmail' => 'snape_hogwards@gmail.com',
                 'contrasena' => bcrypt('snape1234'),
