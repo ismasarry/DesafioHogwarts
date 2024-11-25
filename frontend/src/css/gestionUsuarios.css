@@ -1,0 +1,43 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #c6c8ca;
+    margin: 0;
+    padding: 0;
+    color: rgb(0, 0, 0);
+  }
+
+.btn {
+    color: white !important;
+}
+
+.modal .modal-title,
+.modal .modal-body,
+.modal .modal-footer button {
+    color: white !important;
+}
+
+
+
+  /*NO TOCAR*/
+  header.header {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    z-index: 1000; 
+    margin-left: 0; 
+}
+
+.main-content {
+    margin-top: 100px; 
+}
+
+.user-container {
+  margin-top: 20px; 
+}
+  /*ya puedes tocar*/
+#hechizos_wrapper {
+    color: white;
+}
+
+

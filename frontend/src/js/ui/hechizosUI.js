@@ -50,100 +50,92 @@ document.addEventListener("DOMContentLoaded", function () {
                 ]).draw()
     
                 const editarHechizo = ` 
-                        <div class="modal" id="myModal${hec.id}">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Editar hechizo ${hec.nombre}</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="nombre" class="form-label">Nombre</label>
-                                            <input type="text" id="nombre${hec.id}" name="nombre${hec.id}" class="form-control" value=${hec.nombre}>
-                                            <div class="invalid-feedback" id="mensajeNombre"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="ataque" class="form-label">Ataque</label>
-                                            <input type="text" id="ataque${hec.id}" name="ataque${hec.id}" class="form-control" value=${esta[0]}>
-                                            <div class="invalid-feedback" id="mensajeAtaque"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="defensa" class="form-label">Defensa</label>
-                                            <input type="text" id="defensa${hec.id}" name="defensa${hec.id}" class="form-control" value=${esta[1]}>
-                                            <div class="invalid-feedback" id="mensajeDefensa"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="sanacion" class="form-label">Sanación</label>
-                                            <input type="text" id="sanacion${hec.id}" name="sanacion${hec.id}" class="form-control" value=${esta[2]}>
-                                            <div class="invalid-feedback" id="mensajeSanacion"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="dano" class="form-label">Daño</label>
-                                            <input type="text" id="dano${hec.id}" name="dano${hec.id}" class="form-control" value=${esta[3]}>
-                                            <div class="invalid-feedback" id="mensajeDano"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="invocacion" class="form-label">Invocación</label>
-                                            <input type="text" id="invocacion${hec.id}" name="invocacion${hec.id}" class="form-control" value=${esta[4]}>
-                                            <div class="invalid-feedback" id="mensajeInvocacion"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="accion" class="form-label">Acción</label>
-                                            <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
-                                            <div class="invalid-feedback" id="mensajeAccion"></div>
-                                        </div>
-        
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="creador" class="form-label">Creador</label>
-                                            <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
-                                            <div class="invalid-feedback" id="mensajeCreador"></div>
-                                        </div>
-                    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="nivel" class="form-label">Nivel de hechizo</label>
-                                            <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
-                                            <div class="invalid-feedback" id="mensajeNivel"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${hec.id}">Editar hechizo</button>
-                                </div>
-                            </div>                
+    <div class="modal" id="myModal${hec.id}">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-dark">Editar hechizo ${hec.nombre}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row text-dark">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" id="nombre${hec.id}" name="nombre${hec.id}" class="form-control" value=${hec.nombre}>
+                            <div class="invalid-feedback" id="mensajeNombre"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="ataque" class="form-label">Ataque</label>
+                            <input type="text" id="ataque${hec.id}" name="ataque${hec.id}" class="form-control" value=${esta[0]}>
+                            <div class="invalid-feedback" id="mensajeAtaque"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="defensa" class="form-label">Defensa</label>
+                            <input type="text" id="defensa${hec.id}" name="defensa${hec.id}" class="form-control" value=${esta[1]}>
+                            <div class="invalid-feedback" id="mensajeDefensa"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="sanacion" class="form-label">Sanación</label>
+                            <input type="text" id="sanacion${hec.id}" name="sanacion${hec.id}" class="form-control" value=${esta[2]}>
+                            <div class="invalid-feedback" id="mensajeSanacion"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="dano" class="form-label">Daño</label>
+                            <input type="text" id="dano${hec.id}" name="dano${hec.id}" class="form-control" value=${esta[3]}>
+                            <div class="invalid-feedback" id="mensajeDano"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="invocacion" class="form-label">Invocación</label>
+                            <input type="text" id="invocacion${hec.id}" name="invocacion${hec.id}" class="form-control" value=${esta[4]}>
+                            <div class="invalid-feedback" id="mensajeInvocacion"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="accion" class="form-label">Acción</label>
+                            <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
+                            <div class="invalid-feedback" id="mensajeAccion"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="creador" class="form-label">Creador</label>
+                            <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
+                            <div class="invalid-feedback" id="mensajeCreador"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="nivel" class="form-label">Nivel de hechizo</label>
+                            <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
+                            <div class="invalid-feedback" id="mensajeNivel"></div>
                         </div>
                     </div>
-                    `
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${hec.id}">Editar hechizo</button>
+                </div>
+            </div>                
+        </div>
+    </div>
+`;
     
-                const eliminarHechizo =
-                    `
-                        <div class="modal" id="deleteModal${hec.id}">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                    
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Confirmar Eliminación</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                    
-                                    <div class="modal-body">
-                                        <p>¿Estás seguro de que deseas eliminar el hechizo ${hec.nombre}?</p>
-                                    </div>
-                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmarEliminacion${hec.id}">Confirmar Eliminación</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `
+const eliminarHechizo = `
+<div class="modal" id="deleteModal${hec.id}">
+    <div class="modal-dialog modal-md"class="text-dark">
+        <div class="modal-content"class="text-dark">
+
+            <div class="modal-header"class="text-dark">
+                <h4 class="modal-title text-dark">Confirmar Eliminación</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-dark">¿Estás seguro de que deseas eliminar el hechizo ${hec.nombre}?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmarEliminacion${hec.id}">Confirmar Eliminación</button>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+
 
                     const veriHechizo =
                     `
@@ -209,101 +201,92 @@ document.addEventListener("DOMContentLoaded", function () {
                 ]).draw()
     
                 const editarHechizo = ` 
-                        <div class="modal" id="myModal${hec.id}">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Editar hechizo ${hec.nombre}</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="nombre" class="form-label">Nombre</label>
-                                            <input type="text" id="nombre${hec.id}" name="nombre${hec.id}" class="form-control" value=${hec.nombre}>
-                                            <div class="invalid-feedback" id="mensajeNombre"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="ataque" class="form-label">Ataque</label>
-                                            <input type="text" id="ataque${hec.id}" name="ataque${hec.id}" class="form-control" value=${esta[0]}>
-                                            <div class="invalid-feedback" id="mensajeAtaque"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="defensa" class="form-label">Defensa</label>
-                                            <input type="text" id="defensa${hec.id}" name="defensa${hec.id}" class="form-control" value=${esta[1]}>
-                                            <div class="invalid-feedback" id="mensajeDefensa"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="sanacion" class="form-label">Sanación</label>
-                                            <input type="text" id="sanacion${hec.id}" name="sanacion${hec.id}" class="form-control" value=${esta[2]}>
-                                            <div class="invalid-feedback" id="mensajeSanacion"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="dano" class="form-label">Daño</label>
-                                            <input type="text" id="dano${hec.id}" name="dano${hec.id}" class="form-control" value=${esta[3]}>
-                                            <div class="invalid-feedback" id="mensajeDano"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="invocacion" class="form-label">Invocación</label>
-                                            <input type="text" id="invocacion${hec.id}" name="invocacion${hec.id}" class="form-control" value=${esta[4]}>
-                                            <div class="invalid-feedback" id="mensajeInvocacion"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="accion" class="form-label">Acción</label>
-                                            <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
-                                            <div class="invalid-feedback" id="mensajeAccion"></div>
-                                        </div>
-        
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="creador" class="form-label">Creador</label>
-                                            <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
-                                            <div class="invalid-feedback" id="mensajeCreador"></div>
-                                        </div>
-                    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="nivel" class="form-label">Nivel de hechizo</label>
-                                            <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
-                                            <div class="invalid-feedback" id="mensajeNivel"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${hec.id}">Editar hechizo</button>
-                                </div>
-                            </div>                
+    <div class="modal" id="myModal${hec.id}">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-dark">Editar hechizo ${hec.nombre}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row text-dark">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" id="nombre${hec.id}" name="nombre${hec.id}" class="form-control" value=${hec.nombre}>
+                            <div class="invalid-feedback" id="mensajeNombre"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="ataque" class="form-label">Ataque</label>
+                            <input type="text" id="ataque${hec.id}" name="ataque${hec.id}" class="form-control" value=${esta[0]}>
+                            <div class="invalid-feedback" id="mensajeAtaque"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="defensa" class="form-label">Defensa</label>
+                            <input type="text" id="defensa${hec.id}" name="defensa${hec.id}" class="form-control" value=${esta[1]}>
+                            <div class="invalid-feedback" id="mensajeDefensa"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="sanacion" class="form-label">Sanación</label>
+                            <input type="text" id="sanacion${hec.id}" name="sanacion${hec.id}" class="form-control" value=${esta[2]}>
+                            <div class="invalid-feedback" id="mensajeSanacion"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="dano" class="form-label">Daño</label>
+                            <input type="text" id="dano${hec.id}" name="dano${hec.id}" class="form-control" value=${esta[3]}>
+                            <div class="invalid-feedback" id="mensajeDano"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="invocacion" class="form-label">Invocación</label>
+                            <input type="text" id="invocacion${hec.id}" name="invocacion${hec.id}" class="form-control" value=${esta[4]}>
+                            <div class="invalid-feedback" id="mensajeInvocacion"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="accion" class="form-label">Acción</label>
+                            <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
+                            <div class="invalid-feedback" id="mensajeAccion"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="creador" class="form-label">Creador</label>
+                            <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
+                            <div class="invalid-feedback" id="mensajeCreador"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="nivel" class="form-label">Nivel de hechizo</label>
+                            <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
+                            <div class="invalid-feedback" id="mensajeNivel"></div>
                         </div>
                     </div>
-                    `
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${hec.id}">Editar hechizo</button>
+                </div>
+            </div>                
+        </div>
+    </div>
+`;
     
-                const eliminarHechizo =
-                    `
-                        <div class="modal" id="deleteModal${hec.id}">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                    
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Confirmar Eliminación</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                    
-                    
-                                    <div class="modal-body">
-                                        <p>¿Estás seguro de que deseas eliminar el usuario ${hec.nombre}?</p>
-                                    </div>
-                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmarEliminacion${hec.id}">Confirmar Eliminación</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `
+const eliminarHechizo = `
+<div class="modal" id="deleteModal${hec.id}">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title text-dark">Confirmar Eliminación</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-dark">¿Estás seguro de que deseas eliminar el hechizo ${hec.nombre}?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmarEliminacion${hec.id}">Confirmar Eliminación</button>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+
 
                     const veriDHechizo =
                     `
@@ -367,100 +350,92 @@ document.addEventListener("DOMContentLoaded", function () {
                 ]).draw()
     
                 const editarHechizo = ` 
-                        <div class="modal" id="myModal${hec.id}">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Editar hechizo ${hec.nombre}</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="nombre" class="form-label">Nombre</label>
-                                            <input type="text" id="nombre${hec.id}" name="nombre${hec.id}" class="form-control" value=${hec.nombre}>
-                                            <div class="invalid-feedback" id="mensajeNombre"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="ataque" class="form-label">Ataque</label>
-                                            <input type="text" id="ataque${hec.id}" name="ataque${hec.id}" class="form-control" value=${esta[0]}>
-                                            <div class="invalid-feedback" id="mensajeAtaque"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="defensa" class="form-label">Defensa</label>
-                                            <input type="text" id="defensa${hec.id}" name="defensa${hec.id}" class="form-control" value=${esta[1]}>
-                                            <div class="invalid-feedback" id="mensajeDefensa"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="sanacion" class="form-label">Sanación</label>
-                                            <input type="text" id="sanacion${hec.id}" name="sanacion${hec.id}" class="form-control" value=${esta[2]}>
-                                            <div class="invalid-feedback" id="mensajeSanacion"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="dano" class="form-label">Daño</label>
-                                            <input type="text" id="dano${hec.id}" name="dano${hec.id}" class="form-control" value=${esta[3]}>
-                                            <div class="invalid-feedback" id="mensajeDano"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="invocacion" class="form-label">Invocación</label>
-                                            <input type="text" id="invocacion${hec.id}" name="invocacion${hec.id}" class="form-control" value=${esta[4]}>
-                                            <div class="invalid-feedback" id="mensajeInvocacion"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="accion" class="form-label">Acción</label>
-                                            <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
-                                            <div class="invalid-feedback" id="mensajeAccion"></div>
-                                        </div>
-        
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="creador" class="form-label">Creador</label>
-                                            <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
-                                            <div class="invalid-feedback" id="mensajeCreador"></div>
-                                        </div>
-                    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="nivel" class="form-label">Nivel de hechizo</label>
-                                            <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
-                                            <div class="invalid-feedback" id="mensajeNivel"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${hec.id}">Editar hechizo</button>
-                                </div>
-                            </div>                
+    <div class="modal" id="myModal${hec.id}">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title text-dark">Editar hechizo ${hec.nombre}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row text-dark">
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" id="nombre${hec.id}" name="nombre${hec.id}" class="form-control" value=${hec.nombre}>
+                            <div class="invalid-feedback" id="mensajeNombre"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="ataque" class="form-label">Ataque</label>
+                            <input type="text" id="ataque${hec.id}" name="ataque${hec.id}" class="form-control" value=${esta[0]}>
+                            <div class="invalid-feedback" id="mensajeAtaque"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="defensa" class="form-label">Defensa</label>
+                            <input type="text" id="defensa${hec.id}" name="defensa${hec.id}" class="form-control" value=${esta[1]}>
+                            <div class="invalid-feedback" id="mensajeDefensa"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="sanacion" class="form-label">Sanación</label>
+                            <input type="text" id="sanacion${hec.id}" name="sanacion${hec.id}" class="form-control" value=${esta[2]}>
+                            <div class="invalid-feedback" id="mensajeSanacion"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="dano" class="form-label">Daño</label>
+                            <input type="text" id="dano${hec.id}" name="dano${hec.id}" class="form-control" value=${esta[3]}>
+                            <div class="invalid-feedback" id="mensajeDano"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="invocacion" class="form-label">Invocación</label>
+                            <input type="text" id="invocacion${hec.id}" name="invocacion${hec.id}" class="form-control" value=${esta[4]}>
+                            <div class="invalid-feedback" id="mensajeInvocacion"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="accion" class="form-label">Acción</label>
+                            <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
+                            <div class="invalid-feedback" id="mensajeAccion"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="creador" class="form-label">Creador</label>
+                            <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
+                            <div class="invalid-feedback" id="mensajeCreador"></div>
+                        </div>
+                        <div class="col-sm-12 col-md-6 col-lg-6">
+                            <label for="nivel" class="form-label">Nivel de hechizo</label>
+                            <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
+                            <div class="invalid-feedback" id="mensajeNivel"></div>
                         </div>
                     </div>
-                    `
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${hec.id}">Editar hechizo</button>
+                </div>
+            </div>                
+        </div>
+    </div>
+`;
     
-                const eliminarHechizo =
-                    `
-                        <div class="modal" id="deleteModal${hec.id}">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                    
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Confirmar Eliminación</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                    </div>
-                    
-                                    <div class="modal-body">
-                                        <p>¿Estás seguro de que deseas eliminar el hechizo ${hec.nombre}?</p>
-                                    </div>
-                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmarEliminacion${hec.id}">Confirmar Eliminación</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `
+const eliminarHechizo = `
+<div class="modal" id="deleteModal${hec.id}">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+
+            <div class="modal-header" class="text-dark">
+                <h4 class="modal-title text-dark">Confirmar Eliminación</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <p class="text-dark">¿Estás seguro de que deseas eliminar el hechizo ${hec.nombre}?</p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmarEliminacion${hec.id}">Confirmar Eliminación</button>
+            </div>
+        </div>
+    </div>
+</div>
+`;
+
                 document.body.insertAdjacentHTML('beforeend', editarHechizo)
                 editarHechizoUI(hec.id)
     
@@ -497,101 +472,92 @@ document.addEventListener("DOMContentLoaded", function () {
                 ]).draw()
     
                 const editarHechizo = ` 
-                        <div class="modal" id="myModal${hec.id}">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Editar hechizo ${hec.nombre}</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal" id="myModal${hec.id}">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title text-dark">Editar hechizo ${hec.nombre}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row text-dark">
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="nombre" class="form-label">Nombre</label>
+                                        <input type="text" id="nombre${hec.id}" name="nombre${hec.id}" class="form-control" value=${hec.nombre}>
+                                        <div class="invalid-feedback" id="mensajeNombre"></div>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="nombre" class="form-label">Nombre</label>
-                                            <input type="text" id="nombre${hec.id}" name="nombre${hec.id}" class="form-control" value=${hec.nombre}>
-                                            <div class="invalid-feedback" id="mensajeNombre"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="ataque" class="form-label">Ataque</label>
-                                            <input type="text" id="ataque${hec.id}" name="ataque${hec.id}" class="form-control" value=${esta[0]}>
-                                            <div class="invalid-feedback" id="mensajeAtaque"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="defensa" class="form-label">Defensa</label>
-                                            <input type="text" id="defensa${hec.id}" name="defensa${hec.id}" class="form-control" value=${esta[1]}>
-                                            <div class="invalid-feedback" id="mensajeDefensa"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="sanacion" class="form-label">Sanación</label>
-                                            <input type="text" id="sanacion${hec.id}" name="sanacion${hec.id}" class="form-control" value=${esta[2]}>
-                                            <div class="invalid-feedback" id="mensajeSanacion"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="dano" class="form-label">Daño</label>
-                                            <input type="text" id="dano${hec.id}" name="dano${hec.id}" class="form-control" value=${esta[3]}>
-                                            <div class="invalid-feedback" id="mensajeDano"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="invocacion" class="form-label">Invocación</label>
-                                            <input type="text" id="invocacion${hec.id}" name="invocacion${hec.id}" class="form-control" value=${esta[4]}>
-                                            <div class="invalid-feedback" id="mensajeInvocacion"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="accion" class="form-label">Acción</label>
-                                            <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
-                                            <div class="invalid-feedback" id="mensajeAccion"></div>
-                                        </div>
-        
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="creador" class="form-label">Creador</label>
-                                            <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
-                                            <div class="invalid-feedback" id="mensajeCreador"></div>
-                                        </div>
-                    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="nivel" class="form-label">Nivel de hechizo</label>
-                                            <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
-                                            <div class="invalid-feedback" id="mensajeNivel"></div>
-                                        </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="ataque" class="form-label">Ataque</label>
+                                        <input type="text" id="ataque${hec.id}" name="ataque${hec.id}" class="form-control" value=${esta[0]}>
+                                        <div class="invalid-feedback" id="mensajeAtaque"></div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${hec.id}">Editar hechizo</button>
-                                </div>
-                            </div>                
-                        </div>
-                    </div>
-                    `
-    
-                const eliminarHechizo =
-                    `
-                        <div class="modal" id="deleteModal${hec.id}">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                    
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Confirmar Eliminación</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="defensa" class="form-label">Defensa</label>
+                                        <input type="text" id="defensa${hec.id}" name="defensa${hec.id}" class="form-control" value=${esta[1]}>
+                                        <div class="invalid-feedback" id="mensajeDefensa"></div>
                                     </div>
-                    
-                    
-                                    <div class="modal-body">
-                                        <p>¿Estás seguro de que deseas eliminar el usuario ${hec.nombre}?</p>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="sanacion" class="form-label">Sanación</label>
+                                        <input type="text" id="sanacion${hec.id}" name="sanacion${hec.id}" class="form-control" value=${esta[2]}>
+                                        <div class="invalid-feedback" id="mensajeSanacion"></div>
                                     </div>
-                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmarEliminacion${hec.id}">Confirmar Eliminación</button>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="dano" class="form-label">Daño</label>
+                                        <input type="text" id="dano${hec.id}" name="dano${hec.id}" class="form-control" value=${esta[3]}>
+                                        <div class="invalid-feedback" id="mensajeDano"></div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="invocacion" class="form-label">Invocación</label>
+                                        <input type="text" id="invocacion${hec.id}" name="invocacion${hec.id}" class="form-control" value=${esta[4]}>
+                                        <div class="invalid-feedback" id="mensajeInvocacion"></div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="accion" class="form-label">Acción</label>
+                                        <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
+                                        <div class="invalid-feedback" id="mensajeAccion"></div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="creador" class="form-label">Creador</label>
+                                        <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
+                                        <div class="invalid-feedback" id="mensajeCreador"></div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="nivel" class="form-label">Nivel de hechizo</label>
+                                        <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
+                                        <div class="invalid-feedback" id="mensajeNivel"></div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${hec.id}">Editar hechizo</button>
+                            </div>
+                        </div>                
+                    </div>
+                </div>
+            `;
+    
+            const eliminarHechizo = `
+            <div class="modal" id="deleteModal${hec.id}">
+                <div class="modal-dialog modal-md" class="text-dark">
+                    <div class="modal-content" class="text-dark">
+        
+                        <div class="modal-header" class="text-dark">
+                            <h4 class="modal-title text-dark">Confirmar Eliminación</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                    `
+        
+                        <div class="modal-body">
+                            <p class="text-dark">¿Estás seguro de que deseas eliminar el hechizo ${hec.nombre}?</p>
+                        </div>
+        
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmarEliminacion${hec.id}">Confirmar Eliminación</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
 
                 document.body.insertAdjacentHTML('beforeend', editarHechizo)
                 editarHechizoUI(hec.id)
@@ -657,100 +623,91 @@ document.addEventListener("DOMContentLoaded", function () {
                 ]).draw()
     
                 const editarHechizo = ` 
-                        <div class="modal" id="myModal${hec.id}">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Editar hechizo ${hec.nombre}</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <div class="modal" id="myModal${hec.id}">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title text-dark">Editar hechizo ${hec.nombre}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row text-dark">
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="nombre" class="form-label">Nombre</label>
+                                        <input type="text" id="nombre${hec.id}" name="nombre${hec.id}" class="form-control" value=${hec.nombre}>
+                                        <div class="invalid-feedback" id="mensajeNombre"></div>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="nombre" class="form-label">Nombre</label>
-                                            <input type="text" id="nombre${hec.id}" name="nombre${hec.id}" class="form-control" value=${hec.nombre}>
-                                            <div class="invalid-feedback" id="mensajeNombre"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="ataque" class="form-label">Ataque</label>
-                                            <input type="text" id="ataque${hec.id}" name="ataque${hec.id}" class="form-control" value=${esta[0]}>
-                                            <div class="invalid-feedback" id="mensajeAtaque"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="defensa" class="form-label">Defensa</label>
-                                            <input type="text" id="defensa${hec.id}" name="defensa${hec.id}" class="form-control" value=${esta[1]}>
-                                            <div class="invalid-feedback" id="mensajeDefensa"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="sanacion" class="form-label">Sanación</label>
-                                            <input type="text" id="sanacion${hec.id}" name="sanacion${hec.id}" class="form-control" value=${esta[2]}>
-                                            <div class="invalid-feedback" id="mensajeSanacion"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="dano" class="form-label">Daño</label>
-                                            <input type="text" id="dano${hec.id}" name="dano${hec.id}" class="form-control" value=${esta[3]}>
-                                            <div class="invalid-feedback" id="mensajeDano"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="invocacion" class="form-label">Invocación</label>
-                                            <input type="text" id="invocacion${hec.id}" name="invocacion${hec.id}" class="form-control" value=${esta[4]}>
-                                            <div class="invalid-feedback" id="mensajeInvocacion"></div>
-                                        </div>
-    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="accion" class="form-label">Acción</label>
-                                            <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
-                                            <div class="invalid-feedback" id="mensajeAccion"></div>
-                                        </div>
-        
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="creador" class="form-label">Creador</label>
-                                            <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
-                                            <div class="invalid-feedback" id="mensajeCreador"></div>
-                                        </div>
-                    
-                                        <div class="col-sm-12 col-md-6 col-lg-6">
-                                            <label for="nivel" class="form-label">Nivel de hechizo</label>
-                                            <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
-                                            <div class="invalid-feedback" id="mensajeNivel"></div>
-                                        </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="ataque" class="form-label">Ataque</label>
+                                        <input type="text" id="ataque${hec.id}" name="ataque${hec.id}" class="form-control" value=${esta[0]}>
+                                        <div class="invalid-feedback" id="mensajeAtaque"></div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${hec.id}">Editar hechizo</button>
-                                </div>
-                            </div>                
-                        </div>
-                    </div>
-                    `
-    
-                const eliminarHechizo =
-                    `
-                        <div class="modal" id="deleteModal${hec.id}">
-                            <div class="modal-dialog modal-md">
-                                <div class="modal-content">
-                    
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Confirmar Eliminación</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="defensa" class="form-label">Defensa</label>
+                                        <input type="text" id="defensa${hec.id}" name="defensa${hec.id}" class="form-control" value=${esta[1]}>
+                                        <div class="invalid-feedback" id="mensajeDefensa"></div>
                                     </div>
-                    
-                                    <div class="modal-body">
-                                        <p>¿Estás seguro de que deseas eliminar el hechizo ${hec.nombre}?</p>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="sanacion" class="form-label">Sanación</label>
+                                        <input type="text" id="sanacion${hec.id}" name="sanacion${hec.id}" class="form-control" value=${esta[2]}>
+                                        <div class="invalid-feedback" id="mensajeSanacion"></div>
                                     </div>
-                    
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmarEliminacion${hec.id}">Confirmar Eliminación</button>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="dano" class="form-label">Daño</label>
+                                        <input type="text" id="dano${hec.id}" name="dano${hec.id}" class="form-control" value=${esta[3]}>
+                                        <div class="invalid-feedback" id="mensajeDano"></div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="invocacion" class="form-label">Invocación</label>
+                                        <input type="text" id="invocacion${hec.id}" name="invocacion${hec.id}" class="form-control" value=${esta[4]}>
+                                        <div class="invalid-feedback" id="mensajeInvocacion"></div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="accion" class="form-label">Acción</label>
+                                        <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
+                                        <div class="invalid-feedback" id="mensajeAccion"></div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="creador" class="form-label">Creador</label>
+                                        <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
+                                        <div class="invalid-feedback" id="mensajeCreador"></div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6 col-lg-6">
+                                        <label for="nivel" class="form-label">Nivel de hechizo</label>
+                                        <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
+                                        <div class="invalid-feedback" id="mensajeNivel"></div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${hec.id}">Editar hechizo</button>
+                            </div>
+                        </div>                
+                    </div>
+                </div>
+            `;
+                
+            const eliminarHechizo = `
+            <div class="modal" id="deleteModal${hec.id}">
+                <div class="modal-dialog modal-md" class="text-dark">
+                    <div class="modal-content" class="text-dark">
+            
+                        <div class="modal-header" class="text-dark">
+                            <h4 class="modal-title text-dark">Confirmar Eliminación</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
-                    `
+            
+                        <div class="modal-body">
+                            <p class="text-dark">¿Estás seguro de que deseas eliminar el hechizo ${hec.nombre}?</p>
+                        </div>
+            
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmarEliminacion${hec.id}">Confirmar Eliminación</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
                 document.body.insertAdjacentHTML('beforeend', editarHechizo)
                 editarHechizoUI(hec.id)
     
