@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 //Jaime Ortega
 
+
+
+
 // AQUI EMPIEZAN LAS RUTAS AGRUPADAS POR REL AUTH SANCTUM
 //Route::middleware(['auth:sanctum'])->group(function () {
 Route::prefix('rol')->group(function () {

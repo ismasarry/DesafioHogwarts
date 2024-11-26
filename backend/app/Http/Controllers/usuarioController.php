@@ -32,38 +32,62 @@ class UsuarioController extends Controller
     }*/
 
     public function postUsuario(Request $request){
-        /*$validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:255',
-            'gmail' => 'required|string|email|max:255|unique:users',
-            'contrasena' => 'required|string|min:5',
-            'idCasa' => 'required|integer',
-            'nivel' => 'required|integer',
-            'exp' => 'required|integer',
-            'foto' => 'required|image|mimes:jpg,jpeg,png',
-            'activo' => 'required|boolean'
+        // $validator = Validator::make($request->all(), [
+        //     'nombre' => 'required|string|max:255',
+        //     'gmail' => 'required|string|email|max:255|unique:users',
+        //     'contrasena' => 'required|string|min:5',
+        //     'idCasa' => 'required|integer',
+        //     'nivel' => 'required|integer',
+        //     'exp' => 'required|integer',
+        //     'foto' => 'required|image|mimes:jpg,jpeg,png',
+        //     'activo' => 'required|boolean'
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return response(['errors' => $validator->errors()->all()], Response::HTTP_UNPROCESSABLE_ENTITY);
+        // } else {
+
+
+        // $file = $request->file('foto');
+        // return response()->json(['foto' => $file]);
+
+        if (!$request->hasFile('foto')) {
+            return response()->json(['error' => 'No se recibió ningún archivo'], 400);
+        }
+        
+        $file = $request->file('foto');
+        
+        $uploadedFile = Cloudinary::upload($file->getRealPath(), [
+            'folder' => 'hogwarts/cloudinary',
         ]);
+    
+        $secureUrl = $uploadedFile->getSecurePath();
+    
+        return response()->json([
+            'message' => 'Imagen subida exitosamente',
+            'url' => $secureUrl,
+        ]);
+        // $uploadedFileUrl = Cloudinary::upload($request->file('foto')->getRealPath())->getSecurePath();
+        // echo ($uploadedFileUrl);
 
-        if ($validator->fails()) {
-            return response(['errors' => $validator->errors()->all()], Response::HTTP_UNPROCESSABLE_ENTITY);
-        } else {*/
-        $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
-
-            $usuario = Usuario::create([
-                'nombre' => $request['nombre'],
-                'gmail' => $request['gmail'],
-                'contrasena' => bcrypt($request['contrasena']),
-                'idCasa' => $request['idCasa'],
-                'nivel' => $request['nivel'],
-                'exp' => $request['exp'],
-                'foto' => $uploadedFileUrl,
-                'activo' => $request['activo'],
-            ]);
+        //     $usuario = Usuario::create([
+        //         'nombre' => $request['nombre'],
+        //         'gmail' => $request['gmail'],
+        //         'contrasena' => bcrypt($request['contrasena']),
+        //         'idCasa' => $request['idCasa'],
+        //         'nivel' => $request['nivel'],
+        //         'exp' => $request['exp'],
+        //         'foto' => $request->file['foto'],
+        //         'activo' => $request['activo'],
+        //     ]);
 
 
-            return response()->json(['Usuario' => $usuario], Response::HTTP_CREATED);
-        //}
-    }
+        //     return response()->json(['Usuario' => $usuario], Response::HTTP_CREATED);
+        }
+    // }
 
+
+    
     public function putUsuario(Request $request, $id){
         $usuario = Usuario::find($id);
 
