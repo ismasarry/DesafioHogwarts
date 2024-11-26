@@ -79,6 +79,9 @@ Route::get('asignaturaProfesor/profesor/{id}', [asignaturaProfesorController::cl
 Route::post('asignaturaProfesor', [asignaturaProfesorController::class, 'postAsignaturaProfesor']);
 Route::put('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'putAsignaturaProfesor']);
 Route::delete('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesor']);
+//Jaime Ortega
+Route::delete('asignaturaProfesor/{idAsignatura}/{idProfesor}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesorEspecifico']);
+
 
 
 //Raul Gutierrez
@@ -98,9 +101,9 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::get('/nologin', function () {
     return response()->json("No autorizado", 203);
-}); 
+});
 
-//ismael sarrion 
+//ismael sarrion
 
 //Route::middleware('guest')->group(function () {
 Route::get('formulario', function () {
