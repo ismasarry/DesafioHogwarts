@@ -166,3 +166,26 @@ export const deleteAsignaturaAlumno = async (id_asignaturaAlumno) => {
         throw error
     }
 }
+
+export const deleteAsignaturaAlumnoEspecifico = async (id_asignatura, id_alumno) => {
+    const rutaAsignaturaAlumno = constantes.urlApi + constantes.asignaturaAlumno
+
+    try {
+        const respuesta = await fetch(rutaAsignaturaAlumno + id_asignatura + '/' + id_alumno, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok) {
+            throw new Error(`Error al eliminar la asignaturaAlumno. Código de estado: ${respuesta.status}`)
+        }
+
+        const resultado = await respuesta.json()
+        return resultado
+    } catch (error) {
+        console.error('Error en la función deleteAsignaturaAlumno:', error.message)
+        throw error
+    }
+}

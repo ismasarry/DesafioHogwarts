@@ -68,7 +68,8 @@ Route::get('asignaturaAlumno/alumno/{id}', [asignaturaAlumnoController::class, '
 Route::post('asignaturaAlumno', [asignaturaAlumnoController::class, 'postAsignaturaAlumno']);
 Route::put('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'putAsignaturaAlumno']);
 Route::delete('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumno']);
-
+//Jaime Ortega
+Route::delete('asignaturaAlumno/{idAsignatura}/{idAlumno}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumnoEspecifico']);
 //ismael sarrion
 Route::get('/asignaturaAlumno/alumnoPorId/{id}',[asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorIdAlumno']);
 
