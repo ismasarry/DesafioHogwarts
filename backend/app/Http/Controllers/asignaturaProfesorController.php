@@ -83,4 +83,16 @@ class asignaturaProfesorController extends Controller
         $asignatura->delete();
         return response()->json(['message' => 'Registro de asignatura eliminado exitosamente']);
     }
+
+    //Jaime Ortega
+    public function deleteAsignaturaProfesorEspecifico($idAsignatura, $idProfesor)
+    {
+        $asignaturaProfesor = asignaturaProfesor::where('idAsignatura', $idAsignatura)->where('idProfesor', $idProfesor);
+        if ($asignaturaProfesor->count() === 0) {
+            return response()->json(['message' => 'Registro de asignatura-profesor no encontrado'], 404);
+        }
+
+        $asignaturaProfesor->delete();
+        return response()->json(['message' => 'Registro de asignatura eliminado exitosamente']);
+    }
 }

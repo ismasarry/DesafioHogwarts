@@ -68,7 +68,8 @@ Route::get('asignaturaAlumno/alumno/{id}', [asignaturaAlumnoController::class, '
 Route::post('asignaturaAlumno', [asignaturaAlumnoController::class, 'postAsignaturaAlumno']);
 Route::put('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'putAsignaturaAlumno']);
 Route::delete('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumno']);
-
+//Jaime Ortega
+Route::delete('asignaturaAlumno/{idAsignatura}/{idAlumno}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumnoEspecifico']);
 //ismael sarrion
 Route::get('/asignaturaAlumno/alumnoPorId/{id}',[asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorIdAlumno']);
 
@@ -79,6 +80,9 @@ Route::get('asignaturaProfesor/profesor/{id}', [asignaturaProfesorController::cl
 Route::post('asignaturaProfesor', [asignaturaProfesorController::class, 'postAsignaturaProfesor']);
 Route::put('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'putAsignaturaProfesor']);
 Route::delete('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesor']);
+//Jaime Ortega
+Route::delete('asignaturaProfesor/{idAsignatura}/{idProfesor}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesorEspecifico']);
+
 
 
 //Raul Gutierrez
@@ -98,9 +102,9 @@ Route::post('register', [AuthController::class, 'register']);
 
 Route::get('/nologin', function () {
     return response()->json("No autorizado", 203);
-}); 
+});
 
-//ismael sarrion 
+//ismael sarrion
 
 //Route::middleware('guest')->group(function () {
 Route::get('formulario', function () {

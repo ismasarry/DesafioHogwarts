@@ -17,3 +17,7 @@ i, li a, h4, .modal-body label, input[type="text"], h5, ul li {
         padding: 0; 
         margin: 0;
 }
+
+li {
+    cursor: pointer;
+}
