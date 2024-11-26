@@ -33,10 +33,6 @@ class usuarioRolSeeder extends Seeder
             [
                 'idRol' => 4,
                 'idUsuario' => 4
-            ],
-            [
-                'idRol' => 5,
-                'idUsuario' => 5
             ]
         ];
 
