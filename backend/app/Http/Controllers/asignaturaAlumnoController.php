@@ -53,15 +53,18 @@ class asignaturaAlumnoController extends Controller
     //Jaime Ortega (modifica)
     public function postAsignaturaAlumno(Request $request)
     {
+        $asignaturaAlumnos = [];
         foreach ($request['idAlumno'] as $idAlumno) {
             $asignaturaAlumno = asignaturaAlumno::create([
                 'idAsignatura' => $request['idAsignatura'],
                 'idAlumno' => $idAlumno
             ]);
+            $asignaturaAlumnos[] = $asignaturaAlumno;
         }
 
-        return response()->json(['asignaturaAlumno' => $asignaturaAlumno], Response::HTTP_CREATED);
+        return response()->json(['asignaturaAlumno' => $asignaturaAlumnos], Response::HTTP_CREATED);
     }
+
 
     public function putAsignaturaAlumno(Request $request, $id)
     {
@@ -92,8 +95,8 @@ class asignaturaAlumnoController extends Controller
     //Jaime Ortega
     public function deleteAsignaturaAlumnoEspecifico($idAsignatura, $idAlumno)
     {
-        $asignaturaAlumno = asignaturaAlumno::where('idAsignatura', $idAsignatura)->where('idProfesor', $idAlumno)->delete();
-        if ($asignaturaAlumno === 0) {
+        $asignaturaAlumno = asignaturaAlumno::where('idAsignatura', $idAsignatura)->where('idAlumno', $idAlumno);
+        if ($asignaturaAlumno->count() === 0) {
             return response()->json(['message' => 'Registro de asignatura-alumno no encontrado'], 404);
         }
 

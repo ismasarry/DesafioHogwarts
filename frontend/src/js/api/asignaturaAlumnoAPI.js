@@ -95,8 +95,13 @@ export const getBuscarAsignaturaAlumnoPorAlumno = async (id_alumno) => {
     }
 }
 
-export const postAsignaturaAlumno = async (asignaturaAlumnoCreada) => {
+//Jaime Ortega (modifica)
+export const postAsignaturaAlumno = async (idAsignatura, idAlumno) => {
     const rutaAsignaturaAlumno = constantes.urlApi + constantes.asignaturaAlumno
+    const data = {
+        idAsignatura: idAsignatura,
+        idAlumno: [idAlumno],
+    }
     
     try {
         const respuesta = await fetch(rutaAsignaturaAlumno, {
@@ -105,7 +110,7 @@ export const postAsignaturaAlumno = async (asignaturaAlumnoCreada) => {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(asignaturaAlumnoCreada),
+            body: JSON.stringify(data),
         })
         if (!respuesta.ok) {
             throw new Error(`Error al añadir la asignaturaAlumno. Código de estado: ${respuesta.status}`)
@@ -167,6 +172,7 @@ export const deleteAsignaturaAlumno = async (id_asignaturaAlumno) => {
     }
 }
 
+//Jaime Ortega
 export const deleteAsignaturaAlumnoEspecifico = async (id_asignatura, id_alumno) => {
     const rutaAsignaturaAlumno = constantes.urlApi + constantes.asignaturaAlumno
 
