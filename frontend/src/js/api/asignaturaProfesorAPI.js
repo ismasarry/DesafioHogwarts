@@ -95,8 +95,13 @@ export const getBuscarAsignaturaProfesorPorProfesor = async (id_profesor) => {
     }
 }
 
-export const postAsignaturaProfesor = async (asignaturaProfesorCreada) => {
+//Jaime Ortega (modifica)
+export const postAsignaturaProfesor = async (idAsignatura, idProfesor) => {
     const rutaAsignaturaProfesor = constantes.urlApi + constantes.asignaturaProfesor
+    const data = {
+        idAsignatura: idAsignatura,
+        idProfesor: [idProfesor],
+    }
     
     try {
         const respuesta = await fetch(rutaAsignaturaProfesor, {
@@ -105,7 +110,7 @@ export const postAsignaturaProfesor = async (asignaturaProfesorCreada) => {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             },
-            body: JSON.stringify(asignaturaProfesorCreada),
+            body: JSON.stringify(data),
         })
         if (!respuesta.ok) {
             throw new Error(`Error al añadir la asignaturaProfesor. Código de estado: ${respuesta.status}`)
@@ -163,6 +168,30 @@ export const deleteAsignaturaProfesor = async (id_asignaturaProfesor) => {
         return resultado
     } catch (error) {
         console.error('Error en la función deleteAsignaturaProfesor:', error.message)
+        throw error
+    }
+}
+
+//Jaime Ortega
+export const deleteAsignaturaProfesorEspecifico = async (id_asignatura, id_profesor) => {
+    const rutaAsignaturaProfesor = constantes.urlApi + constantes.asignaturaProfesor
+
+    try {
+        const respuesta = await fetch(rutaAsignaturaProfesor + id_asignatura + '/' + id_profesor, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok) {
+            throw new Error(`Error al eliminar la asignaturaProfesor. Código de estado: ${respuesta.status}`)
+        }
+
+        const resultado = await respuesta.json()
+        return resultado
+    } catch (error) {
+        console.error('Error en la función deleteAsignaturaProfesorEspecifico:', error.message)
         throw error
     }
 }
