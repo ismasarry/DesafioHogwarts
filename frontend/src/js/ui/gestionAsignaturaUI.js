@@ -222,23 +222,23 @@ const init = async () => {
             addClickEventToAlumnos(listaNoAsisten, listaAsisten, asig.id)
         }
 
-        crearModal.addEventListener('click', async () => {
-            const nombreAsignatura = document.getElementById('nombreAsignatura').value.trim()
+        // crearModal.addEventListener('click', async () => {
+        //     const nombreAsignatura = document.getElementById('nombreAsignatura').value.trim()
         
-            if (nombreAsignatura) {
-                try {
-                    await postAsignatura(nombreAsignatura) 
-                    console.log("Asignatura creada con éxito")
+        //     if (nombreAsignatura) {
+        //         try {
+        //             await postAsignatura(nombreAsignatura) 
+        //             console.log("Asignatura creada con éxito")
         
-                    location.reload()
-                } catch (error) {
-                    console.error("Error al crear la asignatura:", error)
-                    alert("Hubo un error al crear la asignatura. Inténtalo nuevamente.")
-                }
-            } else {
-                alert("El nombre de la asignatura no puede estar vacío.")
-            }
-        })
+        //             location.reload()
+        //         } catch (error) {
+        //             console.error("Error al crear la asignatura:", error)
+        //             alert("Hubo un error al crear la asignatura. Inténtalo nuevamente.")
+        //         }
+        //     } else {
+        //         alert("El nombre de la asignatura no puede estar vacío.")
+        //     }
+        // })
 
         document.querySelector(`#guardarBtn${asig.id}`).addEventListener('click', async () => {
             const nombreInput = document.querySelector(`#nombre${asig.id}`)
