@@ -17,6 +17,7 @@ export const constantes ={
     registro: 'register',
     log:'login/',
     logout: 'logout/',
+    enviarGmail:'enviar/',
 
     nombreRegex: /^[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]{2,50}$/,
     gmailRegex: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,

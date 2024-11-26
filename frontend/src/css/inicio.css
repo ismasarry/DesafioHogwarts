@@ -8,7 +8,26 @@ body {
     padding: 0;
   }
   
-  
+
+  /*NO TOCAR*/
+  header.header {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    z-index: 1000; 
+    margin-left: 0; 
+}
+
+.main-content {
+    margin-top: 100px; 
+}
+
+.user-container {
+  margin-top: 20px; 
+}
+  /*ya puedes tocar*/
+
   .header {
     background-color: #007bff; 
     color: white;

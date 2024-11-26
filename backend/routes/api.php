@@ -111,6 +111,6 @@ Route::get('formulario', function () {
     return view('formularioRecuperacion');
 });
 
-Route::post('envia', [gmailController::class, 'enviar']);
+Route::post('enviar', [gmailController::class, 'enviar']);
 //});
 
