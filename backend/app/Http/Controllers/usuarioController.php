@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Usuario;
+use Exception;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class UsuarioController extends Controller
 {
@@ -79,6 +81,39 @@ class UsuarioController extends Controller
             'foto' => $request['foto'],
             'activo' => $request['activo'],
         ]);
+
+        //correo modificación de contraseña
+
+        try {
+            if (!$usuario) {
+                return response()->json([
+                    'enviado' => false,
+                    'mensaje' => 'No se encontró un usuario con ese correo.',
+                ], 404);
+            } 
+
+            $datos = [
+                'nombreUsuario' => $usuario->nombre, 
+                'gmail' => $request->gmail
+            ];
+
+            Mail::send('notificacionCambioContrasena', $datos, function($message) use ($request) {
+                $message->to($request->gmail)
+                        ->subject('Cambio de contraseña');
+                $message->from('welcometohogwartslittlemuggle@gmail.com', '¿Has realizado un cambio de contraseña?');
+            });
+
+            return response()->json([
+                'enviado' => true,
+                'mensaje' => 'Correo de contraseña enviado con éxito.',
+            ], 200);
+        } catch (Exception $e) {
+            
+            return response()->json([
+                'enviado' => false,
+                'mensaje' => 'Error en el servidor: ' . $e->getMessage(),
+            ], 500);
+        }
 
         return response()->json(['Usuario' => $usuario], Response::HTTP_CREATED);
     }
