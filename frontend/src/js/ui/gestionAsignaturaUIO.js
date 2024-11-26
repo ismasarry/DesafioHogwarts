@@ -1,69 +1,79 @@
 //Jaime Ortega
-import { mostrarUsuariosRolPorIdRol } from "../api/usuarioRolAPI.js"
+import { getTodosUsuarios } from "../api/usuarioAPI.js"
+import { mostrarRolesUsuario } from "../api/usuarioRolAPI.js"
 import { constantes } from "../classes/constantes.js"
 import { getTodosAsignaturas, getBuscarAsignatura, postAsignatura, putAsignatura, deleteAsignatura } from "../api/asignaturaAPI.js"
-import { getTodosAsignaturaProfesores, postAsignaturaProfesor, deleteAsignaturaProfesorEspecifico } from "../api/asignaturaProfesorAPI.js"
-import { getTodosAsignaturaAlumnos, postAsignaturaAlumno, deleteAsignaturaAlumno } from "../api/asignaturaAlumnoAPI.js"
+import { getTodosAsignaturaAlumnos, getBuscarAsignaturaAlumno, getBuscarAsignaturaAlumnoPorAlumno, postAsignaturaAlumno, putAsignaturaAlumno, deleteAsignaturaAlumno, getBuscarAsignaturaAlumnoPorId } from "../api/asignaturaAlumnoAPI.js"
+import { getTodosAsignaturaProfesores, getBuscarAsignaturaProfesor, getBuscarAsignaturaProfesorPorProfesor, postAsignaturaProfesor, putAsignaturaProfesor, deleteAsignaturaProfesor, getBuscarAsignaturaProfesorPorId } from "../api/asignaturaProfesorAPI.js"
 import { cargarSideBar } from "../components/cargarSideBar.js"
 
 await cargarSideBar()
 
+const verificarRol = async (idUsuario, nomRol) => {
+    try {
+        const rolesUsuario = await mostrarRolesUsuario(idUsuario)
+        return rolesUsuario.roles.some(rol => rol.nombre === nomRol)
+    } catch (e) {
+        console.error(`Error al verificar el rol ${nomRol} del usuario ${idUsuario}`, e)
+        return
+    }
+}
+
 const init = async () => {
     const tabla = $('#asignaturas').DataTable()
-
     const asignaturas = await getTodosAsignaturas() || []
+    const todosProfesores = await getTodosUsuarios() || []
+    console.log('todos profes:', todosProfesores)
+    const todosAlumnos = await getTodosUsuarios() || []
+    console.log('todos alumnos:', todosAlumnos)
 
-    const profesoresData = await mostrarUsuariosRolPorIdRol(3) || {}
-    const profesores = profesoresData.usuarios || []
-    const profesorAsignatura = await getTodosAsignaturaProfesores() || []
-
-    const alumnosData = await mostrarUsuariosRolPorIdRol(4) || {}
-    const alumnos = alumnosData.usuarios || []
-    const alumnosAsignatura = await getTodosAsignaturaAlumnos() || []
+    const profesoresRol = Array.isArray(todosProfesores) ? await Promise.all(
+        todosProfesores.filter(async user => await verificarRol(user.id, 'profesor'))
+    ) : []
+    
+    const alumnosRol = Array.isArray(todosAlumnos) ? await Promise.all(
+        todosAlumnos.filter(async user => await verificarRol(user.id, 'alumno'))
+    ) : []
 
     for (const asig of asignaturas) {
-        const profesoresImparten = []
-        const profesoresNoImparten = []
+        const profesorData = await getBuscarAsignaturaProfesorPorId(asig.id) || []
+        const alumnoData = await getBuscarAsignaturaAlumnoPorId(asig.id) || []
 
-        const alumnosAsisten = []
-        const alumnosNoAsisten = []
-
-        let conteoProfesores = 0
-        let conteoAlumnos = 0
-
-        for (const profe of profesores) {
-            let imparteAsignatura = false
-            for (const profeAsig of profesorAsignatura) {
-                if (profe.id === profeAsig.idProfesor && profeAsig.idAsignatura === asig.id) {
-                    profesoresImparten.push(profe)
-                    imparteAsignatura = true
-                    conteoProfesores++
-                }
-            }
-            if (!imparteAsignatura) {
-                profesoresNoImparten.push(profe)
+        const profesoresValidos = []
+        for (const profesor of profesorData.profesores || []) {
+            const esProfesor = profesor && profesor.id ? await verificarRol(profesor.id, 'profesor') : false
+            if (esProfesor) {
+                profesoresValidos.push(profesor)
             }
         }
 
-        for (const alumn of alumnos) {
-            let asisteAsignatura = false
-            for (const alumnAsig of alumnosAsignatura) {
-                if (alumn.id === alumnAsig.idAlumno && alumnAsig.idAsignatura === asig.id) {
-                    alumnosAsisten.push(alumn)
-                    asisteAsignatura = true
-                    conteoAlumnos++
-                }
-            }
-            if (!asisteAsignatura) {
-                alumnosNoAsisten.push(alumn)
+        const profesoresNoImparten = profesoresRol.filter(prof =>
+            !profesoresValidos.some(valido => valido.id === prof.id)
+        )
+
+        const alumnosValidos = []
+        for (const alumno of alumnoData.alumnos || []) {
+            const esAlumno = alumno && alumno.id ? await verificarRol(alumno.id, 'alumno') : false
+            if (esAlumno) {
+                alumnosValidos.push(alumno)
             }
         }
+
+        const alumnosNoAsisten = alumnosRol.filter(al =>
+            !alumnosValidos.some(valido => valido.id === al.id)
+        )
+
+        // const conteoProfesores = profesorData.conteoProfesores || 0
+        const conteoAlumnos = alumnoData.conteoAlumnos || 0
+
+        const profesoresImpartenDisplay = profesoresValidos.length > 0 ? profesoresValidos.map(prof => prof.nombre).join(', ') : 'Libre'
+        const alumnosAsistenDisplay = alumnosValidos.length > 0 ? alumnosValidos.map(al => al.nombre).join(', ') : 'Libre'
 
         const row = tabla.row.add([
             asig.nombre,
-            profesoresImparten.map(profe => profe.nombre).join(','),
+            profesoresImpartenDisplay,
             // conteoProfesores,
-            // alumnosAsisten.map(alumn => alumn.nombre).join(','),
+            // alumnosAsistenDisplay,
             conteoAlumnos,
             `<button class='btn-editar btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal${asig.id}'><i class='fas fa-edit'></i>Editar</button>` +
             `<button class='btn-eliminar btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal${asig.id}'><i class='fas fa-trash-alt'></i>Eliminar</button>`
@@ -92,8 +102,7 @@ const init = async () => {
                             <div class="tab-content">
                                 <div id="asignatura${asig.id}" class="tab-pane fade show active">
                                     <label for="nombre${asig.id}" class="form-label">Nombre de la Asignatura</label>
-                                    <input type="text" id="nombre${asig.id}" class="form-control" value="${asig.nombre}"
-                                    data-original='${asig.nombre}'>
+                                    <input type="text" id="nombre${asig.id}" class="form-control" value="${asig.nombre}">
                                 </div>
                                 <div id="profesores${asig.id}" class="tab-pane fade">
                                     <label class="form-label">Profesores</label>
@@ -101,7 +110,7 @@ const init = async () => {
                                         <div class='col'>
                                             <h5>Imparten</h5>
                                             <ul class='no-puntos' id="imparten${asig.id}">
-                                            ${profesoresImparten.length > 0 ? profesoresImparten.map(prof => `
+                                            ${profesoresValidos.length > 0 ? profesoresValidos.map(prof => `
                                                 <li class='profesor' data-id='${prof.id}'>
                                                     ${prof.nombre ? prof.nombre : 'Nombre no disponible'}
                                                 </li>`).join('') : '<li>Libre</li>'}
@@ -111,8 +120,8 @@ const init = async () => {
                                             <h5>No imparten</h5>
                                             <ul class="no-puntos" id="noImparten${asig.id}">
                                             ${profesoresNoImparten.length > 0 ? profesoresNoImparten.map(prof => `
-                                                <li class="profesor" data-id="${prof.id}">
-                                                    ${prof.nombre ? prof.nombre : 'Nombre no disponible'}
+                                                <li class="profesor" data-id="${prof.idProfesor}"> 
+                                                    ${prof.usuario ? prof.usuario.nombre : 'Nombre no disponible'}
                                                 </li>`).join('') : '<li>Libre</li>'}
                                             </ul>
                                         </div>
@@ -124,7 +133,7 @@ const init = async () => {
                                         <div class='col'>
                                             <h5>Asisten</h5>
                                             <ul class='no-puntos' id="asisten${asig.id}">
-                                            ${alumnosAsisten.length > 0 ? alumnosAsisten.map(al => `
+                                            ${alumnosValidos.length > 0 ? alumnosValidos.map(al => `
                                                 <li class='alumno' data-id='${al.id}'>
                                                     ${al.nombre ? al.nombre : 'Nombre no disponible'}
                                                 </li>`).join('') : '<li>Libre</li>'}
@@ -134,8 +143,8 @@ const init = async () => {
                                             <h5>No asisten</h5>
                                             <ul class="no-puntos" id="noAsisten${asig.id}">
                                             ${alumnosNoAsisten.length > 0 ? alumnosNoAsisten.map(al => `
-                                                <li class="profesor" data-id="${al.id}">
-                                                    ${al.nombre ? al.nombre : 'Nombre no disponible'}
+                                                <li class="alumno" data-id="${al.idAlumno}">
+                                                    ${al.usuario ? al.usuario.nombre : 'Nombre no disponible'}
                                                 </li>`).join('') : '<li>Libre</li>'}
                                             </ul>
                                         </div>
@@ -163,33 +172,55 @@ const init = async () => {
             addClickEventToProfesores(listaNoImparten, listaImparten, asig.id)
         }
 
-        // if (listaAsisten && listaNoAsisten) {
-        //     addClickEventToAlumnos(listaAsisten, listaNoAsisten, asig.id)
-        //     addClickEventToAlumnos(listaNoAsisten, listaAsisten, asig.id)
-        // }
+        if (listaAsisten && listaNoAsisten) {
+            addClickEventToAlumnos(listaAsisten, listaNoAsisten, asig.id)
+            addClickEventToAlumnos(listaNoAsisten, listaAsisten, asig.id)
+        }
 
-        document.querySelector(`#guardarBtn${asig.id}`).addEventListener('click', async () => {
-            const nombreInput = document.querySelector(`#nombre${asig.id}`)
-            const nombreActual = nombreInput.value.trim()
-            const nombreOriginal = nombreInput.dataset.original
+        editarAsignaturaUI(asig.id)
+    }
+}
 
-            if (nombreActual !== nombreOriginal) {
-                try {
-                    const respuesta = await putAsignatura(asig.id, { nombre: nombreActual })
-                    if (respuesta.ok) {
-                        console.log("Nombre de la asignatura actualizado correctamente")
-                        nombreInput.dataset.original = nombreActual
-                        const rowIndex = tabla.row(`#editModal${asig.id}`).index()
-                        tabla.cell(rowIndex, 0).data(nombreActual).draw()
-                    } else {
-                        console.error("Error al actualizar el nombre de la asignatura")
-                        alert("No se pudo actualizar el nombre. Intenta nuevamente.")
-                    }
-                } catch (error) {
-                    console.error("Error en la solicitud PUT", error)
-                }
+const editarAsignaturaUI = async (id) => {
+    const btnGuardar = document.getElementById(`guardarBtn${id}`)
+    if (btnGuardar) {
+        btnGuardar.addEventListener('click', async () => {
+            const asignaturasInput = document.getElementById(`nombre${id}`).value
+            const profesoresInput = Array.from(document.querySelectorAll(`#imparten${id} .profesor`))
+                .map(prof => prof.getAttribute('data-id'))
+            const alumnosInput = Array.from(document.querySelectorAll(`#asisten${id} .alumno`))
+                .map(al => al.getAttribute('data-id'))
+
+            const asignaturaData = {
+                nombre: asignaturasInput,
+                profesores: profesoresInput,
+                alumnos: alumnosInput,
+            }
+
+            // Actualizar la asignatura existente (PUT)
+            await putAsignatura(id, asignaturaData)
+
+            const modalElement = document.getElementById(`editModal${id}`)
+            const modal = new bootstrap.Modal(modalElement)
+            modal.hide()
+            location.reload() // Recargar la página para reflejar los cambios
+        })
+    }
+}
+
+
+const verificarAsignatura = async (id) => {
+    try {
+        const respuesta = await fetch(`${constantes.urlApi}${constantes.asignaturaProfesor}${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
             }
         })
+        return respuesta.ok // Devuelve true si la asignatura existe
+    } catch (error) {
+        console.error('Error al verificar la asignatura:', error.message)
+        return false // Devuelve false en caso de error
     }
 }
 
@@ -236,39 +267,61 @@ const addProfesores = async (idAsignatura, idProfesor) => {
 
 const removeProfesores = async (idAsignatura, idProfesor) => {
     try {
-        await deleteAsignaturaProfesorEspecifico(idAsignatura,idProfesor) // Realiza el DELETE para eliminar al profesor de la asignatura
+        await deleteAsignaturaProfesor(idProfesor) // Realiza el DELETE para eliminar al profesor de la asignatura
         console.log(`Profesor con ID ${idProfesor} eliminado de la asignatura ${idAsignatura}`)
     } catch (error) {
         console.error('Error al eliminar el profesor:', error)
     }
 }
 
-// const addClickEventToAlumnos = (lista, listaContraria, idAsignatura) => {
-//     lista.querySelectorAll('.alumno').forEach(i => {
-//         const manejarClick = () => {
-//             const alumnoId = i.getAttribute('data-id')
-//             const alumnoNombre = i.textContent
+const addClickEventToAlumnos = (lista, listaContraria, idAsignatura) => {
+    lista.querySelectorAll('.alumno').forEach(i => {
+        const manejarClick = () => {
+            const alumnoId = i.getAttribute('data-id')
+            const alumnoNombre = i.textContent
 
-//             if (!listaContraria.querySelector(`.alumno[data-id='${alumnoId}']`)) {
-//                 removeAlumnos(idAsignatura, alumnoId)
-//                 const iNew = document.createElement('li')
-//                 iNew.className = 'alumno'
-//                 iNew.setAttribute('data-id', alumnoId)
-//                 iNew.textContent = alumnoNombre
+            if (!listaContraria.querySelector(`.alumno[data-id='${alumnoId}']`)) {
+                removeAlumnos(idAsignatura, alumnoId)
+                const iNew = document.createElement('li')
+                iNew.className = 'alumno'
+                iNew.setAttribute('data-id', alumnoId)
+                iNew.textContent = alumnoNombre
 
-//                 listaContraria.appendChild(iNew)
-//             } else {
-//                 addAlumnos(idAsignatura, alumnoId)
+                listaContraria.appendChild(iNew)
+            } else {
+                addAlumnos(idAsignatura, alumnoId)
 
-//                 i.remove()
-//             }
+                i.remove()
+            }
 
-//             addClickEventToAlumnos(listaContraria, lista, idAsignatura)
-//         }
+            addClickEventToAlumnos(listaContraria, lista, idAsignatura)
+        }
 
-//         i.removeEventListener('click', manejarClick)
-//         i.addEventListener('click', manejarClick)
-//     })
-// }
+        i.removeEventListener('click', manejarClick)
+        i.addEventListener('click', manejarClick)
+    })
+}
+
+const addAlumnos = async (idAsignatura, idAlumno) => {
+    try {
+        const asignaturaData = {
+            idAsignatura: idAsignatura,
+            idAlumno: [idAlumno] // Solo un ID de alumno
+        }
+        await postAsignaturaAlumno(asignaturaData) // Asegúrate de que esta función esté definida
+        console.log(`Alumno con ID ${idAlumno} agregado a la asignatura ${idAsignatura}`)
+    } catch (error) {
+        console.error('Error al agregar el alumno:', error)
+    }
+}
+
+const removeAlumnos = async (idAsignatura, idAlumno) => {
+    try {
+        await deleteAsignaturaAlumno(idAlumno) // Asegúrate de que esta función esté definida para eliminar el alumno
+        console.log(`Alumno con ID ${idAlumno} eliminado de la asignatura ${idAsignatura}`)
+    } catch (error) {
+        console.error('Error al eliminar el alumno:', error)
+    }
+}
 
 init()
