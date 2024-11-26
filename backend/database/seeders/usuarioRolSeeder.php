@@ -37,7 +37,11 @@ class usuarioRolSeeder extends Seeder
             [
                 'idRol' => 4,
                 'idUsuario' => 5
-            ]
+            ],
+            [
+                'idRol' => 2,
+                'idUsuario' => 3
+            ],
         ];
 
         DB::table('usuario_rol')->insert($datos);
