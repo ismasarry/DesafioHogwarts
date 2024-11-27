@@ -1,0 +1,7 @@
+* {
+    color: white !important;
+}
+
+i, li a, h4, .modal-body label {
+    color: black !important;
+}
