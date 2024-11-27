@@ -6,6 +6,7 @@ use App\Http\Controllers\asignaturaProfesorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\rolController;
 use App\Http\Controllers\casaController;
+use App\Http\Controllers\dueloController;
 use App\Http\Controllers\hechizosController;
 use App\Http\Controllers\gmailController;
 use App\Http\Controllers\usuarioRolController;
@@ -103,6 +104,15 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('/nologin', function () {
     return response()->json("No autorizado", 203);
 });
+
+//Raul Gutierrez
+Route::get('duelo', [dueloController::class, 'getTodosDuelos']);
+Route::get('duelo/{id}', [dueloController::class, 'getDueloPorId']);
+Route::get('duelo/usuario/{id}', [dueloController::class, 'getDueloPorIdUsuario']);
+Route::get('duelo/winRate/{id}', [dueloController::class, 'getWinRatePorIdUsuario']);
+Route::post('duelo', [dueloController::class, 'postDuelo']);
+Route::put('duelo/{id}', [dueloController::class, 'putDuelo']);
+Route::delete('duelo/{id}', [dueloController::class, 'deleteDuelo']);
 
 //ismael sarrion
 
