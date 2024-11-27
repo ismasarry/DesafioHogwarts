@@ -21,7 +21,11 @@ class hechizos extends Model
         'veriD'
     ];
 
-    // public function usuario(){
-    //     return $this->belongsTo(usuario::class, 'idUsuario');
-    // }
+    public function turnoUsuario(){
+        return $this->hasMany(turnoDuelo::class, 'idHechizoUsadoUsuario' ,'id');
+    }
+
+    public function turnoBot(){
+        return $this->hasMany(turnoDuelo::class, 'idHechizoUsadoBot' ,'id');
+    }
 }

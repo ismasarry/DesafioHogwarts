@@ -10,7 +10,7 @@ class turnoDuelo extends Model
 {
     use HasFactory, Notifiable;
     
-    protected $table = 'turnoDuelo';
+    protected $table = 'turno_duelo';
 
     protected $fillable = [
         'idDuelo',
@@ -19,4 +19,19 @@ class turnoDuelo extends Model
         'idHechizoUsadoBot',
         'ganador'
     ];
+
+    public function duelo()
+    {
+        return $this->belongsTo(duelo::class, 'idDuelo', 'id');
+    }
+
+    public function hechizoUsuario()
+    {
+        return $this->belongsTo(hechizos::class, 'idHechizoUsadoUsuario', 'id');
+    }
+
+    public function hechizoBot()
+    {
+        return $this->belongsTo(hechizos::class, 'idHechizoUsadoBot', 'id');
+    }
 }

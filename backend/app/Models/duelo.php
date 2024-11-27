@@ -16,4 +16,9 @@ class duelo extends Model
         'idUsuario',
         'ganador'
     ];
+
+    public function turnos()
+    {
+        return $this->hasMany(turnoDuelo::class, 'idDuelo', 'id');
+    }
 }

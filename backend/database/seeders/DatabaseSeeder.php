@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             asignaturaProfesorSeeder::class,
             hechizosSeeder::class,
             dueloSeeder::class,
-            turnoDuelo::class
+            turnoDueloSeeder::class
         ]);
     }
 }

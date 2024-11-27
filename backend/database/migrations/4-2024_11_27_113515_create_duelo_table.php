@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('duelo', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('idUsuario');
-            $table->boolean('ganador');
+            $table->boolean('ganador')->nullable()->default(null);
             $table->foreign('idUsuario')->references('id')->on('usuario')->onDelete('cascade');
             $table->timestamps();
         });
