@@ -1,0 +1,122 @@
+<!--Ismael sarrion-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pociones</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="./../css/inicio.css"/>
+</head>
+<body>
+  <div class="d-flex" id="wrapper">
+    <div id="header-container"></div>
+        <main class="main-content">
+            <div class="row m-2">
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#anadirModal"><i class="fas fa-edit"></i>Añadir pocion</button>
+                <h3 class="fs-3 mb-3">Lista de pociones disponibles</h3>
+                <div class="col-table">
+                    <table id="pociones" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Sanacion</th>
+                                <th>Envenenamiento</th>
+                                <th>Analgesia</th>
+                                <th>Dolor</th>
+                                <th>Curativo</th>
+                                <th>Enfermante</th>
+                                <th>Inflamatorio</th>
+                                <th>Desinflamatorio</th>
+                                <th>Creador</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </main>
+  </div>
+
+  <div class="modal" id="anadirModal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Añadir pocion</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control">
+                    <div class="invalid-feedback" id="mensajeNombre"></div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label for="descripcion" class="form-label">Descripcion</label>
+                    <input type="text" id="descripcion" name="descripcion" class="form-control">
+                    <div class="invalid-feedback" id="mensajeDescripcion"></div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label for="sanacion" class="form-label">Sanacion</label>
+                    <input type="text" id="sanacion" name="sanacion" class="form-control">
+                    <div class="invalid-feedback" id="mensajeSanacion"></div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label for="envenenamiento" class="form-label">Envenenamiento</label>
+                    <input type="text" id="envenenamiento" name="envenenamiento" class="form-control">
+                    <div class="invalid-feedback" id="mensajeEnvenenamiento"></div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label for="analgesia" class="form-label">Analgesia</label>
+                    <input type="text" id="analgesia" name="analgesia" class="form-control">
+                    <div class="invalid-feedback" id="mensajeAnalgesia"></div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label for="dano" class="form-label">Daño</label>
+                    <input type="text" id="dano" name="dano" class="form-control">
+                    <div class="invalid-feedback" id="mensajeDano"></div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label for="dolor" class="form-label">Dolor</label>
+                    <input type="text" id="dolor" name="dolor" class="form-control">
+                    <div class="invalid-feedback" id="mensajeDolor"></div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label for="curativo" class="form-label">Curativo</label>
+                    <input type="text" id="curativo" name="curativo" class="form-control">
+                    <div class="invalid-feedback" id="mensajeCurativo"></div>
+                </div>
+
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <label for="creador" class="form-label">Creador</label>
+                    <input type="text" id="creador" name="creador" class="form-control">
+                    <div class="invalid-feedback" id="mensajeCreador"></div>
+                </div>
+               
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="anadirBtn">Añadir pocion</button>
+        </div>
+    </div>                
+</div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+  <script type="module" src="./../js/components/cabecera.js"></script>
+  <script type="module" src="./../js/ui/pocionesUI.js"></script>
+
+</body>
+</html>
