@@ -1,5 +1,5 @@
 <?php
-
+//Raul Gutierrez
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -29,9 +29,13 @@ class turnoDueloController extends Controller
         return response()->json(['turnoDuelo' => $turnoDuelo]);
     }
 
-    public function getTurnoDuelosPorDuelo($idDuelo) 
+    public function getTurnoDuelosPorDuelo($idUsuario) 
     {
-        $turnoDuelo = turnoDuelo::where('idDuelo', $idDuelo)->get();
+        $dueloEnCurso = duelo::where('idUsuario', $idUsuario)
+        ->whereNull('ganador')
+        ->first();
+
+        $turnoDuelo = turnoDuelo::where('idDuelo', $dueloEnCurso)->get();
         return response()->json($turnoDuelo);
     }
 

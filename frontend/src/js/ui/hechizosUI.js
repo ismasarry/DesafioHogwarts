@@ -3,6 +3,7 @@ import { getBuscarUsuario, getTodosUsuarios } from "../api/usuarioAPI.js"
 import { cargarSideBar } from "../components/cargarSideBar.js"
 import { getBuscarHechizo, getBuscarHechizoNivel, postHechizo, putHechizo, deleteHechizo } from "../api/hechizoAPI.js"
 import { mostrarRolesUsuario } from "../api/usuarioRolAPI.js"
+import { postDuelo } from "../api/duelosAPI.js"
 
 cargarSideBar
 document.addEventListener("DOMContentLoaded", function () {
@@ -15,6 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(roles)
         
         anadirHechizoUI()
+        duelo(usuario)
 
         const tabla = $('#hechizos').DataTable()
         tabla.clear().draw()
@@ -901,6 +903,33 @@ const eliminarHechizo = `
                     location.reload()
                 } catch (error) {
                     console.error('Error al confirmar la modificación:', error)
+                }
+            });
+        }
+    }
+
+    async function duelo(id) {
+        const dueloModal = document.getElementById(`dueloModal`)
+
+        if (dueloModal) {
+            dueloModal.addEventListener('click', async () => {
+                try {
+                    const modalElement = document.getElementById(`btnDuelo`)
+
+                    const duelo = {
+                        idUsuario : id,
+                        ganador : null
+                    }
+
+                    await postDuelo(duelo)
+
+                    const modal = new bootstrap.Modal(modalElement);
+                    modal.hide();
+                    window.location.href = './duelos.html'
+
+
+                } catch (error) {
+                    console.error('Error al confirmar la eliminación:', error);
                 }
             });
         }
