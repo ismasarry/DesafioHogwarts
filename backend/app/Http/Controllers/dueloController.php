@@ -32,6 +32,15 @@ class dueloController extends Controller
         return response()->json($duelo);
     }
 
+    public function getDueloEnCurso($idUsuario)
+    {
+        $dueloEnCurso = duelo::where('idUsuario', $idUsuario)
+        ->whereNull('ganador')
+        ->first();
+
+        return response()->json($dueloEnCurso);
+    }
+
     public function getWinRatePorIdUsuario($idUsuario)
     {
         $duelos = duelo::where('idUsuario', $idUsuario)->count();

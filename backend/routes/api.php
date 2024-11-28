@@ -110,6 +110,7 @@ Route::get('/nologin', function () {
 Route::get('duelo', [dueloController::class, 'getTodosDuelos']);
 Route::get('duelo/{id}', [dueloController::class, 'getDueloPorId']);
 Route::get('duelo/usuario/{id}', [dueloController::class, 'getDueloPorIdUsuario']);
+Route::get('duelo/curso/{id}', [dueloController::class, 'getDueloEnCurso']);
 Route::get('duelo/winRate/{id}', [dueloController::class, 'getWinRatePorIdUsuario']);
 Route::post('duelo', [dueloController::class, 'postDuelo']);
 Route::put('duelo/{id}', [dueloController::class, 'putDuelo']);

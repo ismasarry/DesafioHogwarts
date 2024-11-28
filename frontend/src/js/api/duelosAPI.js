@@ -99,3 +99,52 @@ export const postDuelo = async (dueloCreado) => {
         throw error;
     }
 }
+
+export const getDueloEnCurso = async (id_usuario) => {
+    const rutaDuelo = constantes.urlApi + constantes.duelo + 'curso/'
+
+    try {
+        const respuesta = await fetch(rutaDuelo + id_usuario, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok){
+            throw new Error(`Error al obtener la lista de Duelos en curso. Código de estado: ${respuesta.status}`);
+        }
+
+        const duelo = await respuesta.json()
+        console.log(duelo)
+        return duelo
+
+    } catch (error) {
+        console.error('Error en la función getDueloEnCurso:', error.message);
+        throw error;
+    }
+}
+
+export const postTurnoDuelo = async (turnoDueloCreado) => {
+    const rutaTurnoDuelo = constantes.urlApi + constantes.turnoDuelo
+    
+    try {
+        const respuesta = await fetch(rutaTurnoDuelo, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(turnoDueloCreado),
+        })
+        if (!respuesta.ok) {
+            throw new Error(`Error al añadir el Turno Duelo. Código de estado: ${respuesta.status}`);
+        }
+
+        const resultado = await respuesta.json();
+        return resultado;
+    } catch (error) {
+        console.error('Error en la función postTurnoDuelo:', error.message);
+        throw error;
+    }
+}

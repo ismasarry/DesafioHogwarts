@@ -921,7 +921,7 @@ const eliminarHechizo = `
                         ganador : null
                     }
 
-                    await postDuelo(duelo)
+                    //await postDuelo(duelo)
 
                     const modal = new bootstrap.Modal(modalElement);
                     modal.hide();
