@@ -35,7 +35,7 @@ class turnoDueloController extends Controller
         ->whereNull('ganador')
         ->first();
 
-        $turnoDuelo = turnoDuelo::where('idDuelo', $dueloEnCurso)->get();
+        $turnoDuelo = turnoDuelo::where('idDuelo', $dueloEnCurso->id)->get();
         return response()->json($turnoDuelo);
     }
 

@@ -1,6 +1,6 @@
 //Raul Gutierrez
 import { getBuscarUsuario, getTodosUsuarios } from "../api/usuarioAPI.js"
-import { getTurnoDuelos, getTurnoDuelosPorDuelo } from "../api/duelosAPI.js"
+import { getTurnoDuelos, getTurnoDuelosBot, getTurnoDuelosPorDuelo } from "../api/duelosAPI.js"
 import { mostrarRolesUsuario } from "../api/usuarioRolAPI.js"
 import { constantes } from "../classes/constantes.js"
 
@@ -64,7 +64,39 @@ document.addEventListener("DOMContentLoaded", function () {
                 try {
                     const modalElement = document.getElementById(`useModal${id}`);
                     const turnos = await getTurnoDuelosPorDuelo(idUsuario)
-                    console.log(turnos)
+                    const hechizosBot = await getTurnoDuelosBot(idUsuario)
+                    console.log(hechizosBot)
+                    const ale = Math.floor(Math.random() * 4)
+                    switch (turnos.length) {
+                        
+                        case 0:
+                            // El hechizo con mas ataque que tenga (75% de que sea un hechizo aleatorio)
+                            if (ale == 0) {
+                                //hechizo random
+                            }else{
+                                //hechizo con mas daño
+                            }
+                            break;
+                        case 1:
+                            // Escoge entre los 3 hechizo con mas ataque que tenga (25% de que sea un hechizo defensivo def>=atq)
+                            if (ale == 0) {
+                                //hechizo defensivo
+                            }else{
+                                //hechizo con mas daño
+                            }
+                            break;
+                        case 2:
+                            // Si ha ganado los 2 anteriores tirara el hechizo más fuerte que tenga y si no pues jugará con el hechizo que más defensa tenga
+                            break;
+                        case 3:
+                            // Si le queda 1 para ganar usará el ataque mas fuerte que tenga y si no usará el hechizo que más defensan tenga (50% de que sea un hechizo aleatorio) 
+                            break;
+                        case 4:
+                            // Lanzará el hechizo que más ataque tenga par desenpatar
+                            break;
+                        default:
+                            break;
+                    }
 
                     const modal = new bootstrap.Modal(modalElement);
                     modal.hide();
@@ -76,6 +108,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             });
         }
+    }
+
+    async function guardarTurno(idHechizoUsuario, idHechizoBot, idUsuario, turnos) {
+        
     }
 
     rellenarHechizos()

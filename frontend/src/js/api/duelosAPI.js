@@ -26,6 +26,31 @@ export const getTurnoDuelos = async (id_usuario) => {
     }
 }
 
+export const getTurnoDuelosBot = async (id_usuario) => {
+    const rutaHechizo = constantes.urlApi + constantes.turnoDuelo + 'hechizosUsablesBot/'
+
+    try {
+        const respuesta = await fetch(rutaHechizo + id_usuario, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok){
+            throw new Error(`Error al obtener la lista de Hechizos para duelos. Código de estado: ${respuesta.status}`);
+        }
+
+        const hechizos = await respuesta.json()
+        console.log(hechizos)
+        return hechizos
+
+    } catch (error) {
+        console.error('Error en la función getTurnoDuelos:', error.message);
+        throw error;
+    }
+}
+
 export const getTurnoDuelosPorDuelo = async (id_usuario) => {
     const rutaHechizo = constantes.urlApi + constantes.turnoDuelo + 'duelo/'
 
