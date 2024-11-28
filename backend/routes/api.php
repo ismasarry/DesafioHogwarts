@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\rolController;
 use App\Http\Controllers\casaController;
 use App\Http\Controllers\hechizosController;
+use App\Http\Controllers\gmailController;
 use App\Http\Controllers\usuarioRolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\IngredientesController;
@@ -16,6 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //Jaime Ortega
+
+// AQUI EMPIEZAN LAS RUTAS AGRUPADAS POR REL AUTH SANCTUM
 //Route::middleware(['auth:sanctum'])->group(function () {
 Route::prefix('rol')->group(function () {
     Route::get('/', [rolController::class, 'getAllRoles']);
@@ -38,6 +41,8 @@ Route::prefix('casa')->group(function () {
 //Ismael Sarrion
 Route::get('/usuarioRoles', [usuarioRolController::class, 'getTodosUsuarioRoles']);
 Route::get('/usuarioRoles/{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
+//Jaime Ortega
+Route::get('/usuarioRoles/integrantes/{id}', [usuarioRolController::class, 'getTodosUsuarioRolPorIdRol']);
 Route::post('/usuarioRoles', [usuarioRolController::class, 'postUsuarioRol']);
 Route::put('/usuarioRoles/{id}', [usuarioRolController::class, 'putUsuarioRol']);
 Route::delete('/usuarioRoles/{id}', [usuarioRolController::class, 'deleteUsuarioRol']);
@@ -61,10 +66,13 @@ Route::delete('asignatura/{id}', [asignaturaController::class, 'deleteAsignatura
 //Raul Gutierrez
 Route::get('/asignaturaAlumno', [asignaturaAlumnoController::class, 'getTodosAsignaturaAlumnos']);
 Route::get('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorId']);
+//Jaime Ortega (getAsignaturaAlumnoPorIdAlumno)
+Route::get('asignaturaAlumno/alumno/{id}', [asignaturaAlumnoController::class, 'getAsignaturaProfesorPorIdAlumno']);
 Route::post('asignaturaAlumno', [asignaturaAlumnoController::class, 'postAsignaturaAlumno']);
 Route::put('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'putAsignaturaAlumno']);
 Route::delete('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumno']);
-
+//Jaime Ortega
+Route::delete('asignaturaAlumno/{idAsignatura}/{idAlumno}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumnoEspecifico']);
 //ismael sarrion
 Route::get('/asignaturaAlumno/alumnoPorId/{id}',[asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorIdAlumno']);
 
@@ -75,6 +83,9 @@ Route::get('asignaturaProfesor/profesor/{id}', [asignaturaProfesorController::cl
 Route::post('asignaturaProfesor', [asignaturaProfesorController::class, 'postAsignaturaProfesor']);
 Route::put('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'putAsignaturaProfesor']);
 Route::delete('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesor']);
+//Jaime Ortega
+Route::delete('asignaturaProfesor/{idAsignatura}/{idProfesor}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesorEspecifico']);
+
 
 
 //Raul Gutierrez
@@ -107,9 +118,21 @@ Route::delete('/recetas/{id}', [RecetasController::class, 'deleteReceta']);
 //ismael sarrion
 Route::post('login', [AuthController::class, 'login']);
 Route::post('logout', [AuthController::class, 'logout']);
+
 //Jaime Ortega (register)
 Route::post('register', [AuthController::class, 'register']);
 
 Route::get('/nologin', function () {
     return response()->json("No autorizado", 203);
 });
+
+//ismael sarrion
+
+//Route::middleware('guest')->group(function () {
+Route::get('formulario', function () {
+    return view('formularioRecuperacion');
+});
+
+Route::post('enviar', [gmailController::class, 'enviar']);
+//});
+

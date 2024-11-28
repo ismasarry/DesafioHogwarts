@@ -41,6 +41,26 @@ class UsuarioRolController extends Controller
         ]);
     }
 
+    //Jaime Ortega
+    public function getTodosUsuarioRolPorIdRol($idRol)
+    {
+        $usuarioRoles = UsuarioRol::where('idRol', $idRol)->get();
+
+        if ($usuarioRoles->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron usuarios con el rol especificado'], 404);
+        }
+
+        $usuarios = $usuarioRoles->map(function ($usuarioRol) {
+            return Usuario::find($usuarioRol->idUsuario);
+        });
+        $usuariosId = $usuarioRoles->pluck('idUsuario');
+
+        return response()->json([
+            'rol' => Rol::find($idRol),
+            'usuarios' => $usuarios,
+            'usuariosId' => $usuariosId,
+        ]);
+    }
 
     public function postUsuarioRol(Request $request)
     {
