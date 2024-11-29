@@ -31,9 +31,8 @@ class PocionesController extends Controller
             'Nombre' => $request['Nombre'],
             'Descripcion' => $request['Descripcion'],
             'Estadisticas' => $request['Estadisticas'],
-            //'foto' => $request['foto'],
+            'foto' => $request['foto'],
             'veri' => $request['veri'],
-            'veriD' => $request['veriD']
         ]);
 
         return response()->json(['pocion' => $pocion], Response::HTTP_CREATED);
@@ -51,9 +50,8 @@ class PocionesController extends Controller
             'Nombre' => $request['Nombre'],
             'Descripcion' => $request['Descripcion'],
             'Estadisticas' => $request['Estadisticas'],
-           // 'foto' => $request['foto'],
+            'foto' => $request['foto'],
             'veri' => $request['veri'],
-            'veriD' => $request['veriD']
         ]);
 
         return response()->json(['pocion' => $pocion], Response::HTTP_OK);

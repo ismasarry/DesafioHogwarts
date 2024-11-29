@@ -27,7 +27,9 @@ class IngredientesController extends Controller
     public function postIngrediente(Request $request) {
         $ingrediente = Ingredientes::create([
             'Nombre' => $request['Nombre'],
-            'Estadisticas' => $request['Estadisticas']
+            'Estadisticas' => $request['Estadisticas'],
+            'foto' => $request['foto'],
+
         ]);
 
         return response()->json(['ingrediente' => $ingrediente], Response::HTTP_CREATED);
@@ -42,7 +44,9 @@ class IngredientesController extends Controller
 
         $ingrediente->update([
             'Nombre' => $request['Nombre'],
-            'Estadisticas' => $request['Estadisticas']
+            'Estadisticas' => $request['Estadisticas'],
+            'foto' => $request['foto'],
+
         ]);
 
         return response()->json(['ingrediente' => $ingrediente], Response::HTTP_OK);

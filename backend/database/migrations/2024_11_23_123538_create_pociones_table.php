@@ -17,12 +17,10 @@ class CreatePocionesTable extends Migration
             $table->string('nombre');
             $table->string('descripcion')->nullable();
             $table->string('estadisticas')->nullable(); 
-           $table->integer('idUsuario'); 
-         //   $table->unsignedBigInteger('idUsuario'); 
-          //  $table->foreign('idUsuario')->references('id')->on('usuario')->onDelete('cascade');
-           // $table->string('foto')->nullable();
+           $table->unsignedBigInteger('idUsuario'); 
+           $table->foreign('idUsuario')->references('id')->on('usuario')->onDelete('cascade');
+            $table->string('foto')->nullable();
             $table->integer('veri')->default(0);
-            $table->integer('veriD')->default(0);
             $table->timestamps();
             
         });
