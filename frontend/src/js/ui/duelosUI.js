@@ -204,12 +204,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (ale3 <= invProbBot) {
                         estaBot[1] * 2
                     }
-                    estaBot[0] = estaBot[0] + estaBot[3]
-                    estaBot[1] = estaBot[1] + estaBot[2]
+                    estaBot[0] + estaBot[3]
+                    estaBot[1] + estaBot[2]
 
 
-                    estaBot[0] = estaBot[0] - estaUsuario[1]
-                    estaUsuario[0] = estaUsuario[0] - estaBot[1]
+                    estaBot[0] - estaUsuario[1]
+                    estaUsuario[0] - estaBot[1]
                     //ver ganador
                     let ganador = null
                     if (estaUsuario[0] > estaBot[0]) {
