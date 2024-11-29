@@ -2,7 +2,7 @@
     color: white !important;
 }
 
-i, li a, h4, .modal-body label, input[type="text"], h5, ul li {
+i, li a, h4, .modal-body label, .modal-body p, input[type="text"], h5, ul li {
     color: black !important;
 }
 
@@ -20,4 +20,25 @@ i, li a, h4, .modal-body label, input[type="text"], h5, ul li {
 
 li {
     cursor: pointer;
+}
+
+.col-table {
+    width: 80vw;
+    padding-top: 2rem;
+}
+
+h3 {
+    padding-bottom: 5vh;
+}
+
+.btn-crear {
+    position: sticky;
+    left: 80vw;
+    bottom: 55vh; 
+    width: 10rem; 
+    height: 2.5rem; 
+}
+
+.error-message {
+    color: red !important;
 }

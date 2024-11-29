@@ -10,18 +10,42 @@ await cargarSideBar()
 const init = async () => {
     const tabla = $('#asignaturas').DataTable()
 
-    const asignaturas = await getTodosAsignaturas() || []
+    const [asignaturas, profesoresData, profesorAsignatura, alumnosData, alumnosAsignatura] = await Promise.all([
+        getTodosAsignaturas(),
+        mostrarUsuariosRolPorIdRol(3),
+        getTodosAsignaturaProfesores(),
+        mostrarUsuariosRolPorIdRol(4),
+        getTodosAsignaturaAlumnos(),
+    ])
 
-    const profesoresData = await mostrarUsuariosRolPorIdRol(3) || {}
     const profesores = profesoresData.usuarios || []
-    const profesorAsignatura = await getTodosAsignaturaProfesores() || []
-
-    const alumnosData = await mostrarUsuariosRolPorIdRol(4) || {}
     const alumnos = alumnosData.usuarios || []
-    const alumnosAsignatura = await getTodosAsignaturaAlumnos() || []
-    console.log(`alumnosData:`, alumnosData)
-    console.log(`alumnos:`, alumnos)
-    console.log(`alumnosAsignatura:`, alumnosAsignatura)
+
+    const crearModal = `
+            <div class="modal fade" id="crearAsignaturaModal" tabindex="-1" aria-labelledby="crearAsignaturaLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="crearAsignaturaLabel">Crear Nueva Asignatura</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="crearAsignaturaForm">
+                                <div class="mb-3">
+                                    <label for="nombreAsignatura" class="form-label">Nombre de la Asignatura</label>
+                                    <input type="text" class="form-control" id="nombreAsignatura" placeholder="Introduce el nombre" required>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" id="guardarAsignatura">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+    document.body.insertAdjacentHTML('beforeend', crearModal)
 
     for (const asig of asignaturas) {
         const profesoresImparten = []
@@ -71,30 +95,7 @@ const init = async () => {
             `<button class='btn-eliminar btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal${asig.id}'><i class='fas fa-trash-alt'></i>Eliminar</button>`
         ]).draw()
 
-        const crearModal = `
-            <div class="modal fade" id="crearAsignaturaModal" tabindex="-1" aria-labelledby="crearAsignaturaLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="crearAsignaturaLabel">Crear Nueva Asignatura</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="crearAsignaturaForm">
-                                <div class="mb-3">
-                                    <label for="nombreAsignatura" class="form-label">Nombre de la Asignatura</label>
-                                    <input type="text" class="form-control" id="nombreAsignatura" placeholder="Introduce el nombre" required>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" id="guardarAsignatura">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `
+
 
         const editarModal = `
             <div class="modal" id="editModal${asig.id}">
@@ -181,6 +182,7 @@ const init = async () => {
                 </div>
             </div>
         `
+        document.body.insertAdjacentHTML('beforeend', editarModal)
 
         const eliminarModal = `
             <div class="modal" id="deleteModal${asig.id}">
@@ -202,9 +204,6 @@ const init = async () => {
                 </div>
             </div>
         `
-
-        // document.body.insertAdjacentHTML('beforeend', crearModal)
-        document.body.insertAdjacentHTML('beforeend', editarModal)
         document.body.insertAdjacentHTML('beforeend', eliminarModal)
 
         const listaImparten = document.getElementById(`imparten${asig.id}`)
@@ -222,24 +221,6 @@ const init = async () => {
             addClickEventToAlumnos(listaNoAsisten, listaAsisten, asig.id)
         }
 
-        // crearModal.addEventListener('click', async () => {
-        //     const nombreAsignatura = document.getElementById('nombreAsignatura').value.trim()
-        
-        //     if (nombreAsignatura) {
-        //         try {
-        //             await postAsignatura(nombreAsignatura) 
-        //             console.log("Asignatura creada con éxito")
-        
-        //             location.reload()
-        //         } catch (error) {
-        //             console.error("Error al crear la asignatura:", error)
-        //             alert("Hubo un error al crear la asignatura. Inténtalo nuevamente.")
-        //         }
-        //     } else {
-        //         alert("El nombre de la asignatura no puede estar vacío.")
-        //     }
-        // })
-
         document.querySelector(`#guardarBtn${asig.id}`).addEventListener('click', async () => {
             const nombreInput = document.querySelector(`#nombre${asig.id}`)
             const nombreActual = nombreInput.value.trim()
@@ -255,7 +236,6 @@ const init = async () => {
                         tabla.cell(rowIndex, 0).data(nombreActual).draw()
                     } else {
                         console.error("Error al actualizar el nombre de la asignatura")
-                        alert("No se pudo actualizar el nombre. Intenta nuevamente.")
                     }
                 } catch (error) {
                     console.error("Error en la solicitud PUT", error)
@@ -285,6 +265,29 @@ const init = async () => {
         }
         eliminarAsignatura(asig.id)
     }
+
+    const crearAsignatura = document.getElementById('guardarAsignatura')
+    crearAsignatura.addEventListener('click', async () => {
+        const nombreAsignatura = document.getElementById('nombreAsignatura')
+        if (nombreAsignatura.value) {
+            try {
+                await postAsignatura(nombreAsignatura.value)
+                location.reload()
+            } catch (error) {
+                console.error("Error al crear la asignatura:", error)
+            }
+        } else {
+            const existeError = document.querySelector('.error-message')
+            if (!existeError) {
+                let errorMessage = document.createElement('span')
+                errorMessage.innerHTML = 'El nombre de la asignatura no puede estar vacío'
+
+                errorMessage.classList.add('error-message')
+
+                nombreAsignatura.insertAdjacentElement('afterend', errorMessage)
+            }
+        }
+    })
 }
 
 const addClickEventToProfesores = (lista, listaContraria, idAsignatura) => {
@@ -381,7 +384,6 @@ const addClickEventToAlumnos = (lista, listaContraria, idAsignatura) => {
         i.addEventListener('click', manejarClick)
     })
 }
-
 
 const addAlumnos = async (idAsignatura, idAlumno) => {
     try {
