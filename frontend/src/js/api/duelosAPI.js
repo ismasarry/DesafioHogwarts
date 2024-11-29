@@ -142,9 +142,35 @@ export const postTurnoDuelo = async (turnoDueloCreado) => {
         }
 
         const resultado = await respuesta.json();
+        console.log(resultado)
         return resultado;
     } catch (error) {
         console.error('Error en la función postTurnoDuelo:', error.message);
+        throw error;
+    }
+}
+
+export const putDuelo = async (id_duelo, duelo) => {
+    const rutaDuelo = constantes.urlApi + constantes.duelo
+    try {
+        const respuesta = await fetch(rutaDuelo + id_duelo, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            body: JSON.stringify(duelo),
+        });
+
+        if (!respuesta.ok) {
+
+            throw new Error(`Error al editar el duelo. Código de estado: ${respuesta.status}`);
+        }
+
+        const resultado = await respuesta.json()
+        return resultado;
+    } catch (error) {
+        console.error('Error en la función putDuelo:', error.message);
         throw error;
     }
 }

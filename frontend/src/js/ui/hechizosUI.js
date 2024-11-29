@@ -3,7 +3,7 @@ import { getBuscarUsuario, getTodosUsuarios } from "../api/usuarioAPI.js"
 import { cargarSideBar } from "../components/cargarSideBar.js"
 import { getBuscarHechizo, getBuscarHechizoNivel, postHechizo, putHechizo, deleteHechizo } from "../api/hechizoAPI.js"
 import { mostrarRolesUsuario } from "../api/usuarioRolAPI.js"
-import { postDuelo } from "../api/duelosAPI.js"
+import { postDuelo, getDueloEnCurso } from "../api/duelosAPI.js"
 
 cargarSideBar
 document.addEventListener("DOMContentLoaded", function () {
@@ -916,12 +916,16 @@ const eliminarHechizo = `
                 try {
                     const modalElement = document.getElementById(`btnDuelo`)
 
-                    const duelo = {
-                        idUsuario : id,
-                        ganador : null
-                    }
+                    const duelo = await getDueloEnCurso(id)
 
-                    //await postDuelo(duelo)
+                    if (duelo.idUsuario == undefined) {
+                        const dueloNuevo = {
+                            idUsuario : id,
+                            ganador : null
+                        }
+    
+                        await postDuelo(dueloNuevo)
+                    }
 
                     const modal = new bootstrap.Modal(modalElement);
                     modal.hide();
