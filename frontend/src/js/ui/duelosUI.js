@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (finUsuario == 3 || finBot == 3) {
-            await modificarDuelo(finUsuario, idUsuario)
             window.location.href = "./finDuelo.html"
         }
 
@@ -72,22 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-async function modificarDuelo(finUsuario, idUsuario) {
-    let dueloM
-    if (finUsuario == 3) {
-        dueloM = {
-            idUsuario: idUsuario,
-            ganador: true
-        }
-    } else {
-        dueloM = {
-            idUsuario: idUsuario,
-            ganador: false
-        }
-    }
-    const dueloEnCurso = await getDueloEnCurso(idUsuario)
-    await putDuelo(dueloEnCurso.id, dueloM)
-}
+
 
 async function dueloHechizoUI(id, idUsuario) {
     const confirmarUso = document.getElementById(`confirmarUso${id}`)
