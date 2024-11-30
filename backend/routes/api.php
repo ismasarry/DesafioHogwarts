@@ -12,6 +12,9 @@ use App\Http\Controllers\gmailController;
 use App\Http\Controllers\turnoDueloController;
 use App\Http\Controllers\usuarioRolController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\IngredientesController;
+use App\Http\Controllers\PocionesController;
+use App\Http\Controllers\RecetasController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -94,6 +97,25 @@ Route::get('hechizos/nivel/{id}', [hechizosController::class, 'getHechizoPorNive
 Route::post('hechizos', [hechizosController::class, 'postHechizo']);
 Route::put('hechizos/{id}', [hechizosController::class, 'putHechizo']);
 Route::delete('hechizos/{id}', [hechizosController::class, 'deleteHechizo']);
+
+//ismael sarrion
+Route::get('/ingredientes', [IngredientesController::class, 'getTodosIngredientes']);
+Route::get('/ingredientes/{id}', [IngredientesController::class, 'getIngredientePorId']);
+Route::post('/ingredientes', [IngredientesController::class, 'postIngrediente']);
+Route::put('/ingredientes/{id}', [IngredientesController::class, 'putIngrediente']);
+Route::delete('/ingredientes/{id}', [IngredientesController::class, 'deleteIngrediente']);
+
+Route::get('/pociones', [pocionesController::class, 'getTodasPociones']);
+Route::get('/pociones/{id}', [PocionesController::class, 'getPocionPorId']);
+Route::post('/pociones', [PocionesController::class, 'postPocion']);
+Route::put('/pociones/{id}', [PocionesController::class, 'putPocion']);
+Route::delete('/pociones/{id}', [PocionesController::class, 'deletePocion']);
+
+Route::get('/recetas', [RecetasController::class, 'getTodasRecetas']);
+Route::get('/recetas/{id}', [RecetasController::class, 'getRecetaPorId']);
+Route::post('/recetas', [RecetasController::class, 'postReceta']);
+Route::put('/recetas/{id}', [RecetasController::class, 'putReceta']);
+Route::delete('/recetas/{id}', [RecetasController::class, 'deleteReceta']);
 
 //ismael sarrion
 Route::post('login', [AuthController::class, 'login']);

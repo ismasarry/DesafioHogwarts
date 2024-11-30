@@ -27,6 +27,9 @@ class DatabaseSeeder extends Seeder
             hechizosSeeder::class,
             dueloSeeder::class,
             turnoDueloSeeder::class
+            PocionesSeeder::class,
+            IngredienteSeeder::class,
+            RecetaSeeder::class
         ]);
     }
 }
