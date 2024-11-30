@@ -14,6 +14,8 @@ export const constantes ={
     casa: 'casa/',
     usuRol: 'usuarioRoles/',
     hechizo: 'hechizos/',
+    duelo : 'duelo/',
+    turnoDuelo: 'turnoDuelo/',
     registro: 'register',
     log:'login/',
     logout: 'logout/',

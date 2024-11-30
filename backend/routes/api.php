@@ -6,8 +6,10 @@ use App\Http\Controllers\asignaturaProfesorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\rolController;
 use App\Http\Controllers\casaController;
+use App\Http\Controllers\dueloController;
 use App\Http\Controllers\hechizosController;
 use App\Http\Controllers\gmailController;
+use App\Http\Controllers\turnoDueloController;
 use App\Http\Controllers\usuarioRolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\IngredientesController;
@@ -125,6 +127,26 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('/nologin', function () {
     return response()->json("No autorizado", 203);
 });
+
+//Raul Gutierrez
+Route::get('duelo', [dueloController::class, 'getTodosDuelos']);
+Route::get('duelo/{id}', [dueloController::class, 'getDueloPorId']);
+Route::get('duelo/usuario/{id}', [dueloController::class, 'getDueloPorIdUsuario']);
+Route::get('duelo/curso/{id}', [dueloController::class, 'getDueloEnCurso']);
+Route::get('duelo/winRate/{id}', [dueloController::class, 'getWinRatePorIdUsuario']);
+Route::post('duelo', [dueloController::class, 'postDuelo']);
+Route::put('duelo/{id}', [dueloController::class, 'putDuelo']);
+Route::delete('duelo/{id}', [dueloController::class, 'deleteDuelo']);
+
+//Raul Gutierrez
+Route::get('turnoDuelo', [turnoDueloController::class, 'getTodosTurnoDuelos']);
+Route::get('turnoDuelo/{id}', [turnoDueloController::class, 'getTurnoDueloPorId']);
+Route::get('turnoDuelo/duelo/{id}', [turnoDueloController::class, 'getTurnoDuelosPorDuelo']);
+Route::get('turnoDuelo/hechizosUsablesUsuario/{id}', [turnoDueloController::class, 'getHechizosDisponiblesUsuarioDuelo']);
+Route::get('turnoDuelo/hechizosUsablesBot/{id}', [turnoDueloController::class, 'getHechizosDisponiblesBotDuelo']);
+Route::post('turnoDuelo', [turnoDueloController::class, 'postTurnoDuelo']);
+Route::put('turnoDuelo/{id}', [turnoDueloController::class, 'putTurnoDuelo']);
+Route::delete('turnoDuelo/{id}', [turnoDueloController::class, 'deleteTurnoDuelo']);
 
 //ismael sarrion
 
