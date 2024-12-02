@@ -100,10 +100,29 @@ const init = async () => {
             }
         }
 
-        const acciones = `<button class='btn-editar btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal${asig.id}'><i class='fas fa-edit'></i>Editar</button>` +
-            `<button class='btn-eliminar btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal${asig.id}'><i class='fas fa-trash-alt'></i>Eliminar</button>`
+        const acciones = `  
+                            <button class='btn-editar btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal${asig.id}'>
+                                <i class='fas fa-edit'></i>Editar
+                            </button> 
+                            <button class='btn-eliminar btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal${asig.id}'>
+                                <i class='fas fa-trash-alt'></i>Eliminar
+                            </button>
+                        `
 
-        tabla.row.add({
+        const exixteFila = tabla.row(`#row-${asig.id}`)
+        if (exixteFila.node()) {
+            exixteFila.data({
+                id: asig.id,
+                nombre: asig.nombre,
+                profesores: profesoresImparten.map(profe => profe.nombre).join(',') || '-',
+                // profesores: conteoProfesores,
+                // alumnos: alumnosAsisten.map(alumn => alumn.nombre).join(','),
+                alumnos: conteoAlumnos,
+                acciones: acciones
+            })
+        }
+
+        const newFila = tabla.row.add({
             id: asig.id,
             nombre: asig.nombre,
             profesores: profesoresImparten.map(profe => profe.nombre).join(',') || '-',
@@ -111,14 +130,20 @@ const init = async () => {
             // alumnos: alumnosAsisten.map(alumn => alumn.nombre).join(','),
             alumnos: conteoAlumnos,
             acciones: acciones
-        }).draw(false)
+        }).node()
+
+        if (newFila) {
+            newFila.id = `row-${asig.id}`
+        }
+
+        tabla.draw(false)
 
         const editarModal = `
             <div class="modal" id="editModal${asig.id}">
                 <div class="modal-dialog modal-md">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Editar asignatura ${asig.nombre}</h4>
+                            <h4 id='titulo-modal' class="modal-title">Editar asignatura ${asig.nombre}</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
@@ -245,10 +270,17 @@ const init = async () => {
             if (nombreActual !== nombreOriginal) {
                 try {
                     const respuesta = await putAsignatura(asig.id, { nombre: nombreActual })
-                    if (respuesta.ok) {
+                    if (respuesta) {
                         nombreInput.dataset.original = nombreActual
 
-                        tabla.cell(`#row-${asig.id}`, 1).data(nombreActual).draw(false)
+                        const fila = tabla.row(`#row-${asig.id}`).data()
+                        fila.nombre = nombreActual
+                        tabla.row(`#row-${asig.id}`).data(fila).invalidate().draw(false)
+
+                        const tituloModal = document.querySelector(`#editModal${asig.id} .modal-title`)
+                        if (tituloModal) {
+                            tituloModal.textContent = `Editar asignatura ${nombreActual}`
+                        }
                     } else {
                         console.error("Error al actualizar el nombre de la asignatura")
                     }
@@ -270,9 +302,9 @@ const init = async () => {
                             const row = $(`#asignaturas tbody tr`).filter(function () {
                                 return $(this).find('td').eq(0).text() == id
                             })
-        
+
                             if (row.length > 0) {
-                                tabla.row(row).remove().draw(false) 
+                                tabla.row(row).remove().draw(false)
                             }
                         } else {
                             console.error("Error al eliminar la asignatura")
@@ -406,7 +438,6 @@ const addClickEventToAlumnos = (lista, listaContraria, idAsignatura) => {
 const addAlumnos = async (idAsignatura, idAlumno) => {
     try {
         await postAsignaturaAlumno(idAsignatura, idAlumno)
-        console.log(`Alumno con ID ${idAlumno} añadido a la asignatura ${idAsignatura}`)
     } catch (error) {
         console.error('Error al agregar el alumno:', error)
     }
