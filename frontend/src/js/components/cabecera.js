@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   
     const idUsuario = sessionStorage.getItem("userId")
     usuario = await getBuscarUsuario(idUsuario)
+    console.log(usuario.Usuario)
 
     if (usuario) {
       headerContainer.innerHTML = `
@@ -113,11 +114,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 let usuarioObjeto
 
-                if (contraUsu.type == undefined) {
+                if (contraUsu.trim() === "") {
                   usuarioObjeto = {
                     nombre: nombreUsu,
                     gmail: gmailUsu,
-                    contrasena: usuarioU.contrasena,
                     idCasa: usuarioU.idCasa,
                     nivel: usuarioU.nivel,
                     exp: usuarioU.exp,

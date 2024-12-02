@@ -31,9 +31,9 @@ async function mensaje() {
         await sumarPuntos(idUsuario)
     } else if (finBot == 3) {
         html.innerHTML = `
-                <img src="./../assets/fallo.jpeg" alt="Lo siento">
+                <img src="./../assets/pusheen-harry-potter.gif" alt="Lo siento">
                 <h2>Lo siento</h2>
-                <p>¿Que hiciste viktor? ¡Inténtalo de nuevo!</p>
+                <p>AAAAAAAAAAAAAAAAAAAAAAA</p>
             `;
         await modificarDuelo(finUsuario, idUsuario)
     }
@@ -82,7 +82,6 @@ async function sumarPuntos(idUsuario) {
     const usu = {
         nombre : usuario.Usuario.nombre,
         gmail :  usuario.Usuario.gmail,
-        contrasena : usuario.Usuario.contrasena,
         idCasa : usuario.Usuario.idCasa,
         nivel : nivelSubido,
         exp : expSubido,

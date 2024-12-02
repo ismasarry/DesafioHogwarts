@@ -1,5 +1,5 @@
 //Raul Gutierrez
-import { getTurnoDuelos, getTurnoDuelosBot, getTurnoDuelosPorDuelo, postTurnoDuelo, getDueloEnCurso, putDuelo } from "../api/duelosAPI.js"
+import { getTurnoDuelos, getTurnoDuelosBot, getTurnoDuelosPorDuelo, postTurnoDuelo, getDueloEnCurso} from "../api/duelosAPI.js"
 import { getBuscarHechizo } from "../api/hechizoAPI.js"
 
 document.addEventListener("DOMContentLoaded", function () {
