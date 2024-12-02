@@ -8,7 +8,20 @@ import { cargarSideBar } from "../components/cargarSideBar.js"
 await cargarSideBar()
 
 const init = async () => {
-    const tabla = $('#asignaturas').DataTable()
+    const tabla = $('#asignaturas').DataTable({
+        columns: [
+            { title: 'ID', data: 'id'/*, visible: false*/ },
+            { title: 'Asignatura', data: 'nombre' },
+            { title: 'Profesor/es', data: 'profesores' },
+            { title: 'Alumnos', data: 'alumnos' },
+            { title: 'Acciones', data: 'acciones', orderable: false }
+        ],
+        language: {
+            url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json'
+        },
+        pageLength: 10,
+        responsive: true
+    })
 
     const [asignaturas, profesoresData, profesorAsignatura, alumnosData, alumnosAsignatura] = await Promise.all([
         getTodosAsignaturas(),
@@ -46,6 +59,8 @@ const init = async () => {
             </div>
         `
     document.body.insertAdjacentHTML('beforeend', crearModal)
+
+    tabla.clear()
 
     for (const asig of asignaturas) {
         const profesoresImparten = []
@@ -85,17 +100,18 @@ const init = async () => {
             }
         }
 
-        const row = tabla.row.add([
-            asig.nombre,
-            profesoresImparten.map(profe => profe.nombre).join(','),
-            // conteoProfesores,
-            // alumnosAsisten.map(alumn => alumn.nombre).join(','),
-            conteoAlumnos,
-            `<button class='btn-editar btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal${asig.id}'><i class='fas fa-edit'></i>Editar</button>` +
+        const acciones = `<button class='btn-editar btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal${asig.id}'><i class='fas fa-edit'></i>Editar</button>` +
             `<button class='btn-eliminar btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal${asig.id}'><i class='fas fa-trash-alt'></i>Eliminar</button>`
-        ]).draw()
 
-
+        tabla.row.add({
+            id: asig.id,
+            nombre: asig.nombre,
+            profesores: profesoresImparten.map(profe => profe.nombre).join(',') || '-',
+            // profesores: conteoProfesores,
+            // alumnos: alumnosAsisten.map(alumn => alumn.nombre).join(','),
+            alumnos: conteoAlumnos,
+            acciones: acciones
+        }).draw(false)
 
         const editarModal = `
             <div class="modal" id="editModal${asig.id}">
@@ -133,7 +149,7 @@ const init = async () => {
                                             ${profesoresImparten.length > 0 ? profesoresImparten.map(prof => `
                                                 <li class='profesor' data-id='${prof.id}'>
                                                     ${prof.nombre ? prof.nombre : 'Nombre no disponible'}
-                                                </li>`).join('') : '<li>Libre</li>'}
+                                                </li>`).join('') : ''}
                                             </ul>
                                         </div>
 
@@ -143,7 +159,7 @@ const init = async () => {
                                             ${profesoresNoImparten.length > 0 ? profesoresNoImparten.map(prof => `
                                                 <li class="profesor" data-id="${prof.id}">
                                                     ${prof.nombre ? prof.nombre : 'Nombre no disponible'}
-                                                </li>`).join('') : '<li>Libre</li>'}
+                                                </li>`).join('') : ''}
                                             </ul>
                                         </div>
                                     </div>
@@ -158,7 +174,7 @@ const init = async () => {
                                             ${alumnosAsisten.length > 0 ? alumnosAsisten.map(al => `
                                                 <li class='alumno' data-id='${al.id}'>
                                                     ${al.nombre ? al.nombre : 'Nombre no disponible'}
-                                                </li>`).join('') : '<li>Libre</li>'}
+                                                </li>`).join('') : ''}
                                             </ul>
                                         </div>
 
@@ -168,7 +184,7 @@ const init = async () => {
                                             ${alumnosNoAsisten.length > 0 ? alumnosNoAsisten.map(al => `
                                                 <li class="alumno" data-id="${al.id}">
                                                     ${al.nombre ? al.nombre : 'Nombre no disponible'}
-                                                </li>`).join('') : '<li>Libre</li>'}
+                                                </li>`).join('') : ''}
                                             </ul>
                                         </div>
                                     </div>
@@ -230,10 +246,9 @@ const init = async () => {
                 try {
                     const respuesta = await putAsignatura(asig.id, { nombre: nombreActual })
                     if (respuesta.ok) {
-                        console.log("Nombre de la asignatura actualizado correctamente")
                         nombreInput.dataset.original = nombreActual
-                        const rowIndex = tabla.row(`#editModal${asig.id}`).index()
-                        tabla.cell(rowIndex, 0).data(nombreActual).draw()
+
+                        tabla.cell(`#row-${asig.id}`, 1).data(nombreActual).draw(false)
                     } else {
                         console.error("Error al actualizar el nombre de la asignatura")
                     }
@@ -249,14 +264,19 @@ const init = async () => {
             if (confirmarEliminacion) {
                 confirmarEliminacion.addEventListener('click', async () => {
                     try {
-                        await deleteAsignatura(id)
+                        const respuesta = await deleteAsignatura(id)
 
-                        const modalElement = document.getElementById(`deleteModal${id}`)
-                        const modal = new bootstrap.Modal(modalElement)
-                        modal.hide()
-                        location.reload()
-
-
+                        if (respuesta) {
+                            const row = $(`#asignaturas tbody tr`).filter(function () {
+                                return $(this).find('td').eq(0).text() == id
+                            })
+        
+                            if (row.length > 0) {
+                                tabla.row(row).remove().draw(false) 
+                            }
+                        } else {
+                            console.error("Error al eliminar la asignatura")
+                        }
                     } catch (error) {
                         console.error('Error al confirmar la eliminación:', error)
                     }
@@ -333,7 +353,6 @@ const addClickEventToProfesores = (lista, listaContraria, idAsignatura) => {
 const addProfesores = async (idAsignatura, idProfesor) => {
     try {
         await postAsignaturaProfesor(idAsignatura, idProfesor)
-        console.log(`Profesor con ID ${idProfesor} añadido a la asignatura ${idAsignatura}`)
     } catch (error) {
         console.error('Error al agregar el profesor:', error)
     }
@@ -342,7 +361,6 @@ const addProfesores = async (idAsignatura, idProfesor) => {
 const removeProfesores = async (idAsignatura, idProfesor) => {
     try {
         await deleteAsignaturaProfesorEspecifico(idAsignatura, idProfesor)
-        console.log(`Profesor con ID ${idProfesor} eliminado de la asignatura ${idAsignatura}`)
     } catch (error) {
         console.error('Error al eliminar el profesor:', error)
     }
@@ -397,7 +415,6 @@ const addAlumnos = async (idAsignatura, idAlumno) => {
 const removeAlumnos = async (idAsignatura, idAlumno) => {
     try {
         await deleteAsignaturaAlumnoEspecifico(idAsignatura, idAlumno)
-        console.log(`Alumno con ID ${idAlumno} eliminado de la asignatura ${idAsignatura}`)
     } catch (error) {
         console.error('Error al eliminar el alumno:', error)
     }
