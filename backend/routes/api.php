@@ -93,7 +93,7 @@ Route::delete('asignaturaProfesor/{idAsignatura}/{idProfesor}', [asignaturaProfe
 //Raul Gutierrez
 Route::get('hechizos', [hechizosController::class, 'getTodosHechizos']);
 Route::get('hechizos/{id}', [hechizosController::class, 'getHechizoPorId']);
-Route::get('hechizos/nivel/{id}', [hechizosController::class, 'getHechizoPorNivelMenor']);
+Route::get('hechizos/nivel/{nivel}', [hechizosController::class, 'getHechizoPorNivelMenor']);
 Route::post('hechizos', [hechizosController::class, 'postHechizo']);
 Route::put('hechizos/{id}', [hechizosController::class, 'putHechizo']);
 Route::delete('hechizos/{id}', [hechizosController::class, 'deleteHechizo']);
@@ -142,6 +142,7 @@ Route::delete('duelo/{id}', [dueloController::class, 'deleteDuelo']);
 Route::get('turnoDuelo', [turnoDueloController::class, 'getTodosTurnoDuelos']);
 Route::get('turnoDuelo/{id}', [turnoDueloController::class, 'getTurnoDueloPorId']);
 Route::get('turnoDuelo/duelo/{id}', [turnoDueloController::class, 'getTurnoDuelosPorDuelo']);
+Route::get('turnoDuelo/dueloNormal/{id}', [turnoDueloController::class, 'getTurnoDuelosPorDueloNormales']);
 Route::get('turnoDuelo/hechizosUsablesUsuario/{id}', [turnoDueloController::class, 'getHechizosDisponiblesUsuarioDuelo']);
 Route::get('turnoDuelo/hechizosUsablesBot/{id}', [turnoDueloController::class, 'getHechizosDisponiblesBotDuelo']);
 Route::post('turnoDuelo', [turnoDueloController::class, 'postTurnoDuelo']);
