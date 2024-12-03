@@ -76,6 +76,31 @@ export const getTurnoDuelosPorDuelo = async (id_usuario) => {
     }
 }
 
+export const getTurnoDuelosPorDueloNormal = async (id_duelo) => {
+    const rutaHechizo = constantes.urlApi + constantes.turnoDuelo + 'dueloNormal/'
+
+    try {
+        const respuesta = await fetch(rutaHechizo + id_duelo, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok){
+            throw new Error(`Error al obtener la lista de Hechizos para duelos. Código de estado: ${respuesta.status}`);
+        }
+
+        const hechizos = await respuesta.json()
+        console.log(hechizos)
+        return hechizos
+
+    } catch (error) {
+        console.error('Error en la función getTurnoDuelosNormal:', error.message);
+        throw error;
+    }
+}
+
 export const postDuelo = async (dueloCreado) => {
     const rutaDuelo = constantes.urlApi + constantes.duelo
     
@@ -102,6 +127,31 @@ export const postDuelo = async (dueloCreado) => {
 
 export const getDueloEnCurso = async (id_usuario) => {
     const rutaDuelo = constantes.urlApi + constantes.duelo + 'curso/'
+
+    try {
+        const respuesta = await fetch(rutaDuelo + id_usuario, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok){
+            throw new Error(`Error al obtener la lista de Duelos en curso. Código de estado: ${respuesta.status}`);
+        }
+
+        const duelo = await respuesta.json()
+        console.log(duelo)
+        return duelo
+
+    } catch (error) {
+        console.error('Error en la función getDueloEnCurso:', error.message);
+        throw error;
+    }
+}
+
+export const getDueloPorUsuario = async (id_usuario) => {
+    const rutaDuelo = constantes.urlApi + constantes.duelo + 'usuario/'
 
     try {
         const respuesta = await fetch(rutaDuelo + id_usuario, {
@@ -171,6 +221,31 @@ export const putDuelo = async (id_duelo, duelo) => {
         return resultado;
     } catch (error) {
         console.error('Error en la función putDuelo:', error.message);
+        throw error;
+    }
+}
+
+export const getWinRate = async (id_usuario) => {
+    const rutaDuelo = constantes.urlApi + constantes.duelo + 'winRate/'
+
+    try {
+        const respuesta = await fetch(rutaDuelo + id_usuario, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok){
+            throw new Error(`Error al obtener el win rate. Código de estado: ${respuesta.status}`);
+        }
+
+        const duelo = await respuesta.json()
+        console.log(duelo)
+        return duelo
+
+    } catch (error) {
+        console.error('Error en la función getWinrate:', error.message);
         throw error;
     }
 }

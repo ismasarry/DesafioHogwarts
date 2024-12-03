@@ -39,6 +39,12 @@ class turnoDueloController extends Controller
         return response()->json($turnoDuelo);
     }
 
+    public function getTurnoDuelosPorDueloNormales($idDuelo) 
+    {
+        $turnoDuelo = turnoDuelo::where('idDuelo', $idDuelo)->get();
+        return response()->json($turnoDuelo);
+    }
+
     public function getHechizosDisponiblesUsuarioDuelo($idUsuario)
     {
         $usuario = Usuario::find($idUsuario);

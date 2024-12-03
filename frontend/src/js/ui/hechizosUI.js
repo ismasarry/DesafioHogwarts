@@ -3,7 +3,7 @@ import { getBuscarUsuario, getTodosUsuarios } from "../api/usuarioAPI.js"
 import { cargarSideBar } from "../components/cargarSideBar.js"
 import { getBuscarHechizo, getBuscarHechizoNivel, postHechizo, putHechizo, deleteHechizo } from "../api/hechizoAPI.js"
 import { mostrarRolesUsuario } from "../api/usuarioRolAPI.js"
-import { postDuelo, getDueloEnCurso } from "../api/duelosAPI.js"
+import { postDuelo, getDueloEnCurso, getWinRate } from "../api/duelosAPI.js"
 
 cargarSideBar
 document.addEventListener("DOMContentLoaded", function () {
@@ -13,7 +13,11 @@ document.addEventListener("DOMContentLoaded", function () {
         const usuariosParaHechizo = await getTodosUsuarios()
         const hechizos = await getBuscarHechizoNivel(usuarioInfo.Usuario.nivel)
         const roles = await mostrarRolesUsuario(usuario)
+        const winRate = await getWinRate(usuario)
+        const winRateDiv = document.getElementById("winRate")
         console.log(roles)
+
+        winRateDiv.innerHTML += winRate.winRate + `%`
         
         anadirHechizoUI()
         duelo(usuario)

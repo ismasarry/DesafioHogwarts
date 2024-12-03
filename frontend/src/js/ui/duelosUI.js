@@ -1,5 +1,5 @@
 //Raul Gutierrez
-import { getTurnoDuelos, getTurnoDuelosBot, getTurnoDuelosPorDuelo, postTurnoDuelo, getDueloEnCurso, putDuelo } from "../api/duelosAPI.js"
+import { getTurnoDuelos, getTurnoDuelosBot, getTurnoDuelosPorDuelo, postTurnoDuelo, getDueloEnCurso} from "../api/duelosAPI.js"
 import { getBuscarHechizo } from "../api/hechizoAPI.js"
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -7,21 +7,33 @@ document.addEventListener("DOMContentLoaded", function () {
         const idUsuario = sessionStorage.getItem("userId")
         const hechizos = await getTurnoDuelos(idUsuario)
         const turnos = await getTurnoDuelosPorDuelo(idUsuario)
+        const info = document.getElementById("info")
         let finUsuario = 0
         let finBot = 0
+        let score = ''
 
         for (let i = 0; i < turnos.length; i++) {
             if (turnos[i].ganador == 1) {
+                score += `
+                    <img src="./../assets/circuloVerde.png" width="5%" height="100%"/>
+                `
                 finUsuario++
             } else {
+                score += `
+                    <img src="./../assets/circuloRojo.png" width="5%" height="100%"/>
+                `
                 finBot++
             }
         }
 
+        if (turnos.length != 0) {
+            info.innerHTML = score
+        }
+        
         if (finUsuario == 3 || finBot == 3) {
             window.location.href = "./finDuelo.html"
         }
-
+        
         console.log(hechizos)
 
         const tabla = $('#hechizos').DataTable()

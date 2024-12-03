@@ -69,16 +69,21 @@ class UsuarioController extends Controller
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        $usuario->update([
+        $datosUsuario = [
             'nombre' => $request['nombre'],
             'gmail' => $request['gmail'],
-            'contrasena' => bcrypt($request['contrasena']),
             'idCasa' => $request['idCasa'],
             'nivel' => $request['nivel'],
             'exp' => $request['exp'],
             'foto' => $request['foto'],
-            'activo' => $request['activo'],
-        ]);
+            'activo' => $request['activo']
+        ];
+
+        if ($request->filled('contrasena')) {
+            $datosUsuario['contrasena'] = bcrypt($request['contrasena']);
+        }
+
+        $usuario->update($datosUsuario);
 
         return response()->json(['Usuario' => $usuario], Response::HTTP_CREATED);
     }
