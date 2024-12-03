@@ -20,7 +20,8 @@ class MapaMerodeador extends Model
      * @var array
      */
     protected $fillable = [
-        'tablero',
+        'fila',
+        'contenidoFila',
         'segundo',
     ];
 
