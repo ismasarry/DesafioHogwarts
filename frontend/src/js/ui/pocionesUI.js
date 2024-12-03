@@ -11,18 +11,22 @@ document.addEventListener("DOMContentLoaded", function () {
         const pociones = await getTodasPociones(); 
         const roles = await mostrarRolesUsuario(usuario);
         console.log(roles);
-        console.log(pociones.pociones.nombre)
+
 
         anadirPocionUI()
 
         const tabla = $('#pociones').DataTable();
-tabla.clear().draw();
+    tabla.clear(); // Limpia la tabla antes de agregar nuevas filas
+
+console.log(pociones.pociones[1].nombre);
+console.log(pociones.pociones); // Verifica que sea un array
+
 
 pociones.pociones.forEach(pocion => {
-    console.log(pocion.veri)
-    if (roles.roles[0].nombre == "profesor" && pocion.veri == 0) {
-        
-        const esta = (pocion.estadisticas).split(','); 
+    console.log(pocion.nombre); // Asegúrate de que los datos estén presentes
+    
+    if (roles.roles[0].nombre === "profesor" && pocion.veri === 0) {
+        const estadisticas = pocion.estadisticas.split(','); 
         let creador = 0;
         if (pocion.idUsuario == 0) {
             creador = 'Desconocido';
@@ -36,20 +40,21 @@ pociones.pociones.forEach(pocion => {
 
         const row = tabla.row.add([
             pocion.nombre,
-            esta[0],  // Sanación
-            esta[1],  // Envenenamiento
-            esta[2],  // Analgesia
-            esta[3],  // Dolor
-            esta[4],  // Curativo
-            esta[5],  // Enfermante
-            esta[6],  // Inflamatorio
-            esta[7],  // Desinflamatorio
+            estadisticas[0],  // Sanación
+            estadisticas[1],  // Envenenamiento
+            estadisticas[2],  // Analgesia
+            estadisticas[3],  // Dolor
+            estadisticas[4],  // Curativo
+            estadisticas[5],  // Enfermante
+            estadisticas[6],  // Inflamatorio
+            estadisticas[7],  // Desinflamatorio
             pocion.descripcion, 
             creador,
             `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${pocion.id}"><i class="fas fa-edit"></i> Editar</button>` +
             `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${pocion.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>` +
             `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#veriModal${pocion.id}"><i class="fas fa-edit"></i> Verificar</button>`
-        ]).draw();
+        ]);
+        table.draw();
 
         const editarPocion = ` 
             <div class="modal" id="myModal${pocion.id}">
@@ -65,6 +70,12 @@ pociones.pociones.forEach(pocion => {
                                     <label for="nombre" class="form-label">Nombre</label>
                                     <input type="text" id="nombre${pocion.id}" name="nombre${pocion.id}" class="form-control" value="${pocion.nombre}">
                                     <div class="invalid-feedback" id="mensajeNombre"></div>
+                                </div>
+
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="descripcion" class="form-label">Descripción</label>
+                                    <textarea id="descripcion${pocion.id}" name="descripcion${pocion.id}" class="form-control">${pocion.descripcion}</textarea>
+                                    <div class="invalid-feedback" id="mensajeDescripcion"></div>
                                 </div>
 
                                 <div class="col-sm-12 col-md-6 col-lg-6">
@@ -113,12 +124,6 @@ pociones.pociones.forEach(pocion => {
                                     <label for="desinflamatorio" class="form-label">desinflamatorio</label>
                                     <textarea id="desinflamatorio${pocion.id}" name="desinflamatorio${pocion.id}" class="form-control">${pocion.desinflamatorio}</textarea>
                                     <div class="invalid-feedback" id="mensajeDesinflamatorio"></div>
-                                </div>
-
-                                 <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <label for="descripcion" class="form-label">Descripción</label>
-                                    <textarea id="descripcion${pocion.id}" name="descripcion${pocion.id}" class="form-control">${pocion.descripcion}</textarea>
-                                    <div class="invalid-feedback" id="mensajeDescripcion"></div>
                                 </div>
 
                                 <div class="col-sm-12 col-md-6 col-lg-6">
@@ -239,6 +244,12 @@ pociones.pociones.forEach(pocion => {
                                 </div>
 
                                 <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="descripcion" class="form-label">Descripción</label>
+                                    <textarea id="descripcion${pocion.id}" name="descripcion${pocion.id}" class="form-control">${pocion.descripcion}</textarea>
+                                    <div class="invalid-feedback" id="mensajeDescripcion"></div>
+                                </div>
+
+                                <div class="col-sm-12 col-md-6 col-lg-6">
                                     <label for="sanacion" class="form-label">Sanación</label>
                                     <input type="text" id="sanacion${pocion.id}" name="sanacion${pocion.id}" class="form-control" value="${esta[0]}">
                                     <div class="invalid-feedback" id="mensajeSanacion"></div>
@@ -286,11 +297,6 @@ pociones.pociones.forEach(pocion => {
                                     <div class="invalid-feedback" id="mensajeDesinflamatorio"></div>
                                 </div>
 
-                                 <div class="col-sm-12 col-md-6 col-lg-6">
-                                    <label for="descripcion" class="form-label">Descripción</label>
-                                    <textarea id="descripcion${pocion.id}" name="descripcion${pocion.id}" class="form-control">${pocion.descripcion}</textarea>
-                                    <div class="invalid-feedback" id="mensajeDescripcion"></div>
-                                </div>
 
                                 <div class="col-sm-12 col-md-6 col-lg-6">
                                     <label for="creador" class="form-label">Creador</label>
@@ -336,8 +342,6 @@ pociones.pociones.forEach(pocion => {
                         const dolorPocion = modalElement.querySelector(`#dolor${id}`).value;
                         const curativoPocion = modalElement.querySelector(`#curativo${id}`).value;
                         const creadorPocion = modalElement.querySelector(`#creador${id}`).value;
-                        const nivelPocion = modalElement.querySelector(`#nivel${id}`).value;
-        
                         const estadisticas = [sanacionPocion, envenenamientoPocion, analgesiaPocion, danoPocion, dolorPocion, curativoPocion].toString(", ");
         
                         let creador = '';
@@ -354,7 +358,6 @@ pociones.pociones.forEach(pocion => {
                             descripcion: descripcionPocion,
                             estadisticas: estadisticas,
                             idUsuario: creador.toString(),
-                            nivel: nivelPocion,
                             veri: 0,
                             veriD: 0
                         };

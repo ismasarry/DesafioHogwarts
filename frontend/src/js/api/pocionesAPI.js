@@ -41,7 +41,7 @@ export const getBuscarPocion = async (id_pocion) => {
         }
 
         const pocion = await respuesta.json();
-        console.log(pocion);
+      //  console.log(pocion);
         return pocion;
     } catch (error) {
         console.error('Error en la función getBuscarPocion:', error.message);
