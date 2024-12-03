@@ -123,6 +123,8 @@ Route::get('/mapas/{id}', [MapaMerodeadorController::class, 'getMapaPorId']);
 Route::post('/mapas', [MapaMerodeadorController::class, 'postMapa']); 
 Route::put('/mapas/{id}', [MapaMerodeadorController::class, 'putMapa']); 
 Route::delete('/mapas/{id}', [MapaMerodeadorController::class, 'deleteMapa']); 
+Route::get('/mapas/segundo/{segundo}', [MapaMerodeadorController::class, 'getMapaPorSegundo']); 
+
 
 //ismael sarrion
 Route::post('login', [AuthController::class, 'login']);

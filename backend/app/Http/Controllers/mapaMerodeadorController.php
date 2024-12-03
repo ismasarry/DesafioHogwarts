@@ -65,4 +65,18 @@ class MapaMerodeadorController extends Controller
 
         return response()->json(['message' => 'Mapa eliminado exitosamente']);
     }
+
+    public function getMapaPorSegundo($segundo) {
+        $mapas = MapaMerodeador::where('segundo', $segundo)->get(['fila', 'contenidoFila']);
+
+        if ($mapas->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron mapas para el segundo especificado'], 404);
+        }
+
+        return response()->json(['mapas' => $mapas], 200);
+    }
+
+
+
+
 }
