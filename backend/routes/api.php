@@ -41,13 +41,6 @@ Route::prefix('casa')->group(function () {
     Route::delete('/{id}', [casaController::class, 'deleteCasa']);
 });
 
-//Ismael Sarrion
-Route::prefix('usuarioRoles')->group(function () {
-    Route::get('/', [usuarioRolController::class, 'getTodosUsuarioRoles']);
-    Route::get('{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
-});
-
-
 //Jaime Ortega
 Route::prefix('usuarioRoles')->group(function () {
     Route::get('integrantes/{id}', [usuarioRolController::class, 'getTodosUsuarioRolPorIdRol']);
@@ -58,6 +51,9 @@ Route::prefix('usuarioRoles')->group(function () {
     //Raul Gutierrez
     Route::delete('{idUsuario}/{idRol}', [usuarioRolController::class, 'deleteUsuarioRolPorIds']);
 
+    //ismael sarrion
+    Route::get('/', [usuarioRolController::class, 'getTodosUsuarioRoles']);
+    Route::get('{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
 });
 
 //Raul Gutierrez
