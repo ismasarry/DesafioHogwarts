@@ -12,27 +12,23 @@ class mapaMerodeadorFactory extends Factory
 {
     public function definition(): array
     {
-        $mapa = [
-            ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'],
-            ['X', 'X', 'X', 'X', 'S', 'S', 'P', 'S', 'S', 'S', 'S', 'X', 'X', 'X'],
-            ['X', 'O', 'O', 'O', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'X', 'X', 'X'],
-            ['X', 'O', 'O', 'O', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'X', 'X', 'X'],
-            ['X', 'O', 'O', 'X', 'X', 'X', 'S', 'S', 'X', 'X', 'X', 'X', 'X', 'X'],
-            ['X', 'O', 'O', 'X', 'S', 'S', 'S', 'S', 'S', 'X', 'O', 'O', 'O', 'X'],
-            ['X', 'O', 'O', 'X', 'S', 'S', 'S', 'S', 'S', 'O', 'O', 'O', 'O', 'X'],
-            ['X', 'O', 'O', 'X', 'P', 'S', 'S', 'S', 'S', 'O', 'O', 'O', 'O', 'X'],
-            ['X', 'O', 'O', 'X', 'S', 'S', 'S', 'S', 'S', 'X', 'O', 'O', 'O', 'X'],
-            ['X', 'O', 'O', 'X', 'S', 'S', 'S', 'S', 'S', 'X', 'O', 'O', 'O', 'X'],
-            ['X', 'O', 'O', 'X', 'X', 'X', 'S', 'S', 'X', 'X', 'X', 'X', 'X', 'X'],
-            ['X', 'O', 'O', 'O', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'X', 'X', 'X'],
-            ['X', 'O', 'O', 'O', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'X', 'X', 'X'],
-            ['X', 'X', 'X', 'X', 'S', 'S', 'P', 'S', 'S', 'S', 'S', 'X', 'X', 'X'],
-            ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X', 'X']
-        ];
+        $mapa = $this->generarMapa();
 
         return [
             'tablero' => json_encode($mapa),
             'segundo' => 0,
+        ];
+    }
+
+    private function generarMapa(): array {
+        return [
+            ['x','x','x','x','x','p','x','x'],
+            ['x','s','s','s','s','s','s','x'],
+            ['p','s','s','s','s','s','s','x'],
+            ['x','s','s','s','s','s','s','x'],
+            ['x','s','s','s','s','s','s','p'],
+            ['x','s','s','s','s','s','s','x'],
+            ['x','x','p','x','x','x','x','x'],
         ];
     }
 }

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('mapa_merodeador', function (Blueprint $table) {
             $table->id();
-            $table->string('tablero', 255);
+            $table->integer('fila');
+            $table->string('contenidofila');
             $table->integer('segundo')->unsigned();
             $table->timestamps();
         });
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('mapa');
+        Schema::dropIfExists('mapa_merodeador');
     }
 };
