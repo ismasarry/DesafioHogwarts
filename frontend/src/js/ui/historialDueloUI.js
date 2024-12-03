@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     estado = "perdiste"
                 }
 
-                historial += `
+                historial = `
                 <p>En este turno usaste: ${hechizos.hechizos[(turnos[i].idHechizoUsadoUsuario) - 1].nombre}, el oponente usó: ${hechizos.hechizos[(turnos[i].idHechizoUsadoBot) - 1].nombre} y ${estado}</p>
             `
                 body.innerHTML += historial
