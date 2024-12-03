@@ -13,6 +13,7 @@ use App\Http\Controllers\turnoDueloController;
 use App\Http\Controllers\usuarioRolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\IngredientesController;
+use App\Http\Controllers\MapaMerodeadorController;
 use App\Http\Controllers\PocionesController;
 use App\Http\Controllers\RecetasController;
 use Illuminate\Http\Request;
@@ -116,6 +117,12 @@ Route::get('/recetas/{id}', [RecetasController::class, 'getRecetaPorId']);
 Route::post('/recetas', [RecetasController::class, 'postReceta']);
 Route::put('/recetas/{id}', [RecetasController::class, 'putReceta']);
 Route::delete('/recetas/{id}', [RecetasController::class, 'deleteReceta']);
+
+Route::get('/mapas', [MapaMerodeadorController::class, 'getTodosMapas']); 
+Route::get('/mapas/{id}', [MapaMerodeadorController::class, 'getMapaPorId']); 
+Route::post('/mapas', [MapaMerodeadorController::class, 'postMapa']); 
+Route::put('/mapas/{id}', [MapaMerodeadorController::class, 'putMapa']); 
+Route::delete('/mapas/{id}', [MapaMerodeadorController::class, 'deleteMapa']); 
 
 //ismael sarrion
 Route::post('login', [AuthController::class, 'login']);
