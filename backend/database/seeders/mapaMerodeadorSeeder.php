@@ -13,6 +13,22 @@ class mapaMerodeadorSeeder extends Seeder
      */
     public function run(): void
     {
-        MapaMerodeador::factory()->create();
+        $mapa = [
+            ['X', 'X', 'X', 'X', 'X', 'P', 'X', 'X'],
+            ['X', 'S', 'S', 'S', 'S', 'S', 'S', 'X'],
+            ['P', 'S', 'S', 'S', 'S', 'S', 'S', 'X'],
+            ['X', 'S', 'S', 'S', 'S', 'S', 'S', 'X'],
+            ['X', 'S', 'S', 'S', 'S', 'S', 'S', 'P'],
+            ['X', 'S', 'S', 'S', 'S', 'S', 'S', 'X'],
+            ['X', 'X', 'P', 'X', 'X', 'X', 'X', 'X'],
+        ];
+
+        foreach ($mapa as $index => $fila) {
+            MapaMerodeador::create([
+                'fila' => $index++,
+                'contenidofila' => json_encode($fila),
+                'segundo' => 0,
+            ]);
+        }
     }
 }
