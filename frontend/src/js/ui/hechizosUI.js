@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         winRateDiv.innerHTML += winRate.winRate + `%`
         
-        anadirHechizoUI()
+        anadirHechizoUI(usuarioInfo.Usuario)
         duelo(usuario)
 
         const tabla = $('#hechizos').DataTable()
@@ -40,20 +40,36 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                     }
                 }
-                const row = tabla.row.add([
-                    hec.nombre,
-                    esta[0],
-                    esta[1],
-                    esta[2],
-                    esta[3],
-                    esta[4],
-                    esta[5],
-                    creador,
-                    hec.nivel,
-                    `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${hec.id}"><i class="fas fa-edit"></i> Editar</button>` +
-                    `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${hec.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>` +
-                    `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#veriModal${hec.id}"><i class="fas fa-edit"></i> Verificar</button>`
-                ]).draw()
+                let row
+                if (hec.idUsuario == 0) {
+                    row = tabla.row.add([
+                        hec.nombre,
+                        esta[0],
+                        esta[1],
+                        esta[2],
+                        esta[3],
+                        esta[4],
+                        esta[5],
+                        creador,
+                        hec.nivel,
+                        "Intocable"
+                    ]).draw()
+                }else{
+                    row = tabla.row.add([
+                        hec.nombre,
+                        esta[0],
+                        esta[1],
+                        esta[2],
+                        esta[3],
+                        esta[4],
+                        esta[5],
+                        creador,
+                        hec.nivel,
+                        `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${hec.id}"><i class="fas fa-edit"></i> Editar</button>` +
+                        `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${hec.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>` +
+                        `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#veriModal${hec.id}"><i class="fas fa-edit"></i> Verificar</button>`
+                    ]).draw()
+                }
     
                 const editarHechizo = ` 
     <div class="modal" id="myModal${hec.id}">
@@ -100,15 +116,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
                             <div class="invalid-feedback" id="mensajeAccion"></div>
                         </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6">
-                            <label for="creador" class="form-label">Creador</label>
-                            <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
-                            <div class="invalid-feedback" id="mensajeCreador"></div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6">
-                            <label for="nivel" class="form-label">Nivel de hechizo</label>
-                            <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
-                            <div class="invalid-feedback" id="mensajeNivel"></div>
                         </div>
                     </div>
                 </div>
@@ -178,7 +185,7 @@ const eliminarHechizo = `
 
 
             //Dumbledore
-            }else if (roles.roles[0].nombre == "Dumbledore" && hec.veri == 1 && hec.veriD == 0){
+            }else if (roles.roles[0].nombre == "Dumbledore" && hec.veriD == 0){
                 
                 const esta = (hec.estadisticas).split(',')
                 let creador = 0
@@ -191,20 +198,36 @@ const eliminarHechizo = `
                         }
                     }
                 }
-                const row = tabla.row.add([
-                    hec.nombre,
-                    esta[0],
-                    esta[1],
-                    esta[2],
-                    esta[3],
-                    esta[4],
-                    esta[5],
-                    creador,
-                    hec.nivel,
-                    `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${hec.id}"><i class="fas fa-edit"></i> Editar</button>` +
-                    `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${hec.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>` +
-                    `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#veriDModal${hec.id}"><i class="fas fa-edit"></i> Verificar</button>`
-                ]).draw()
+                let row
+                if (hec.idUsuario == 0) {
+                    row = tabla.row.add([
+                        hec.nombre,
+                        esta[0],
+                        esta[1],
+                        esta[2],
+                        esta[3],
+                        esta[4],
+                        esta[5],
+                        creador,
+                        hec.nivel,
+                        "Intocable"
+                    ]).draw()
+                }else{
+                    row = tabla.row.add([
+                        hec.nombre,
+                        esta[0],
+                        esta[1],
+                        esta[2],
+                        esta[3],
+                        esta[4],
+                        esta[5],
+                        creador,
+                        hec.nivel,
+                        `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${hec.id}"><i class="fas fa-edit"></i> Editar</button>` +
+                        `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${hec.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>` +
+                        `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#veriDModal${hec.id}"><i class="fas fa-edit"></i> Verificar</button>`
+                    ]).draw()
+                }
     
                 const editarHechizo = ` 
     <div class="modal" id="myModal${hec.id}">
@@ -250,16 +273,6 @@ const eliminarHechizo = `
                             <label for="accion" class="form-label">Acción</label>
                             <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
                             <div class="invalid-feedback" id="mensajeAccion"></div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6">
-                            <label for="creador" class="form-label">Creador</label>
-                            <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
-                            <div class="invalid-feedback" id="mensajeCreador"></div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6">
-                            <label for="nivel" class="form-label">Nivel de hechizo</label>
-                            <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
-                            <div class="invalid-feedback" id="mensajeNivel"></div>
                         </div>
                     </div>
                 </div>
@@ -341,19 +354,35 @@ const eliminarHechizo = `
                         }
                     }
                 }
-                const row = tabla.row.add([
-                    hec.nombre,
-                    esta[0],
-                    esta[1],
-                    esta[2],
-                    esta[3],
-                    esta[4],
-                    esta[5],
-                    creador,
-                    hec.nivel,
-                    `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${hec.id}"><i class="fas fa-edit"></i> Editar</button>` +
-                    `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${hec.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>`
-                ]).draw()
+                let row
+                if (hec.idUsuario == 0) {
+                    row = tabla.row.add([
+                        hec.nombre,
+                        esta[0],
+                        esta[1],
+                        esta[2],
+                        esta[3],
+                        esta[4],
+                        esta[5],
+                        creador,
+                        hec.nivel,
+                        "Intocable"
+                    ]).draw()
+                }else{
+                    row = tabla.row.add([
+                        hec.nombre,
+                        esta[0],
+                        esta[1],
+                        esta[2],
+                        esta[3],
+                        esta[4],
+                        esta[5],
+                        creador,
+                        hec.nivel,
+                        `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${hec.id}"><i class="fas fa-edit"></i> Editar</button>` +
+                        `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${hec.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>`
+                    ]).draw()
+                }
     
                 const editarHechizo = ` 
     <div class="modal" id="myModal${hec.id}">
@@ -399,16 +428,6 @@ const eliminarHechizo = `
                             <label for="accion" class="form-label">Acción</label>
                             <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
                             <div class="invalid-feedback" id="mensajeAccion"></div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6">
-                            <label for="creador" class="form-label">Creador</label>
-                            <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
-                            <div class="invalid-feedback" id="mensajeCreador"></div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-6">
-                            <label for="nivel" class="form-label">Nivel de hechizo</label>
-                            <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
-                            <div class="invalid-feedback" id="mensajeNivel"></div>
                         </div>
                     </div>
                 </div>
@@ -463,19 +482,35 @@ const eliminarHechizo = `
                         }
                     }
                 }
-                const row = tabla.row.add([
-                    hec.nombre,
-                    esta[0],
-                    esta[1],
-                    esta[2],
-                    esta[3],
-                    esta[4],
-                    esta[5],
-                    creador,
-                    hec.nivel,
-                    `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${hec.id}"><i class="fas fa-edit"></i> Editar</button>` +
-                    `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${hec.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>`
-                ]).draw()
+                let row
+                if (hec.idUsuario == 0) {
+                    row = tabla.row.add([
+                        hec.nombre,
+                        esta[0],
+                        esta[1],
+                        esta[2],
+                        esta[3],
+                        esta[4],
+                        esta[5],
+                        creador,
+                        hec.nivel,
+                        "Intocable"
+                    ]).draw()
+                }else{
+                    row = tabla.row.add([
+                        hec.nombre,
+                        esta[0],
+                        esta[1],
+                        esta[2],
+                        esta[3],
+                        esta[4],
+                        esta[5],
+                        creador,
+                        hec.nivel,
+                        `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${hec.id}"><i class="fas fa-edit"></i> Editar</button>` +
+                        `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${hec.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>`
+                    ]).draw()
+                }
     
                 const editarHechizo = ` 
                 <div class="modal" id="myModal${hec.id}">
@@ -521,16 +556,6 @@ const eliminarHechizo = `
                                         <label for="accion" class="form-label">Acción</label>
                                         <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
                                         <div class="invalid-feedback" id="mensajeAccion"></div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-6">
-                                        <label for="creador" class="form-label">Creador</label>
-                                        <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
-                                        <div class="invalid-feedback" id="mensajeCreador"></div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-6">
-                                        <label for="nivel" class="form-label">Nivel de hechizo</label>
-                                        <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
-                                        <div class="invalid-feedback" id="mensajeNivel"></div>
                                     </div>
                                 </div>
                             </div>
@@ -614,19 +639,35 @@ const eliminarHechizo = `
                         }
                     }
                 }
-                const row = tabla.row.add([
-                    hec.nombre,
-                    esta[0],
-                    esta[1],
-                    esta[2],
-                    esta[3],
-                    esta[4],
-                    esta[5],
-                    creador,
-                    hec.nivel,
-                    `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${hec.id}"><i class="fas fa-edit"></i> Editar</button>` +
-                    `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${hec.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>`
-                ]).draw()
+                let row
+                if (hec.idUsuario) {
+                    row = tabla.row.add([
+                        hec.nombre,
+                        esta[0],
+                        esta[1],
+                        esta[2],
+                        esta[3],
+                        esta[4],
+                        esta[5],
+                        creador,
+                        hec.nivel,
+                        "Intocable"
+                    ]).draw()
+                }else{
+                    row = tabla.row.add([
+                        hec.nombre,
+                        esta[0],
+                        esta[1],
+                        esta[2],
+                        esta[3],
+                        esta[4],
+                        esta[5],
+                        creador,
+                        hec.nivel,
+                        `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${hec.id}"><i class="fas fa-edit"></i> Editar</button>` +
+                        `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${hec.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>`
+                    ]).draw()
+                }
     
                 const editarHechizo = ` 
                 <div class="modal" id="myModal${hec.id}">
@@ -672,16 +713,6 @@ const eliminarHechizo = `
                                         <label for="accion" class="form-label">Acción</label>
                                         <input type="text" id="accion${hec.id}" name="accion${hec.id}" class="form-control" value=${esta[5]}>
                                         <div class="invalid-feedback" id="mensajeAccion"></div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-6">
-                                        <label for="creador" class="form-label">Creador</label>
-                                        <input type="text" id="creador${hec.id}" name="creador${hec.id}" class="form-control" value=${creador}>
-                                        <div class="invalid-feedback" id="mensajeCreador"></div>
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-6">
-                                        <label for="nivel" class="form-label">Nivel de hechizo</label>
-                                        <input type="text" id="nivel${hec.id}" name="nivel${hec.id}" class="form-control" value=${hec.nivel}>
-                                        <div class="invalid-feedback" id="mensajeNivel"></div>
                                     </div>
                                 </div>
                             </div>
@@ -799,8 +830,9 @@ const eliminarHechizo = `
         }
     }
 
-    async function anadirHechizoUI() {
+    async function anadirHechizoUI(usuario) {
         const anadirBtn = document.getElementById(`anadirBtn`)
+        console.log(usuario.id)
         if (anadirBtn) {
 
             anadirBtn.addEventListener('click', async () => {
@@ -814,29 +846,30 @@ const eliminarHechizo = `
                     const danoHec = modalElement.querySelector(`#dano`).value
                     const invocacionHec = modalElement.querySelector(`#invocacion`).value
                     const accionHec = modalElement.querySelector(`#accion`).value
-                    const creadorHec = modalElement.querySelector(`#creador`).value
                     const nivelHec = modalElement.querySelector(`#nivel`).value
 
                     const esta = [ataqueHec,defensaHec,sanacionHec,danoHec,invocacionHec,accionHec]
                     const estadisticas = esta.toString(", ")
 
-                    let creador = ''
-
-                    if(creadorHec == 'Desconocido'){
-                        creador = 0
+                    if (nivelHec < usuario.nivel) {
+                        const hechizoObjeto = {
+                            nombre: nombreHec,
+                            estadisticas: estadisticas,
+                            idUsuario: usuario.id.toString(),
+                            nivel: nivelHec
+                        }
+    
+                        await postHechizo(hechizoObjeto)
                     }else{
-                        const creadores = await getTodosUsuarios()
-                        creador = (creadores.Usuario.find((nombre) => nombre.nombre = creadorHec)).id
+                        const hechizoObjeto = {
+                            nombre: nombreHec,
+                            estadisticas: estadisticas,
+                            idUsuario: usuario.id.toString(),
+                            nivel: usuario.nivel
+                        }
+    
+                        await postHechizo(hechizoObjeto)
                     }
-
-                    const hechizoObjeto = {
-                        nombre: nombreHec,
-                        estadisticas: estadisticas,
-                        idUsuario: creador.toString(),
-                        nivel: nivelHec
-                    }
-
-                    await postHechizo(hechizoObjeto)
 
                     const modal = new bootstrap.Modal(modalElement)
                     modal.hide();
