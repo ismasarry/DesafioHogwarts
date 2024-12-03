@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
             asignaturaProfesorSeeder::class,
             hechizosSeeder::class,
             dueloSeeder::class,
-            turnoDueloSeeder::class
+            turnoDueloSeeder::class,
             PocionesSeeder::class,
             IngredienteSeeder::class,
             RecetaSeeder::class
