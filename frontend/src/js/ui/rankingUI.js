@@ -6,8 +6,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     cargarSideBar()
     
     const casas = await getTodosCasas()
+    casas.sort((a, b) => b.puntos - a.puntos)
     casas.forEach(casa => {
-        const mostrarTop = `
+        let mostrarTop = `
         <div class="col-md-3">
             <div class="card mb-4">
                 <img src="./../assets/${casa.nombre}.png" class="card-img-top">
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             </div>
         </div>
     `
-    document.body.insertAdjacentHTML('beforeend', mostrarTop)
+    const main = document.getElementById("main-content")
+    main.innerHTML += mostrarTop
     })
 })
