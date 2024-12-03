@@ -4,23 +4,24 @@ import { getTodosAsignaturas, postAsignatura, putAsignatura, deleteAsignatura } 
 import { getTodosAsignaturaProfesores, postAsignaturaProfesor, deleteAsignaturaProfesorEspecifico } from "../api/asignaturaProfesorAPI.js"
 import { getTodosAsignaturaAlumnos, postAsignaturaAlumno, deleteAsignaturaAlumnoEspecifico } from "../api/asignaturaAlumnoAPI.js"
 import { cargarSideBar } from "../components/cargarSideBar.js"
+import languageES from '../local-DataTables/es-ES.json'
 
 await cargarSideBar()
 
 const init = async () => {
     const tabla = $('#asignaturas').DataTable({
         columns: [
-            { title: 'ID', data: 'id'/*, visible: false*/ },
+            { title: 'ID', data: 'id' },
             { title: 'Asignatura', data: 'nombre' },
             { title: 'Profesor/es', data: 'profesores' },
             { title: 'Alumnos', data: 'alumnos' },
             { title: 'Acciones', data: 'acciones', orderable: false }
         ],
-        language: {
-            url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json'
-        },
-        pageLength: 10,
-        responsive: true
+        language: languageES,
+        responsive: true,
+        scrollX: true,
+        pagingType: 'full_numbers',
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
     })
 
     const [asignaturas, profesoresData, profesorAsignatura, alumnosData, alumnosAsignatura] = await Promise.all([
@@ -253,13 +254,13 @@ const init = async () => {
         const listaNoAsisten = document.getElementById(`noAsisten${asig.id}`)
 
         if (listaImparten && listaNoImparten) {
-            addClickEventToProfesores(listaImparten, listaNoImparten, asig.id)
-            addClickEventToProfesores(listaNoImparten, listaImparten, asig.id)
+            addClickEventToProfesores(listaImparten, listaNoImparten, asig.id, tabla)
+            addClickEventToProfesores(listaNoImparten, listaImparten, asig.id, tabla)
         }
 
         if (listaAsisten && listaNoAsisten) {
-            addClickEventToAlumnos(listaAsisten, listaNoAsisten, asig.id)
-            addClickEventToAlumnos(listaNoAsisten, listaAsisten, asig.id)
+            addClickEventToAlumnos(listaAsisten, listaNoAsisten, asig.id, tabla)
+            addClickEventToAlumnos(listaNoAsisten, listaAsisten, asig.id, tabla)
         }
 
         document.querySelector(`#guardarBtn${asig.id}`).addEventListener('click', async () => {
@@ -342,7 +343,7 @@ const init = async () => {
     })
 }
 
-const addClickEventToProfesores = (lista, listaContraria, idAsignatura) => {
+const addClickEventToProfesores = (lista, listaContraria, idAsignatura, tabla) => {
     lista.querySelectorAll('.profesor').forEach(i => {
         const manejarClick = async () => {
             const profesorId = i.getAttribute('data-id')
@@ -372,6 +373,13 @@ const addClickEventToProfesores = (lista, listaContraria, idAsignatura) => {
 
                 addClickEventToProfesores(listaContraria, lista, idAsignatura)
             }
+            const profesoresActualizados = Array.from(document.getElementById(`imparten${idAsignatura}`).querySelectorAll('li'))
+                .map(profe => profe.textContent)
+                .join(', ')
+
+            const fila = tabla.row(`#row-${idAsignatura}`).data()
+            fila.profesores = profesoresActualizados || '-'
+            tabla.row(`#row-${idAsignatura}`).data(fila).invalidate().draw(false)
         }
 
         i.removeEventListener('click', manejarClick)
@@ -398,7 +406,7 @@ const removeProfesores = async (idAsignatura, idProfesor) => {
     }
 }
 
-const addClickEventToAlumnos = (lista, listaContraria, idAsignatura) => {
+const addClickEventToAlumnos = (lista, listaContraria, idAsignatura, tabla) => {
     lista.querySelectorAll('.alumno').forEach(i => {
         const manejarClick = async () => {
             const alumnoId = i.getAttribute('data-id')
@@ -428,6 +436,11 @@ const addClickEventToAlumnos = (lista, listaContraria, idAsignatura) => {
 
                 addClickEventToAlumnos(listaContraria, lista, idAsignatura)
             }
+            const alumnosActualizados = Array.from(document.getElementById(`asisten${idAsignatura}`).querySelectorAll('li')).length
+
+            const fila = tabla.row(`#row-${idAsignatura}`).data()
+            fila.alumnos = alumnosActualizados
+            tabla.row(`#row-${idAsignatura}`).data(fila).invalidate().draw(false)
         }
 
         i.removeEventListener('click', manejarClick)
