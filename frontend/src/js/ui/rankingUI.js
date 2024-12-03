@@ -3,7 +3,7 @@ import { getTodosCasas } from "../api/casaAPI.js";
 import { cargarSideBar } from "../components/cargarSideBar.js"
 
 document.addEventListener("DOMContentLoaded", async () => {
-    cargarSideBar()
+    
     
     const casas = await getTodosCasas()
     casas.sort((a, b) => b.puntos - a.puntos)
@@ -23,3 +23,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     main.innerHTML += mostrarTop
     })
 })
+
+cargarSideBar()
