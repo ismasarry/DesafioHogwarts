@@ -15,6 +15,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\IngredientesController;
 use App\Http\Controllers\PocionesController;
 use App\Http\Controllers\RecetasController;
+use App\Http\Middleware\RolMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -52,11 +53,11 @@ Route::delete('/usuarioRoles/{id}', [usuarioRolController::class, 'deleteUsuario
 Route::delete('/usuarioRoles/{idUsuario}/{idRol}', [usuarioRolController::class, 'deleteUsuarioRolPorIds']);
 
 //Raul Gutierrez
-Route::get('/usuario', [UsuarioController::class, 'getTodosUsuarios']);
+Route::get('usuario', [UsuarioController::class, 'getTodosUsuarios']);
 Route::get('usuario/{id}', [UsuarioController::class, 'getUsuarioPorId']);
-Route::post('usuario', [UsuarioController::class, 'postUsuario']);
-Route::put('usuario/{id}', [UsuarioController::class, 'putUsuario']);
-Route::delete('usuario/{id}', [UsuarioController::class, 'deleteUsuario']);
+Route::post('usuario', [UsuarioController::class, 'postUsuario'])->middleware('roles:admin|Dumbledore');
+Route::put('usuario/{id}', [UsuarioController::class, 'putUsuario'])->middleware('roles:admin|Dumbledore');
+Route::delete('usuario/{id}', [UsuarioController::class, 'deleteUsuario'])->middleware('roles:admin|Dumbledore');
 
 //Raul Gutierrez
 Route::get('/asignatura', [asignaturaController::class, 'getTodosAsignaturas']);
@@ -68,11 +69,12 @@ Route::delete('asignatura/{id}', [asignaturaController::class, 'deleteAsignatura
 //Raul Gutierrez
 Route::get('/asignaturaAlumno', [asignaturaAlumnoController::class, 'getTodosAsignaturaAlumnos']);
 Route::get('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorId']);
-//Jaime Ortega (getAsignaturaAlumnoPorIdAlumno)
-Route::get('asignaturaAlumno/alumno/{id}', [asignaturaAlumnoController::class, 'getAsignaturaProfesorPorIdAlumno']);
 Route::post('asignaturaAlumno', [asignaturaAlumnoController::class, 'postAsignaturaAlumno']);
 Route::put('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'putAsignaturaAlumno']);
 Route::delete('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumno']);
+//Jaime Ortega (getAsignaturaAlumnoPorIdAlumno)
+Route::get('asignaturaAlumno/alumno/{id}', [asignaturaAlumnoController::class, 'getAsignaturaProfesorPorIdAlumno']);
+
 //Jaime Ortega
 Route::delete('asignaturaAlumno/{idAsignatura}/{idAlumno}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumnoEspecifico']);
 //ismael sarrion
