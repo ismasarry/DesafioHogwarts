@@ -23,6 +23,7 @@ class RolMiddleware
         $usuario = Auth::usuario();
         $rolesArray = explode('|', $roles);
 
+        //probar mejor mañana que puede ser que en lugar del nombre sea el idRol
         if (!$usuario->roles()->where('nombre', $rolesArray)->exists()) {
             return response()->json(['error' => 'Acceso denegado: no tienes el rol adecuado'], 403);
         }
