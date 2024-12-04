@@ -1,5 +1,5 @@
 //Raul Gutierrez
-import { getBuscarUsuario, getTodosUsuarios, postUsuario, putUsuario } from "../api/usuarioAPI.js";
+import { getBuscarUsuario, getTodosUsuarios, putUsuario } from "../api/usuarioAPI.js";
 import { getTodosCasas } from "../api/casaAPI.js";
 import { getTodosUsuariosRoles, mostrarRolesUsuario, deleteUsuarioRol, postUsuarioRol } from "../api/usuarioRolAPI.js";
 import { cargarSideBar } from "../components/cargarSideBar.js"
@@ -244,8 +244,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     const nombreUsu = modalElement.querySelector(`#nombre${id}`).value
                     const gmailUsu = modalElement.querySelector(`#gmail${id}`).value
                     const contraUsu = modalElement.querySelector(`#contra${id}`).value
+                    let usuarioObjeto
 
-                    const usuarioObjeto = {
+                    if (contraUsu.trim() === "") {
+                      usuarioObjeto = {
+                        nombre: nombreUsu,
+                        gmail: gmailUsu,
+                        idCasa: usuarioU.idCasa,
+                        nivel: usuarioU.nivel,
+                        exp: usuarioU.exp,
+                        foto: usuarioU.foto,
+                        activo: usuarioU.activo
+                      }
+                    }else{
+                      usuarioObjeto = {
                         nombre: nombreUsu,
                         gmail: gmailUsu,
                         contrasena: contraUsu,
@@ -254,6 +266,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         exp: usuarioU.exp,
                         foto: usuarioU.foto,
                         activo: usuarioU.activo
+                      }
                     }
                     await putUsuario(id, usuarioObjeto)
 
