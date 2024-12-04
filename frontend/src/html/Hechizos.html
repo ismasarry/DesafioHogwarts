@@ -10,43 +10,44 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="./../css/Hechizos.css" />
+    <link rel="stylesheet" href="./../css/inicio.css" />
+    <link rel="stylesheet" href="./../css/usuario.css" />
 </head>
 
 <body>
     <div class="d-flex" id="wrapper">
         <div id="header-container"></div>
+        <main class="main-content">
+            <div class="row m-2">
+                <div id="winRate">El poncentaje de victorias es de un: </div>
+                <button type="button" class="btn btn-primary btn-sm" onclick="location.href='./historialDuelo.html'"><i class="fas fa-edit"></i>Historial de duelos</button>
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#dueloModal"><i class="fas fa-edit"></i>Duelo</button>
+                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                    data-bs-target="#anadirModal"><i class="fas fa-edit"></i>Añadir hechizo</button>
+                <h3 class="fs-3 mb-3">Lista de Hechizos disponibles</h3>
+                <div class="col-table">
+                    <table id="hechizos" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Ataque</th>
+                                <th>Defensa</th>
+                                <th>Sanación</th>
+                                <th>Daño</th>
+                                <th>Invocación</th>
+                                <th>Acción</th>
+                                <th>Creador</th>
+                                <th>Nivel</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </main>
     </div>
 
-    <main class="main-content">
-        <div class="row m-2">
-            <div id="winRate">El poncentaje de victorias es de un: </div>
-            <a type="button" class="btn btn-primary btn-sm" href="./historialDuelo.html"><i class="fas fa-edit"></i>Historial de duelos</a>
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                data-bs-target="#dueloModal"><i class="fas fa-edit"></i>Duelo</button>
-            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                data-bs-target="#anadirModal"><i class="fas fa-edit"></i>Añadir hechizo</button>
-            <h3 class="fs-3 mb-3">Lista de Hechizos disponibles</h3>
-            <div class="col-table">
-                <table id="hechizos" class="table table-striped" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Ataque</th>
-                            <th>Defensa</th>
-                            <th>Sanación</th>
-                            <th>Daño</th>
-                            <th>Invocación</th>
-                            <th>Acción</th>
-                            <th>Creador</th>
-                            <th>Nivel</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-        </div>
-    </main>
 
     <div class="modal" id="anadirModal">
         <div class="modal-dialog modal-md">
