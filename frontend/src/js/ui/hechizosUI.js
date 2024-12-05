@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
                 let row
-                if (hec.idUsuario == 0) {
+                if (hec.idUsuario == 0 || hec.idUsuario != usuarioInfo.Usuario.id) {
                     row = tabla.row.add([
                         hec.nombre,
                         esta[0],
@@ -355,7 +355,7 @@ const eliminarHechizo = `
                     }
                 }
                 let row
-                if (hec.idUsuario == 0) {
+                if (hec.idUsuario == 0 || hec.idUsuario != usuarioInfo.Usuario.id) {
                     row = tabla.row.add([
                         hec.nombre,
                         esta[0],
@@ -640,7 +640,7 @@ const eliminarHechizo = `
                     }
                 }
                 let row
-                if (hec.idUsuario) {
+                if (hec.idUsuario == 0 || hec.idUsuario != usuarioInfo.Usuario.id) {
                     row = tabla.row.add([
                         hec.nombre,
                         esta[0],
