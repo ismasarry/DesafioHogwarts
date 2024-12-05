@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('mapa_merodeador', function (Blueprint $table) {
             $table->id();
             $table->integer('fila');
-            $table->string('contenidofila');
+            $table->json('contenidofila');
             $table->integer('segundo')->unsigned();
             $table->timestamps();
         });

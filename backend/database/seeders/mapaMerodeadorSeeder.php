@@ -23,10 +23,14 @@ class mapaMerodeadorSeeder extends Seeder
             ['X', 'X', 'P', 'X', 'X', 'X', 'X', 'X'],
         ];
 
-        foreach ($mapa as $index => $fila) {
+        foreach ($mapa as $filaId => $fila) {
+            $filaJSON = array_map(function ($casilla) {
+                return ['tipo' => $casilla, 'persona' => null];
+            }, $fila);
+
             MapaMerodeador::create([
-                'fila' => $index++,
-                'contenidofila' => json_encode($fila),
+                'fila' => $filaId++,
+                'contenidofila' => json_encode($filaJSON),
                 'segundo' => 0,
             ]);
         }

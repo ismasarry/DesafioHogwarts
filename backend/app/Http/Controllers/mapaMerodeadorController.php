@@ -73,7 +73,7 @@ class MapaMerodeadorController extends Controller
 
     public function getMapaPorSegundo($segundo)
     {
-        $mapaSegundo = MapaMerodeador::where('segundo', $segundo)->get();
+        $mapaSegundo = MapaMerodeador::where('segundo', $segundo)->get(['fila', 'contenidofila']);
 
         if ($mapaSegundo->isEmpty()) {
             return response()->json(['message' => 'No se encontraron mapas para el segundo especificado'], 404);
@@ -85,7 +85,7 @@ class MapaMerodeadorController extends Controller
     //Jaime Ortega
     public function getMapaBase()
     {
-        $mapaBase = MapaMerodeador::where('segundo', 0)->orderBy('fila')->get();
+        $mapaBase = MapaMerodeador::where('segundo', 0)->orderBy('fila')->get(['fila', 'contenidofila']);
 
         if ($mapaBase->isEmpty()) {
             return response()->json(['message' => 'Mapa no encontrado'], 404);
