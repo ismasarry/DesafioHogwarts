@@ -1,5 +1,5 @@
 
-//Raul Gutierrez, Jaime Ortea, Ismael Sarrion
+//Raul Gutierrez, Jaime Ortega, Ismael Sarrion
 export const constantes ={
     tablaNivel : [
         { nivel: 1, minExp: 0, maxExp: 50 },
@@ -10,22 +10,26 @@ export const constantes ={
     ],
 
     urlApi: 'http://127.0.0.1:8000/api/',
+
     usu: 'usuario/',
-    casa: 'casa/',
     usuRol: 'usuarioRoles/',
-    hechizo: 'hechizos/',
+
+    casa: 'casa/',
+
     duelo : 'duelo/',
     turnoDuelo: 'turnoDuelo/',
+
     registro: 'register',
     log:'login/',
     logout: 'logout/',
 
     enviarGmail:'enviar/',
 
+    hechizo: 'hechizos/',
+
     pociones:'pociones/',
     ingredientes:'ingredientes/',
     recetas:'recetas/',
-
 
     nombreRegex: /^[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]{2,50}$/,
     gmailRegex: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
@@ -34,4 +38,6 @@ export const constantes ={
     asignatura: 'asignatura/',
     asignaturaAlumno: 'asignaturaAlumno/',
     asignaturaProfesor: 'asignaturaProfesor/',
+
+    mapa: 'mapa/',
 }
