@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
         usuarios.Usuario.forEach(usu => {
             if (usu.activo == 1) {
                 const row = tabla.row.add([
-                    usu.foto,
+                    `<img src="${usu.foto}"/>`,
                     usu.nombre,
                     usu.gmail,
                     casas[usu.idCasa-1].nombre,
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             } else {
                 const row = tabla.row.add([
-                    usu.foto,
+                    `<img src="${usu.foto}"/>`,
                     usu.nombre,
                     usu.gmail,
                     casas[usu.idCasa-1].nombre,

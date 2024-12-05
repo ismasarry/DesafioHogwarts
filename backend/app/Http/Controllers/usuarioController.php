@@ -51,16 +51,13 @@ class UsuarioController extends Controller
                 'idCasa' => $request['idCasa'],
                 'nivel' => $request['nivel'],
                 'exp' => $request['exp'],
-                'foto' => $request->$fotoUrl,
+                'foto' => $fotoUrl,
                 'activo' => $request['activo']
             ]);
             return response()->json(['Usuario' => $usuario], Response::HTTP_CREATED);
         }
-        }
-    // }
+    }
 
-
-    
     public function putUsuario(Request $request, $id){
         $usuario = Usuario::find($id);
 
@@ -91,7 +88,7 @@ class UsuarioController extends Controller
         $usuario = Usuario::find($id);
 
         $publicId = pathinfo($usuario->foto, PATHINFO_FILENAME);
-        //Cloudinary::destroy($publicId);
+        Cloudinary::destroy($publicId);
 
         $usuario->delete();
 
