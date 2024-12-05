@@ -13,15 +13,15 @@ export const getTodosAsignaturas = async () => {
         })
 
         if (!respuesta.ok){
-            throw new Error(`Error al obtener la lista de asignaturas. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al obtener la lista de asignaturas. Código de estado: ${respuesta.status}`)
         }
 
         const asignaturas = await respuesta.json()
         return asignaturas.asignatura
 
     } catch (error) {
-        console.error('Error en la función getTodosAsignaturas:', error.message);
-        throw error;
+        console.error('Error en la función getTodosAsignaturas:', error.message)
+        throw error
     }
 }
 
@@ -37,12 +37,12 @@ export const getBuscarAsignatura = async (id_asignatura) => {
         })
 
         if (!respuesta.ok) {
-            throw new Error(`Error al obtener la asignatura. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al obtener la asignatura. Código de estado: ${respuesta.status}`)
         }
 
-        const asignatura = await respuesta.json();
+        const asignatura = await respuesta.json()
         console.log(asignatura)
-        return asignatura;
+        return asignatura
     } catch (error) {
         console.error('Error en la función getBuscarAsignatura:', error.message)
         throw error
@@ -51,6 +51,9 @@ export const getBuscarAsignatura = async (id_asignatura) => {
 
 export const postAsignatura = async (asignaturaCreada) => {
     const rutaAsignatura = constantes.urlApi + constantes.asignatura
+    asignaturaCreada = {
+        nombre: asignaturaCreada
+    }
     
     try {
         const respuesta = await fetch(rutaAsignatura, {
@@ -61,15 +64,16 @@ export const postAsignatura = async (asignaturaCreada) => {
             },
             body: JSON.stringify(asignaturaCreada),
         })
+        console.log('Datos enviados:', JSON.stringify(asignaturaCreada))
         if (!respuesta.ok) {
-            throw new Error(`Error al añadir la asignatura. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al añadir la asignatura. Código de estado: ${respuesta.status}`)
         }
 
-        const resultado = await respuesta.json();
-        return resultado;
+        const resultado = await respuesta.json()
+        return resultado
     } catch (error) {
-        console.error('Error en la función postAsignatura:', error.message);
-        throw error;
+        console.error('Error en la función postAsignatura:', error.message)
+        throw error
     }
 }
 
@@ -83,18 +87,18 @@ export const putAsignatura = async (id_asignatura, asignatura) => {
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify(asignatura),
-        });
+        })
 
         if (!respuesta.ok) {
 
-            throw new Error(`Error al editar la asignatura. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al editar la asignatura. Código de estado: ${respuesta.status}`)
         }
 
-        const resultado = await respuesta.json();
-        return resultado;
+        const resultado = await respuesta.json()
+        return resultado
     } catch (error) {
-        console.error('Error en la función putAsignatura:', error.message);
-        throw error;
+        console.error('Error en la función putAsignatura:', error.message)
+        throw error
     }
 }
 
@@ -107,14 +111,14 @@ export const deleteAsignatura = async (id_asignatura) => {
             headers: {
                 'Content-Type': 'application/json'
             }
-        });
+        })
 
         if (!respuesta.ok) {
-            throw new Error(`Error al eliminar la asignatura. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al eliminar la asignatura. Código de estado: ${respuesta.status}`)
         }
 
-        const resultado = await respuesta.json();
-        return resultado;
+        const resultado = await respuesta.json()
+        return resultado
     } catch (error) {
         console.error('Error en la función deleteAsignatura:', error.message)
         throw error

@@ -95,21 +95,21 @@ class UsuarioController extends Controller
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
 
-        $publicId = pathinfo($usuario->foto, PATHINFO_FILENAME);
-        Cloudinary::destroy($publicId);
-
-        $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
-
-        $usuario->update([
+        $datosUsuario = [
             'nombre' => $request['nombre'],
             'gmail' => $request['gmail'],
-            'contrasena' => bcrypt($request['contrasena']),
             'idCasa' => $request['idCasa'],
             'nivel' => $request['nivel'],
             'exp' => $request['exp'],
-            'foto' => $uploadedFileUrl,
-            'activo' => $request['activo'],
-        ]);
+            'foto' => $request['foto'],
+            'activo' => $request['activo']
+        ];
+
+        if ($request->filled('contrasena')) {
+            $datosUsuario['contrasena'] = bcrypt($request['contrasena']);
+        }
+
+        $usuario->update($datosUsuario);
 
         return response()->json(['Usuario' => $usuario], Response::HTTP_CREATED);
     }

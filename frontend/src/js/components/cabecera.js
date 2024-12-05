@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   
     const idUsuario = sessionStorage.getItem("userId")
     usuario = await getBuscarUsuario(idUsuario)
+    console.log(usuario.Usuario)
 
     if (usuario) {
       headerContainer.innerHTML = `
@@ -18,7 +19,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="d-flex align-items-center">
             <button id="openSidebar" class="icon-desplegable btn btn-outline-light me-3" style="font-size: 1.2em;">☰</button>
             <a class="h4 mb-0 me-3 text-white" href="inicio.html">Hogwarts</a>
-            <a class="btn" href="ranking.html" style="background-color: #0056b3; color: white;">Ranking de Casas</a>
+            <button class="btn" onclick="location.href='ranking.html'" style="background-color: #0056b3; color: white;">Ranking de Casas</button>
           </div>
           
           <div class="dropdown">
@@ -113,11 +114,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 let usuarioObjeto
 
-                if (contraUsu.type == undefined) {
+                if (contraUsu.trim() === "") {
                   usuarioObjeto = {
                     nombre: nombreUsu,
                     gmail: gmailUsu,
-                    contrasena: usuarioU.contrasena,
                     idCasa: usuarioU.idCasa,
                     nivel: usuarioU.nivel,
                     exp: usuarioU.exp,
