@@ -34,7 +34,7 @@ class simulacionController extends Controller
 
                 MapaMerodeador::create([
                     'fila' => $fila->fila,
-                    'contenidofila' => json_encode($celdas),
+                    'contenidofila' => $fila->contenidofila = json_encode($celdas),
                     'segundo' => $segundo
                 ]);
             }
@@ -44,7 +44,7 @@ class simulacionController extends Controller
 
     private function colocarPersonasIniciales($celdas, $usuarios, $numPersonas) {
         $posicionesValidas = array_keys(array_filter($celdas, function ($celda) {
-            return $celda['tipo'] === 's' && $celda['persona'] === null;
+            return $celda['tipo'] === 'S' && $celda['persona'] === null;
         }));
 
         shuffle($posicionesValidas);
@@ -55,12 +55,13 @@ class simulacionController extends Controller
                 $celdas[$index]['persona'] = array_shift($usuarios)['id'] ?? null;
             }
         }
+
         return $celdas;
     }
 
     private function actualizarCeldas($celdas, &$usuarios) {
         foreach ($celdas as $celda) {
-            if ($celda['tipo'] === 'p' && $celda['persona'] === null && rand(0, 1)) {
+            if ($celda['tipo'] === 'P' && $celda['persona'] === null && rand(0, 1)) {
                 $celda['persona'] = array_shift($usuarios)['id']?? null;
             }
         }
