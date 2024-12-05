@@ -16,7 +16,9 @@
     <div id="header-container"></div>
         <main class="main-content">
             <div class="row m-2">
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#anadirModal"><i class="fas fa-edit"></i>Añadir pocion</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='creacionPociones.html';">
+                    <i class="fas fa-edit"></i>Añadir poción
+                </button>
                 <h3 class="fs-3 mb-3">Lista de pociones disponibles</h3>
                 <div class="col-table">
                     <table id="pociones" class="table table-striped" style="width:100%">
@@ -32,7 +34,6 @@
                                 <th>Enfermante</th>
                                 <th>Inflamatorio</th>
                                 <th>Desinflamatorio</th>
-                                <th>Descripción</th>
                                 <th>Creador</th>
                             </tr>
                         </thead>
@@ -42,7 +43,7 @@
         </main>
   </div>
 
-  <div class="modal" id="anadirModal">
+  <!-- <div class="modal" id="anadirModal">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
@@ -112,7 +113,7 @@
         </div>
     </div>                
 </div>
-</div>
+</div> -->
 
   <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
