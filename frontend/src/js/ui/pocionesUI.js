@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const tabla = $('#pociones').DataTable();
         console.log("Tabla DataTable inicializada:", tabla);
-    tabla.clear(); 
+    tabla.clear().draw(); 
 
         console.log("Primera poción (si existe):", pociones.pociones[1]?.nombre);
         console.log("Todas las pociones:", pociones.pociones);
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 pociones.pociones.forEach(pocion => {
          console.log("Procesando poción:", pocion);
 
-    if (roles.roles[0].nombre === "profesor" && pocion.veri === 0) {
+    if (roles.roles[0].nombre === "Dumbledore" && pocion.veri === 0) {
          console.log("Poción para verificar:", pocion);
         const esta = pocion.estadisticas.split(','); 
         let creador = 0;
@@ -59,93 +59,93 @@ pociones.pociones.forEach(pocion => {
             `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModal${pocion.id}"><i class="fas fa-edit"></i> Editar</button>` +
             `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${pocion.id}" ><i class="fas fa-trash-alt"></i> Eliminar</button>` +
             `<button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#veriModal${pocion.id}"><i class="fas fa-edit"></i> Verificar</button>`
-        ]);
-        table.draw();
+        ]).draw();
+        
 
-        // const editarPocion = ` 
-        //     <div class="modal" id="myModal${pocion.id}">
-        //         <div class="modal-dialog modal-md">
-        //             <div class="modal-content">
-        //                 <div class="modal-header">
-        //                     <h4 class="modal-title">Editar poción ${pocion.nombre}</h4>
-        //                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        //                 </div>
-        //                 <div class="modal-body">
-        //                     <div class="row">
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="nombre" class="form-label">Nombre</label>
-        //                             <input type="text" id="nombre${pocion.id}" name="nombre${pocion.id}" class="form-control" value="${pocion.nombre}">
-        //                             <div class="invalid-feedback" id="mensajeNombre"></div>
-        //                         </div>y
+        const editarPocion = ` 
+            <div class="modal" id="myModal${pocion.id}">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Editar poción ${pocion.nombre}</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" id="nombre${pocion.id}" name="nombre${pocion.id}" class="form-control" value="${pocion.nombre}">
+                                    <div class="invalid-feedback" id="mensajeNombre"></div>
+                                </div>y
 
-        //                     <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="descripcion" class="form-label">Descripción</label>
-        //                             <textarea id="descripcion${pocion.id}" name="descripcion${pocion.id}" class="form-control">${pocion.descripcion}</textarea>
-        //                             <div class="invalid-feedback" id="mensajeDescripcion"></div>
-        //                         </div>
+                            <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="descripcion" class="form-label">Descripción</label>
+                                    <textarea id="descripcion${pocion.id}" name="descripcion${pocion.id}" class="form-control">${pocion.descripcion}</textarea>
+                                    <div class="invalid-feedback" id="mensajeDescripcion"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="sanacion" class="form-label">Sanación</label>
-        //                             <input type="text" id="sanacion${pocion.id}" name="sanacion${pocion.id}" class="form-control" value="${esta[0]}">
-        //                             <div class="invalid-feedback" id="mensajeSanacion"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="sanacion" class="form-label">Sanación</label>
+                                    <input type="text" id="sanacion${pocion.id}" name="sanacion${pocion.id}" class="form-control" value="${esta[0]}">
+                                    <div class="invalid-feedback" id="mensajeSanacion"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="envenenamiento" class="form-label">Envenenamiento</label>
-        //                             <input type="text" id="envenenamiento${pocion.id}" name="envenenamiento${pocion.id}" class="form-control" value="${esta[1]}">
-        //                             <div class="invalid-feedback" id="mensajeEnvenenamiento"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="envenenamiento" class="form-label">Envenenamiento</label>
+                                    <input type="text" id="envenenamiento${pocion.id}" name="envenenamiento${pocion.id}" class="form-control" value="${esta[1]}">
+                                    <div class="invalid-feedback" id="mensajeEnvenenamiento"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="analgesia" class="form-label">Analgesia</label>
-        //                             <input type="text" id="analgesia${pocion.id}" name="analgesia${pocion.id}" class="form-control" value="${esta[2]}">
-        //                             <div class="invalid-feedback" id="mensajeAnalgesia"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="analgesia" class="form-label">Analgesia</label>
+                                    <input type="text" id="analgesia${pocion.id}" name="analgesia${pocion.id}" class="form-control" value="${esta[2]}">
+                                    <div class="invalid-feedback" id="mensajeAnalgesia"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="dolor" class="form-label">Dolor</label>
-        //                             <input type="text" id="dolor${pocion.id}" name="dolor${pocion.id}" class="form-control" value="${esta[3]}">
-        //                             <div class="invalid-feedback" id="mensajeDolor"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="dolor" class="form-label">Dolor</label>
+                                    <input type="text" id="dolor${pocion.id}" name="dolor${pocion.id}" class="form-control" value="${esta[3]}">
+                                    <div class="invalid-feedback" id="mensajeDolor"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="curativo" class="form-label">Curativo</label>
-        //                             <input type="text" id="curativo${pocion.id}" name="curativo${pocion.id}" class="form-control" value="${esta[4]}">
-        //                             <div class="invalid-feedback" id="mensajeCurativo"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="curativo" class="form-label">Curativo</label>
+                                    <input type="text" id="curativo${pocion.id}" name="curativo${pocion.id}" class="form-control" value="${esta[4]}">
+                                    <div class="invalid-feedback" id="mensajeCurativo"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="enfermante" class="form-label">enfermante</label>
-        //                             <textarea id="enfermante${pocion.id}" name="enfermante${pocion.id}" class="form-control">${pocion.enfermante}</textarea>
-        //                             <div class="invalid-feedback" id="mensajeEnfermante"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="enfermante" class="form-label">enfermante</label>
+                                    <textarea id="enfermante${pocion.id}" name="enfermante${pocion.id}" class="form-control">${pocion.enfermante}</textarea>
+                                    <div class="invalid-feedback" id="mensajeEnfermante"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="inflamatorio" class="form-label">inflamatorio</label>
-        //                             <textarea id="inflamatorio${pocion.id}" name="inflamatorio${pocion.id}" class="form-control">${pocion.inflamatorio}</textarea>
-        //                             <div class="invalid-feedback" id="mensajeInflamatorio"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="inflamatorio" class="form-label">inflamatorio</label>
+                                    <textarea id="inflamatorio${pocion.id}" name="inflamatorio${pocion.id}" class="form-control">${pocion.inflamatorio}</textarea>
+                                    <div class="invalid-feedback" id="mensajeInflamatorio"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="desinflamatorio" class="form-label">desinflamatorio</label>
-        //                             <textarea id="desinflamatorio${pocion.id}" name="desinflamatorio${pocion.id}" class="form-control">${pocion.desinflamatorio}</textarea>
-        //                             <div class="invalid-feedback" id="mensajeDesinflamatorio"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="desinflamatorio" class="form-label">desinflamatorio</label>
+                                    <textarea id="desinflamatorio${pocion.id}" name="desinflamatorio${pocion.id}" class="form-control">${pocion.desinflamatorio}</textarea>
+                                    <div class="invalid-feedback" id="mensajeDesinflamatorio"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="creador" class="form-label">Creador</label>
-        //                             <input type="text" id="creador${pocion.id}" name="creador${pocion.id}" class="form-control" value="${creador}">
-        //                             <div class="invalid-feedback" id="mensajeCreador"></div>
-        //                         </div>
-        //                     </div>
-        //                 </div>
-        //                 <div class="modal-footer">
-        //                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${pocion.id}">Editar poción</button>
-        //                 </div>
-        //             </div>                
-        //         </div>
-        //     </div>
-        // `;
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="creador" class="form-label">Creador</label>
+                                    <input type="text" id="creador${pocion.id}" name="creador${pocion.id}" class="form-control" value="${creador}">
+                                    <div class="invalid-feedback" id="mensajeCreador"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${pocion.id}">Editar poción</button>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+        `;
 
         const eliminarPocion =
             `
@@ -202,8 +202,8 @@ pociones.pociones.forEach(pocion => {
 
         row.nodes().to$().data('pociones', pocion);
         
-            //profesor pero ya verificado
-        }else if (roles.roles[0].nombre == "profesor" && pocion.veri == 1) {
+            //Dumbledore pero ya verificado
+        }else if (roles.roles[0].nombre == "Dumbledore" && pocion.veri == 1) {
 
             const esta = (pocion.estadisticas).split(',');
             let creador = 0;
@@ -233,91 +233,113 @@ pociones.pociones.forEach(pocion => {
                 `<button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal${pocion.id}"><i class="fas fa-trash-alt"></i> Eliminar</button>`
             ]).draw();
         
-        //     const editarPocion = ` 
-        //     <div class="modal" id="myModal${pocion.id}">
-        //         <div class="modal-dialog modal-md">
-        //             <div class="modal-content">
-        //                 <div class="modal-header">
-        //                     <h4 class="modal-title">Editar poción ${pocion.nombre}</h4>
-        //                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        //                 </div>
-        //                 <div class="modal-body">
-        //                     <div class="row">
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="nombre" class="form-label">Nombre</label>
-        //                             <input type="text" id="nombre${pocion.id}" name="nombre${pocion.id}" class="form-control" value="${pocion.nombre}">
-        //                             <div class="invalid-feedback" id="mensajeNombre"></div>
-        //                         </div>
+            const editarPocion = ` 
+            <div class="modal" id="myModal${pocion.id}">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Editar poción ${pocion.nombre}</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="nombre" class="form-label">Nombre</label>
+                                    <input type="text" id="nombre${pocion.id}" name="nombre${pocion.id}" class="form-control" value="${pocion.nombre}">
+                                    <div class="invalid-feedback" id="mensajeNombre"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="descripcion" class="form-label">Descripción</label>
-        //                             <textarea id="descripcion${pocion.id}" name="descripcion${pocion.id}" class="form-control">${pocion.descripcion}</textarea>
-        //                             <div class="invalid-feedback" id="mensajeDescripcion"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="descripcion" class="form-label">Descripción</label>
+                                    <textarea id="descripcion${pocion.id}" name="descripcion${pocion.id}" class="form-control">${pocion.descripcion}</textarea>
+                                    <div class="invalid-feedback" id="mensajeDescripcion"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="sanacion" class="form-label">Sanación</label>
-        //                             <input type="text" id="sanacion${pocion.id}" name="sanacion${pocion.id}" class="form-control" value="${esta[0]}">
-        //                             <div class="invalid-feedback" id="mensajeSanacion"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="sanacion" class="form-label">Sanación</label>
+                                    <input type="text" id="sanacion${pocion.id}" name="sanacion${pocion.id}" class="form-control" value="${esta[0]}">
+                                    <div class="invalid-feedback" id="mensajeSanacion"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="envenenamiento" class="form-label">Envenenamiento</label>
-        //                             <input type="text" id="envenenamiento${pocion.id}" name="envenenamiento${pocion.id}" class="form-control" value="${esta[1]}">
-        //                             <div class="invalid-feedback" id="mensajeEnvenenamiento"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="envenenamiento" class="form-label">Envenenamiento</label>
+                                    <input type="text" id="envenenamiento${pocion.id}" name="envenenamiento${pocion.id}" class="form-control" value="${esta[1]}">
+                                    <div class="invalid-feedback" id="mensajeEnvenenamiento"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="analgesia" class="form-label">Analgesia</label>
-        //                             <input type="text" id="analgesia${pocion.id}" name="analgesia${pocion.id}" class="form-control" value="${esta[2]}">
-        //                             <div class="invalid-feedback" id="mensajeAnalgesia"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="analgesia" class="form-label">Analgesia</label>
+                                    <input type="text" id="analgesia${pocion.id}" name="analgesia${pocion.id}" class="form-control" value="${esta[2]}">
+                                    <div class="invalid-feedback" id="mensajeAnalgesia"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="dolor" class="form-label">Dolor</label>
-        //                             <input type="text" id="dolor${pocion.id}" name="dolor${pocion.id}" class="form-control" value="${esta[3]}">
-        //                             <div class="invalid-feedback" id="mensajeDolor"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="dolor" class="form-label">Dolor</label>
+                                    <input type="text" id="dolor${pocion.id}" name="dolor${pocion.id}" class="form-control" value="${esta[3]}">
+                                    <div class="invalid-feedback" id="mensajeDolor"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="curativo" class="form-label">Curativo</label>
-        //                             <input type="text" id="curativo${pocion.id}" name="curativo${pocion.id}" class="form-control" value="${esta[4]}">
-        //                             <div class="invalid-feedback" id="mensajeCurativo"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="curativo" class="form-label">Curativo</label>
+                                    <input type="text" id="curativo${pocion.id}" name="curativo${pocion.id}" class="form-control" value="${esta[4]}">
+                                    <div class="invalid-feedback" id="mensajeCurativo"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="enfermante" class="form-label">enfermante</label>
-        //                             <textarea id="enfermante${pocion.id}" name="enfermante${pocion.id}" class="form-control">${pocion.enfermante}</textarea>
-        //                             <div class="invalid-feedback" id="mensajeEnfermante"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="enfermante" class="form-label">enfermante</label>
+                                    <textarea id="enfermante${pocion.id}" name="enfermante${pocion.id}" class="form-control">${pocion.enfermante}</textarea>
+                                    <div class="invalid-feedback" id="mensajeEnfermante"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="inflamatorio" class="form-label">inflamatorio</label>
-        //                             <textarea id="inflamatorio${pocion.id}" name="inflamatorio${pocion.id}" class="form-control">${pocion.inflamatorio}</textarea>
-        //                             <div class="invalid-feedback" id="mensajeInflamatorio"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="inflamatorio" class="form-label">inflamatorio</label>
+                                    <textarea id="inflamatorio${pocion.id}" name="inflamatorio${pocion.id}" class="form-control">${pocion.inflamatorio}</textarea>
+                                    <div class="invalid-feedback" id="mensajeInflamatorio"></div>
+                                </div>
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="desinflamatorio" class="form-label">desinflamatorio</label>
-        //                             <textarea id="desinflamatorio${pocion.id}" name="desinflamatorio${pocion.id}" class="form-control">${pocion.desinflamatorio}</textarea>
-        //                             <div class="invalid-feedback" id="mensajeDesinflamatorio"></div>
-        //                         </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="desinflamatorio" class="form-label">desinflamatorio</label>
+                                    <textarea id="desinflamatorio${pocion.id}" name="desinflamatorio${pocion.id}" class="form-control">${pocion.desinflamatorio}</textarea>
+                                    <div class="invalid-feedback" id="mensajeDesinflamatorio"></div>
+                                </div>
 
 
-        //                         <div class="col-sm-12 col-md-6 col-lg-6">
-        //                             <label for="creador" class="form-label">Creador</label>
-        //                             <input type="text" id="creador${pocion.id}" name="creador${pocion.id}" class="form-control" value="${creador}">
-        //                             <div class="invalid-feedback" id="mensajeCreador"></div>
-        //                         </div>
-        //                     </div>
-        //                 </div>
-        //                 <div class="modal-footer">
-        //                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${pocion.id}">Editar poción</button>
-        //                 </div>
-        //             </div>                
-        //         </div>
-        //     </div>
-        // `;
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <label for="creador" class="form-label">Creador</label>
+                                    <input type="text" id="creador${pocion.id}" name="creador${pocion.id}" class="form-control" value="${creador}">
+                                    <div class="invalid-feedback" id="mensajeCreador"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="editarBtn${pocion.id}">Editar poción</button>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+        `;
+        const eliminarPocion =
+        `
+        <div class="modal" id="deleteModal${pocion.id}">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Confirmar Eliminación</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>¿Estás seguro de que deseas eliminar la poción ${pocion.nombre}?</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" id="confirmarEliminacion${pocion.id}">Confirmar Eliminación</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
         
             document.body.insertAdjacentHTML('beforeend', editarPocion);
             editarPocionUI(pocion.id);
@@ -331,54 +353,54 @@ pociones.pociones.forEach(pocion => {
     })
 }
 
-        //     async function editarPocionUI(id) { 
-        //     const modificarBtn = document.getElementById(`editarBtn${id}`);
-        //     if (modificarBtn) {
+            async function editarPocionUI(id) { 
+            const modificarBtn = document.getElementById(`editarBtn${id}`);
+            if (modificarBtn) {
         
-        //         modificarBtn.addEventListener('click', async () => {
-        //             try {
+                modificarBtn.addEventListener('click', async () => {
+                    try {
         
-        //                 const modalElement = document.getElementById(`myModal${id}`);
-        //                 const nombrePocion = modalElement.querySelector(`#nombre${id}`).value;
-        //                 const descripcionPocion = modalElement.querySelector(`#descripcion${id}`).value;
-        //                 const sanacionPocion = modalElement.querySelector(`#sanacion${id}`).value;
-        //                 const envenenamientoPocion = modalElement.querySelector(`#envenenamiento${id}`).value;
-        //                 const analgesiaPocion = modalElement.querySelector(`#analgesia${id}`).value;
-        //                 const danoPocion = modalElement.querySelector(`#dano${id}`).value;
-        //                 const dolorPocion = modalElement.querySelector(`#dolor${id}`).value;
-        //                 const curativoPocion = modalElement.querySelector(`#curativo${id}`).value;
-        //                 const creadorPocion = modalElement.querySelector(`#creador${id}`).value;
-        //                 const estadisticas = [sanacionPocion, envenenamientoPocion, analgesiaPocion, danoPocion, dolorPocion, curativoPocion].toString(", ");
+                        const modalElement = document.getElementById(`myModal${id}`);
+                        const nombrePocion = modalElement.querySelector(`#nombre${id}`).value;
+                        const descripcionPocion = modalElement.querySelector(`#descripcion${id}`).value;
+                        const sanacionPocion = modalElement.querySelector(`#sanacion${id}`).value;
+                        const envenenamientoPocion = modalElement.querySelector(`#envenenamiento${id}`).value;
+                        const analgesiaPocion = modalElement.querySelector(`#analgesia${id}`).value;
+                        const danoPocion = modalElement.querySelector(`#dano${id}`).value;
+                        const dolorPocion = modalElement.querySelector(`#dolor${id}`).value;
+                        const curativoPocion = modalElement.querySelector(`#curativo${id}`).value;
+                        const creadorPocion = modalElement.querySelector(`#creador${id}`).value;
+                        const estadisticas = [sanacionPocion, envenenamientoPocion, analgesiaPocion, danoPocion, dolorPocion, curativoPocion].toString(", ");
         
-        //                 let creador = '';
+                        let creador = '';
         
-        //                 if (creadorPocion == 'Desconocido') {
-        //                     creador = 0;
-        //                 } else {
-        //                     const creadores = await getTodosUsuarios();
-        //                     creador = (creadores.Usuario.find((nombre) => nombre.nombre == creadorPocion)).id;
-        //                 }
+                        if (creadorPocion == 'Desconocido') {
+                            creador = 0;
+                        } else {
+                            const creadores = await getTodosUsuarios();
+                            creador = (creadores.Usuario.find((nombre) => nombre.nombre == creadorPocion)).id;
+                        }
         
-        //                 const pocionObjeto = {
-        //                     nombre: nombrePocion,
-        //                     descripcion: descripcionPocion,
-        //                     estadisticas: estadisticas,
-        //                     idUsuario: creador.toString(),
-        //                     veri: 0,
-        //                     veriD: 0
-        //                 };
+                        const pocionObjeto = {
+                            nombre: nombrePocion,
+                            descripcion: descripcionPocion,
+                            estadisticas: estadisticas,
+                            idUsuario: creador.toString(),
+                            veri: 0,
+                            veriD: 0
+                        };
         
-        //                 await putPocion(id, pocionObjeto);
+                        await putPocion(id, pocionObjeto);
         
-        //                 const modal = new bootstrap.Modal(modalElement);
-        //                 modal.hide();
-        //                 location.reload();
-        //             } catch (error) {
-        //                 console.error('Error al confirmar la modificación:', error);
-        //             }
-        //         });
-        //     }
-        // }
+                        const modal = new bootstrap.Modal(modalElement);
+                        modal.hide();
+                        location.reload();
+                    } catch (error) {
+                        console.error('Error al confirmar la modificación:', error);
+                    }
+                });
+            }
+        }
         
         async function eliminarPocionUI(id) {
             const confirmarEliminacion = document.getElementById(`confirmarEliminacion${id}`);
