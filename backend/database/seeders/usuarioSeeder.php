@@ -24,7 +24,7 @@ class usuarioSeeder extends Seeder
                 'idCasa' => 1,
                 'nivel' => 5,
                 'exp' => 999,
-                'foto' => 'mago',
+                'foto' => './../assets/pruebaHarry.webp',
                 'activo' => true,
                 'remember_token' => Str::random(10)
             ],
@@ -35,7 +35,7 @@ class usuarioSeeder extends Seeder
                 'idCasa' => 4,
                 'nivel' => 5,
                 'exp' => 999,
-                'foto' => 'mago',
+                'foto' => './../assets/pruebaHarry.webp',
                 'activo' => true,
                 'remember_token' => Str::random(10)
             ],
@@ -46,7 +46,7 @@ class usuarioSeeder extends Seeder
                 'idCasa' => 1,
                 'nivel' => 4,
                 'exp' => 450,
-                'foto' => 'mago',
+                'foto' => './../assets/pruebaHarry.webp',
                 'activo' => true,
                 'remember_token' => Str::random(10)
             ],
@@ -57,7 +57,7 @@ class usuarioSeeder extends Seeder
                 'idCasa' => 2,
                 'nivel' => 3,
                 'exp' => 200,
-                'foto' => 'mago',
+                'foto' => './../assets/pruebaHarry.webp',
                 'activo' => true,
                 'remember_token' => Str::random(10)
             ]

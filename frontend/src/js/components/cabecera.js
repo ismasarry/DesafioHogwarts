@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           
           <div class="dropdown">
             <span class="me-2 text-white">${usuario.Usuario.nombre}</span>
-            <img src="./../assets/pruebaHarry.webp" alt="Imagen de usuario" class="user-img dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; cursor: pointer;">
+            <img src="${usuario.Usuario.foto}" alt="Imagen de usuario" class="user-img dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; cursor: pointer;">
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
               <li><a class="dropdown-item" href="#" id="botonPerfil">Perfil</a></li>
               <li><a class="dropdown-item" href="#" id="botonCerrarSesion">Cerrar sesión</a></li>
