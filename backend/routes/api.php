@@ -16,12 +16,13 @@ use App\Http\Controllers\IngredientesController;
 use App\Http\Controllers\MapaMerodeadorController;
 use App\Http\Controllers\PocionesController;
 use App\Http\Controllers\RecetasController;
+use App\Http\Controllers\simulacionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-//Jaime Ortega
-
 // AQUI EMPIEZAN LAS RUTAS AGRUPADAS POR REL AUTH SANCTUM
+
+//Jaime Ortega
 //Route::middleware(['auth:sanctum'])->group(function () {
 Route::prefix('rol')->group(function () {
     Route::get('/', [rolController::class, 'getAllRoles']);
@@ -65,7 +66,6 @@ Route::prefix('usuario')->group(function () {
     Route::delete('{id}', [UsuarioController::class, 'deleteUsuario']);
 });
 
-
 //Raul Gutierrez
 Route::prefix('asignatura')->group(function () {
     Route::get('/', [asignaturaController::class, 'getTodosAsignaturas']);
@@ -74,7 +74,6 @@ Route::prefix('asignatura')->group(function () {
     Route::put('{id}', [asignaturaController::class, 'putAsignatura']);
     Route::delete('{id}', [asignaturaController::class, 'deleteAsignatura']);
 });
-
 
 Route::prefix('asignaturaAlumno')->group(function () {
     // Raul Gutierrez
@@ -94,7 +93,6 @@ Route::prefix('asignaturaAlumno')->group(function () {
     Route::get('alumnoPorId/{id}', [asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorIdAlumno']);
 });
 
-
 Route::prefix('asignaturaProfesor')->group(function () {
     // Raul Gutierrez
     Route::get('/', [asignaturaProfesorController::class, 'getTodosAsignaturaProfesores']);
@@ -108,9 +106,6 @@ Route::prefix('asignaturaProfesor')->group(function () {
     Route::delete('{idAsignatura}/{idProfesor}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesorEspecifico']);
 });
 
-
-
-
 //Raul Gutierrez
 Route::prefix('hechizos')->group(function () {
     Route::get('/', [hechizosController::class, 'getTodosHechizos']);
@@ -120,7 +115,6 @@ Route::prefix('hechizos')->group(function () {
     Route::put('{id}', [hechizosController::class, 'putHechizo']);
     Route::delete('{id}', [hechizosController::class, 'deleteHechizo']);
 });
-
 
 //ismael sarrion
 Route::prefix('ingredientes')->group(function () {
@@ -147,13 +141,17 @@ Route::prefix('recetas')->group(function () {
     Route::delete('{id}', [RecetasController::class, 'deleteReceta']);
 });
 
-Route::prefix('mapas')->group(function () {
-    Route::get('/', [MapaMerodeadorController::class, 'getTodosMapas']);
-    Route::get('{id}', [MapaMerodeadorController::class, 'getMapaPorId']);
-    Route::post('/', [MapaMerodeadorController::class, 'postMapa']);
-    Route::put('{id}', [MapaMerodeadorController::class, 'putMapa']);
-    Route::delete('{id}', [MapaMerodeadorController::class, 'deleteMapa']);
-    Route::get('segundo/{segundo}', [MapaMerodeadorController::class, 'getMapaPorSegundo']);
+Route::prefix('mapa')->group(function () {
+    // Route::get('/', [MapaMerodeadorController::class, 'getTodosMapas']);
+    // Route::get('{id}', [MapaMerodeadorController::class, 'getMapaPorId']);
+    // Route::post('/', [MapaMerodeadorController::class, 'postMapa']);
+    // Route::put('{id}', [MapaMerodeadorController::class, 'putMapa']);
+    // Route::delete('{id}', [MapaMerodeadorController::class, 'deleteMapa']);
+    Route::get('/segundo/{segundo}', [MapaMerodeadorController::class, 'getMapaPorSegundo']);
+    //Jaime Ortega
+    Route::get('/base', [MapaMerodeadorController::class, 'getMapaBase']);
+    Route::post('/simulacion', [simulacionController::class, 'iniciarSimulacion']);
+    Route::delete('/simulacion/reset', [simulacionController::class, 'resetSimulacion']);
 });
 
 //Raul Gutierrez
@@ -168,7 +166,6 @@ Route::prefix('duelo')->group(function () {
     Route::delete('{id}', [dueloController::class, 'deleteDuelo']);
 });
 
-
 //Raul Gutierrez
 Route::prefix('turnoDuelo')->group(function () {
     Route::get('/', [turnoDueloController::class, 'getTodosTurnoDuelos']);
@@ -182,9 +179,7 @@ Route::prefix('turnoDuelo')->group(function () {
     Route::delete('{id}', [turnoDueloController::class, 'deleteTurnoDuelo']);
 });
 
-
 //ismael sarrion
-
 //Route::middleware('guest')->group(function () {
 Route::get('formulario', function () {
     return view('formularioRecuperacion');
@@ -199,7 +194,6 @@ Route::post('logout', [AuthController::class, 'logout']);
 
 //Jaime Ortega (register)
 Route::post('register', [AuthController::class, 'register']);
-
 Route::get('/nologin', function () {
     return response()->json("No autorizado", 203);
 });

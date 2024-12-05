@@ -1,5 +1,5 @@
 <?php
-//Raul Gutierrez
+//Raul Gutierrez, Ismal Sarrion, Jaime Ortega
 namespace Database\Seeders;
 
 use App\Models\asignatura;

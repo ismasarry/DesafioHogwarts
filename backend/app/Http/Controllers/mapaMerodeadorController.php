@@ -9,12 +9,14 @@ use Illuminate\Http\Request;
 
 class MapaMerodeadorController extends Controller
 {
-    public function getTodosMapas() {
+    public function getTodosMapas()
+    {
         $mapas = MapaMerodeador::all();
         return response()->json(['mapas' => $mapas]);
     }
 
-    public function getMapaPorId($id) {
+    public function getMapaPorId($id)
+    {
         $mapa = MapaMerodeador::find($id);
 
         if (!$mapa) {
@@ -24,7 +26,8 @@ class MapaMerodeadorController extends Controller
         return response()->json(['mapa' => $mapa]);
     }
 
-    public function postMapa(Request $request) {
+    public function postMapa(Request $request)
+    {
         $validatedData = $request->validate([
             'fila' => 'required|integer',
             'contenidofila' => 'required|string',
@@ -36,7 +39,8 @@ class MapaMerodeadorController extends Controller
         return response()->json(['mapa' => $mapa], Response::HTTP_CREATED);
     }
 
-    public function putMapa(Request $request, $id) {
+    public function putMapa(Request $request, $id)
+    {
         $mapa = MapaMerodeador::find($id);
 
         if (!$mapa) {
@@ -54,7 +58,8 @@ class MapaMerodeadorController extends Controller
         return response()->json(['mapa' => $mapa], Response::HTTP_OK);
     }
 
-    public function deleteMapa($id) {
+    public function deleteMapa($id)
+    {
         $mapa = MapaMerodeador::find($id);
 
         if (!$mapa) {
@@ -66,17 +71,27 @@ class MapaMerodeadorController extends Controller
         return response()->json(['message' => 'Mapa eliminado exitosamente']);
     }
 
-    public function getMapaPorSegundo($segundo) {
-        $mapas = MapaMerodeador::where('segundo', $segundo)->get(['fila', 'contenidoFila']);
+    public function getMapaPorSegundo($segundo)
+    {
+        $mapaSegundo = MapaMerodeador::where('segundo', $segundo)->get();
 
-        if ($mapas->isEmpty()) {
+        if ($mapaSegundo->isEmpty()) {
             return response()->json(['message' => 'No se encontraron mapas para el segundo especificado'], 404);
         }
 
-        return response()->json(['mapas' => $mapas], 200);
+        return response()->json(['mapaSegundo' => $mapaSegundo], 200);
     }
 
+    //Jaime Ortega
+    public function getMapaBase()
+    {
+        $mapaBase = MapaMerodeador::where('segundo', 0)->orderBy('fila')->get();
 
+        if ($mapaBase->isEmpty()) {
+            return response()->json(['message' => 'Mapa no encontrado'], 404);
+        }
 
+        return response()->json(['mapaBase' => $mapaBase]);
+    }
 
 }
