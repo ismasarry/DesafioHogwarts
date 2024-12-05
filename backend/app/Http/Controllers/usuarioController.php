@@ -42,47 +42,20 @@ class UsuarioController extends Controller
         //     'foto' => 'required|image|mimes:jpg,jpeg,png',
         //     'activo' => 'required|boolean'
         // ]);
-
-        // if ($validator->fails()) {
-        //     return response(['errors' => $validator->errors()->all()], Response::HTTP_UNPROCESSABLE_ENTITY);
-        // } else {
-
-
-        // $file = $request->file('foto');
-        // return response()->json(['foto' => $file]);
-
-        if (!$request->hasFile('foto')) {
-            return response()->json(['error' => 'No se recibió ningún archivo'], 400);
+        if ($request->hasFile('foto') && $request->file('foto')->isValid()) {
+            $fotoUrl = $request->file('foto')->storeOnCloudinary('desafioHogwarts')->getSecurePath();
+            $usuario = Usuario::create([
+                'nombre' => $request['nombre'],
+                'gmail' => $request['gmail'],
+                'contrasena' => bcrypt($request['contrasena']),
+                'idCasa' => $request['idCasa'],
+                'nivel' => $request['nivel'],
+                'exp' => $request['exp'],
+                'foto' => $request->$fotoUrl,
+                'activo' => $request['activo']
+            ]);
+            return response()->json(['Usuario' => $usuario], Response::HTTP_CREATED);
         }
-        
-        $file = $request->file('foto');
-        
-        $uploadedFile = Cloudinary::upload($file->getRealPath(), [
-            'folder' => 'hogwarts/cloudinary',
-        ]);
-    
-        $secureUrl = $uploadedFile->getSecurePath();
-    
-        return response()->json([
-            'message' => 'Imagen subida exitosamente',
-            'url' => $secureUrl,
-        ]);
-        // $uploadedFileUrl = Cloudinary::upload($request->file('foto')->getRealPath())->getSecurePath();
-        // echo ($uploadedFileUrl);
-
-        //     $usuario = Usuario::create([
-        //         'nombre' => $request['nombre'],
-        //         'gmail' => $request['gmail'],
-        //         'contrasena' => bcrypt($request['contrasena']),
-        //         'idCasa' => $request['idCasa'],
-        //         'nivel' => $request['nivel'],
-        //         'exp' => $request['exp'],
-        //         'foto' => $request->file['foto'],
-        //         'activo' => $request['activo'],
-        //     ]);
-
-
-        //     return response()->json(['Usuario' => $usuario], Response::HTTP_CREATED);
         }
     // }
 
@@ -118,7 +91,7 @@ class UsuarioController extends Controller
         $usuario = Usuario::find($id);
 
         $publicId = pathinfo($usuario->foto, PATHINFO_FILENAME);
-        Cloudinary::destroy($publicId);
+        //Cloudinary::destroy($publicId);
 
         $usuario->delete();
 
