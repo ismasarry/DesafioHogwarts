@@ -640,7 +640,7 @@ const eliminarHechizo = `
                     }
                 }
                 let row
-                if (hec.idUsuario == 0 && hec.idUsuario == usuarioInfo.Usuario.id) {
+                if (hec.idUsuario == 0 && hec.idUsuario != usuarioInfo.Usuario.id) {
                     row = tabla.row.add([
                         hec.nombre,
                         esta[0],
