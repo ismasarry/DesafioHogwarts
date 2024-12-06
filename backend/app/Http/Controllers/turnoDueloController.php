@@ -29,17 +29,17 @@ class turnoDueloController extends Controller
         return response()->json(['turnoDuelo' => $turnoDuelo]);
     }
 
-    public function getTurnoDuelosPorDuelo($idUsuario) 
+    public function getTurnoDuelosPorDuelo($idUsuario)
     {
         $dueloEnCurso = duelo::where('idUsuario', $idUsuario)
-        ->whereNull('ganador')
-        ->first();
+            ->whereNull('ganador')
+            ->first();
 
         $turnoDuelo = turnoDuelo::where('idDuelo', $dueloEnCurso->id)->get();
         return response()->json($turnoDuelo);
     }
 
-    public function getTurnoDuelosPorDueloNormales($idDuelo) 
+    public function getTurnoDuelosPorDueloNormales($idDuelo)
     {
         $turnoDuelo = turnoDuelo::where('idDuelo', $idDuelo)->get();
         return response()->json($turnoDuelo);
@@ -95,7 +95,7 @@ class turnoDueloController extends Controller
             ->whereNotIn('id', $hechizosUsados)
             ->get();
 
-        return response()-> json($hechizosDisponibles);
+        return response()->json($hechizosDisponibles);
     }
 
     public function postTurnoDuelo(Request $request)
@@ -136,5 +136,125 @@ class turnoDueloController extends Controller
         $turnoDuelo->delete();
 
         return response()->json(['message' => 'turno duelo eliminado exitosamente']);
+    }
+
+    public function eleccionHechizoBot($idUsuario)
+    {
+        $hechizosDisponiblesResponse = self::getHechizosDisponiblesBotDuelo($idUsuario);
+        $hechizosDisponibles = $hechizosDisponiblesResponse->getData(true);
+        $turnoRespose = self::getTurnoDuelosPorDuelo($idUsuario);
+        $turno = $turnoRespose->getData(true);
+        $hechizosConEsta = [];
+
+        for ($i = 0; $i < count($hechizosDisponibles); $i++) {
+            $hechizo = $hechizosDisponibles[$i];
+            $estadisticas = explode(",", $hechizo['estadisticas']);
+            $hechizos = [$hechizo['id'], $estadisticas];
+            array_push($hechizosConEsta, $hechizos);
+        }
+
+        $ale = rand(0, 3);
+        $hechizoBot = "";
+
+        switch (count($turno)) {
+            case 0:
+                if ($ale != 0) {
+                    $hechizoBot = $hechizosDisponibles[rand(0, count($hechizosDisponibles)-1)]['id'];
+                } else {
+                    $max = 0;
+                    for ($i = 0; $i < count($hechizosConEsta); $i++) {
+                        if ($hechizosConEsta[$i][1][0] <= 70) {
+                            if ($hechizosConEsta[$i][1][0] >= $max) {
+                                $hechizoBot = $hechizosConEsta[$i][0];
+                                $max = $hechizosConEsta[$i][1][0];
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case 1:
+                if ($ale == 0) {
+                    $max1 = 0;
+                    for ($i = 0; $i < count($hechizosConEsta); $i++) {
+                        if ($hechizosConEsta[$i][1][0] <= 70) {
+                            if ($hechizosConEsta[$i][1][1] >= $max1) {
+                                $hechizoBot = $hechizosConEsta[$i][0];
+                                $max1 = $hechizosConEsta[$i][1][1];
+                            }
+                        }
+                    }
+                } else {
+                    $max1 = 0;
+                    for ($i = 0; $i < count($hechizosConEsta); $i++) {
+                        if ($hechizosConEsta[$i][1][0] <= 70) {
+                            if ($hechizosConEsta[$i][1][5] >= $max1) {
+                                $hechizoBot = $hechizosConEsta[$i][0];
+                                $max1 = $hechizosConEsta[$i][1][5];
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case 2:
+                if ($turno[0]->ganador == true && $turno[1]->ganador == true) {
+                    $max2 = 0;
+                    for ($i = 0; $i < count($hechizosConEsta); $i++) {
+                        if ($hechizosConEsta[$i][1][0] >= $max2) {
+                            $hechizoBot = $hechizosConEsta[$i][0];
+                            $max2 = $hechizosConEsta[$i][1][0];
+                        }
+                    }
+                } else {
+                    $max2 = 0;
+                    for ($i = 0; $i < count($hechizosConEsta); $i++) {
+                        if ($hechizosConEsta[$i][1][0] <= 70) {
+                            if ($hechizosConEsta[$i][1][1] >= $max2) {
+                                $hechizoBot = $hechizosConEsta[$i][0];
+                                $max2 = $hechizosConEsta[$i][1][1];
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case 3:
+                if ($ale <= 1) {
+                    if (($turno[0]->ganador == false && $turno[1]->ganador == false) || ($turno[0]->ganador == false && $turno[2]->ganador == false) || ($turno[1]->ganador == false && $turno[2]->ganador == false)) {
+                        $max3 = 0;
+                        for ($i = 0; $i < count($hechizosConEsta); $i++) {
+                            if ($hechizosConEsta[$i][1][0] >= $max3) {
+                                $hechizoBot = $hechizosConEsta[$i][0];
+                                $max3 = $hechizosConEsta[$i][1][0];
+                            }
+                        }
+                    } else {
+                        $max3 = 0;
+                        for ($i = 0; $i < count($hechizosConEsta); $i++) {
+                            if ($hechizosConEsta[$i][1][0] <= 70) {
+                                if ($hechizosConEsta[$i][1][1] >= $max3) {
+                                    $hechizoBot = $hechizosConEsta[$i][0];
+                                    $max3 = $hechizosConEsta[$i][1][1];
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    $hechizoBot = $hechizosDisponibles[rand(0, count($hechizosDisponibles)-1)]['id'];
+                }
+                break;
+            case 4:
+                $max4 = 0;
+                for ($i = 0; $i < count($hechizosConEsta); $i++) {
+                    if ($hechizosConEsta[$i][1][0] >= $max4) {
+                        $hechizoBot = $hechizosConEsta[$i][0];
+                        $max4 = $hechizosConEsta[$i][1][0];
+                    }
+                }
+                break;
+        }
+
+        return response()->json(['hechizos' => $hechizoBot], Response::HTTP_CREATED);
     }
 }

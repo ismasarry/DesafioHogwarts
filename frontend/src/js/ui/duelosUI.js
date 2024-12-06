@@ -1,5 +1,5 @@
 //Raul Gutierrez
-import { getTurnoDuelos, getTurnoDuelosBot, getTurnoDuelosPorDuelo, postTurnoDuelo, getDueloEnCurso} from "../api/duelosAPI.js"
+import { getTurnoDuelos, getTurnoDuelosBot, getTurnoDuelosPorDuelo, postTurnoDuelo, getDueloEnCurso, eleccionBot} from "../api/duelosAPI.js"
 import { getBuscarHechizo } from "../api/hechizoAPI.js"
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -98,11 +98,18 @@ async function dueloHechizoUI(id, idUsuario) {
 
                 const ale = Math.floor(Math.random() * 4)
 
-                let hechizoBot = ""
-                let hechizo = []
-                let hechizosConEsta = []
+                let vidaUsu = 0
+                let vidaBot = 0
+                if (turnos.length == 0) {
+                    vidaUsu = 200
+                    vidaBot = 200
+                }else{
+                    vidaUsu = sessionStorage.getItem("vidaUsu")
+                    vidaBot = sessionStorage.getItem("vidaBot")
+                }
 
-                for (let i = 0; i < hechizosDisponibleBot.length; i++) {
+//
+                /*for (let i = 0; i < hechizosDisponibleBot.length; i++) {
                     hechizo = [hechizosDisponibleBot[i].id, hechizosDisponibleBot[i].estadisticas.split(',')]
                     hechizosConEsta.push(hechizo)
                 }
@@ -202,7 +209,9 @@ async function dueloHechizoUI(id, idUsuario) {
                             }
                         }
                         break;
-                }
+                }*/
+
+                const hechizoBot = await eleccionBot(idUsuario)
 
                 //compara usuario con bot
                 const hechizoDelUsuario = await getBuscarHechizo(id)
@@ -255,6 +264,9 @@ async function dueloHechizoUI(id, idUsuario) {
                         ganador = false
                     }
                 }
+
+
+
 
                 const idDuelo = await getDueloEnCurso(idUsuario)
 
