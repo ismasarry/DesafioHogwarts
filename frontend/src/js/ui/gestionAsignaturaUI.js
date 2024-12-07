@@ -110,9 +110,9 @@ const init = async () => {
                             </button>
                         `
 
-        const exixteFila = tabla.row(`#row-${asig.id}`)
-        if (exixteFila.node()) {
-            exixteFila.data({
+        const existeFila = tabla.row(`#row-${asig.id}`)
+        if (existeFila.node()) {
+            existeFila.data({
                 id: asig.id,
                 nombre: asig.nombre,
                 profesores: profesoresImparten.map(profe => profe.nombre).join(',') || '-',

@@ -40,4 +40,6 @@ export const constantes ={
     asignaturaProfesor: 'asignaturaProfesor/',
 
     mapa: 'mapa/',
+    segundo: 'segundo/',
+    simulacion: 'simulacion/',
 }
