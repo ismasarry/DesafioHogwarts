@@ -1,0 +1,35 @@
+.mapa-table {
+    table-layout: fixed;
+    width: auto;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+.mapa-table td {
+    width: 2cm;
+    height: 2cm;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #000;
+    font-size: 1.2rem;
+}
+
+.celda-muro {
+    background-color: #333;
+    color: white;
+}
+
+.celda-puerta {
+    background-color: #ffc107;
+    color: black;
+}
+
+.celda-suelo {
+    background-color: #f8f9fa;
+    color: black;
+}
+
+.celda-persona {
+    background-color: #0d6efd;
+    color: white;
+}
