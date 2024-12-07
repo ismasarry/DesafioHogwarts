@@ -150,11 +150,11 @@ export const getDueloEnCurso = async (id_usuario) => {
     }
 }
 
-export const eleccionBot = async (id_usuario) => {
-    const rutaDuelo = constantes.urlApi + constantes.turnoDuelo + 'eleccionBot/'
+export const calcularGanador = async (id_hechizo, id_usuario) => {
+    const rutaDuelo = constantes.urlApi + constantes.turnoDuelo + 'calcularGanador/'
 
     try {
-        const respuesta = await fetch(rutaDuelo + id_usuario, {
+        const respuesta = await fetch(rutaDuelo + id_hechizo + '/' + id_usuario, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

@@ -182,7 +182,7 @@ Route::prefix('turnoDuelo')->group(function () {
     Route::delete('{id}', [turnoDueloController::class, 'deleteTurnoDuelo']);
     
     Route::get('eleccionBot/{id}', [turnoDueloController::class, 'eleccionHechizoBot']);
-
+    Route::get('calcularGanador/{idHechizo}/{id}', [turnoDueloController::class, 'calculoGanador']);
 });
 
 

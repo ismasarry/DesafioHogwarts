@@ -1,5 +1,5 @@
 //Raul Gutierrez
-import { getTurnoDuelos, getTurnoDuelosBot, getTurnoDuelosPorDuelo, postTurnoDuelo, getDueloEnCurso, eleccionBot} from "../api/duelosAPI.js"
+import { getTurnoDuelos, getTurnoDuelosBot, getTurnoDuelosPorDuelo, postTurnoDuelo, getDueloEnCurso, calcularGanador} from "../api/duelosAPI.js"
 import { getBuscarHechizo } from "../api/hechizoAPI.js"
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -211,62 +211,62 @@ async function dueloHechizoUI(id, idUsuario) {
                         break;
                 }*/
 
-                const hechizoBot = await eleccionBot(idUsuario)
+                // const hechizoBot = await eleccionBot(idUsuario)
 
-                //compara usuario con bot
-                const hechizoDelUsuario = await getBuscarHechizo(id)
-                let estaUsuario = hechizoDelUsuario.hechizos.estadisticas.split(',')
+                // //compara usuario con bot
+                // const hechizoDelUsuario = await getBuscarHechizo(id)
+                // let estaUsuario = hechizoDelUsuario.hechizos.estadisticas.split(',')
 
-                const hechizoDelBot = await getBuscarHechizo(hechizoBot)
-                let estaBot = hechizoDelBot.hechizos.estadisticas.split(',')
+                // const hechizoDelBot = await getBuscarHechizo(hechizoBot)
+                // let estaBot = hechizoDelBot.hechizos.estadisticas.split(',')
 
-                //Calcular ataque usuario
-                const accProbUsuario = estaUsuario[5] / 2
-                const invProbUsuario = estaUsuario[4] / 2
-                const ale2 = Math.floor(Math.random() * 100)
-                if (ale2 <= accProbUsuario) {
-                    estaUsuario[0] * 2
-                }
-                if (ale2 <= invProbUsuario) {
-                    estaUsuario[1] * 2
-                }
-                estaUsuario[0] + estaUsuario[3]
-                estaUsuario[1] + estaUsuario[2]
-
-
-                //Calcular ataque Bot
-                const accProbBot = estaBot[5] / 2
-                const invProbBot = estaBot[4] / 2
-                const ale3 = Math.floor(Math.random() * 100)
-                if (ale3 <= accProbBot) {
-                    estaBot[0] * 2
-                }
-                if (ale3 <= invProbBot) {
-                    estaBot[1] * 2
-                }
-                estaBot[0] + estaBot[3]
-                estaBot[1] + estaBot[2]
+                // //Calcular ataque usuario
+                // const accProbUsuario = estaUsuario[5] / 2
+                // const invProbUsuario = estaUsuario[4] / 2
+                // const ale2 = Math.floor(Math.random() * 100)
+                // if (ale2 <= accProbUsuario) {
+                //     estaUsuario[0] * 2
+                // }
+                // if (ale2 <= invProbUsuario) {
+                //     estaUsuario[1] * 2
+                // }
+                // estaUsuario[0] + estaUsuario[3]
+                // estaUsuario[1] + estaUsuario[2]
 
 
-                estaBot[0] - estaUsuario[1]
-                estaUsuario[0] - estaBot[1]
-
-                //ver ganador
-                let ganador = null
-                if (estaUsuario[0] > estaBot[0]) {
-                    ganador = true
-                } else if (estaUsuario[0] < estaBot[0]) {
-                    ganador = false
-                } else {
-                    if (hechizoDelUsuario.hechizos.nivel >= hechizoDelBot.hechizos.nivel) {
-                        ganador = true
-                    } else {
-                        ganador = false
-                    }
-                }
+                // //Calcular ataque Bot
+                // const accProbBot = estaBot[5] / 2
+                // const invProbBot = estaBot[4] / 2
+                // const ale3 = Math.floor(Math.random() * 100)
+                // if (ale3 <= accProbBot) {
+                //     estaBot[0] * 2
+                // }
+                // if (ale3 <= invProbBot) {
+                //     estaBot[1] * 2
+                // }
+                // estaBot[0] + estaBot[3]
+                // estaBot[1] + estaBot[2]
 
 
+                // estaBot[0] - estaUsuario[1]
+                // estaUsuario[0] - estaBot[1]
 
+                // //ver ganador
+                // let ganador = null
+                // if (estaUsuario[0] > estaBot[0]) {
+                //     ganador = true
+                // } else if (estaUsuario[0] < estaBot[0]) {
+                //     ganador = false
+                // } else {
+                //     if (hechizoDelUsuario.hechizos.nivel >= hechizoDelBot.hechizos.nivel) {
+                //         ganador = true
+                //     } else {
+                //         ganador = false
+                //     }
+                // }
+
+
+                const ganador = await calcularGanador(id, idUsuario)
 
                 const idDuelo = await getDueloEnCurso(idUsuario)
 
@@ -274,10 +274,11 @@ async function dueloHechizoUI(id, idUsuario) {
                     idDuelo: idDuelo.id,
                     turno: turnos.length + 1,
                     idHechizoUsadoUsuario: id,
-                    idHechizoUsadoBot: hechizoBot,
-                    ganador: ganador
+                    idHechizoUsadoBot: ganador.idHechizoBot,
+                    ganador: ganador.ganador
                 }
-
+                console.log(ganador)
+                console.log(turnoDuelo)
                 await postTurnoDuelo(turnoDuelo)
 
                 const modal = new bootstrap.Modal(modalElement);

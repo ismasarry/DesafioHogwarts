@@ -198,7 +198,7 @@ class turnoDueloController extends Controller
                 break;
 
             case 2:
-                if ($turno[0]->ganador == true && $turno[1]->ganador == true) {
+                if ($turno[0]['ganador'] == true && $turno[1]['ganador'] == true) {
                     $max2 = 0;
                     for ($i = 0; $i < count($hechizosConEsta); $i++) {
                         if ($hechizosConEsta[$i][1][0] >= $max2) {
@@ -221,7 +221,7 @@ class turnoDueloController extends Controller
 
             case 3:
                 if ($ale <= 1) {
-                    if (($turno[0]->ganador == false && $turno[1]->ganador == false) || ($turno[0]->ganador == false && $turno[2]->ganador == false) || ($turno[1]->ganador == false && $turno[2]->ganador == false)) {
+                    if (($turno[0]['ganador'] == false && $turno[1]['ganador'] == false) || ($turno[0]['ganador'] == false && $turno[2]['ganador'] == false) || ($turno[1]['ganador'] == false && $turno[2]['ganador'] == false)) {
                         $max3 = 0;
                         for ($i = 0; $i < count($hechizosConEsta); $i++) {
                             if ($hechizosConEsta[$i][1][0] >= $max3) {
@@ -256,5 +256,57 @@ class turnoDueloController extends Controller
         }
 
         return response()->json(['hechizos' => $hechizoBot], Response::HTTP_CREATED);
+    }
+
+    public function calculoGanador($idHechizoUsuario, $idUsuario)
+    {
+        $hechizoUsuario = hechizos::find($idHechizoUsuario);
+        $estaUsuario = explode(",", $hechizoUsuario['estadisticas']);
+
+        $idHechizoBotResponse = self::eleccionHechizoBot($idUsuario);
+        $idHechizoBot = $idHechizoBotResponse->getData(true);
+        $hechizoBot = hechizos::find($idHechizoBot);
+        $estaBot = explode(",", $hechizoBot[0]['estadisticas']);
+
+        $accProbUsuario = $estaUsuario[5] / 2;
+        $invProbUsuario = $estaUsuario[4] / 2;
+        $ale2 = rand(0,100);
+        if ($ale2 <= $accProbUsuario) {
+            $estaUsuario[0]*2;
+        }
+        if ($ale2 <= $invProbUsuario) {
+            $estaUsuario[1]*2;
+        }
+        $estaUsuario[0] + $estaUsuario[3];
+        $estaUsuario[1] + $estaUsuario[2];
+
+
+        $accProbBot = $estaBot[5] / 2;
+        $invProbBot = $estaBot[4] / 2;
+        $ale3 = rand(0,100);
+        if ($ale3 <= $accProbBot) {
+            $estaBot[0]*2;
+        }
+        if ($ale3 <= $invProbBot) {
+            $estaBot[1]*2;
+        }
+        $estaBot[0] + $estaBot[3];
+        $estaBot[1] + $estaBot[2];
+
+
+        $ganador = null;
+        if ($estaUsuario[0] > $estaBot[0]) {
+            $ganador = true;
+        }elseif($estaUsuario[0] < $estaBot[0]){
+            $ganador = false;
+        }else {
+            if ($hechizoUsuario['nivel'] >= $hechizoBot[0]['nivel']) {
+                $ganador = true;
+            }else{
+                $ganador = false;
+            }
+        }
+
+        return response()->json(['ganador' => $ganador, 'idHechizoBot' => $hechizoBot[0]['id']], Response::HTTP_CREATED);
     }
 }
