@@ -2,70 +2,13 @@
 import { postFormUsuario } from "../api/usuarioAPI.js"
 import { getTodosCasas, getBuscarIntegrantesCasa } from "../api/casaAPI.js"
 import { constantes } from "../classes/constantes.js"
+import { validacionNombre, validacionGmail, validacionContrasena, mostrarErrores } from "../classes/validaciones.js"
 
 const nombreInput = document.getElementById('nombre')
 const gmailInput = document.getElementById('gmail')
 const contrasenaInput = document.getElementById('contrasena')
 const confirm_contrasenaInput = document.getElementById('confirm_contrasena')
 const prioridadInput = document.getElementById('prioridad')
-
-const validacionNombre = (nombre) => {
-    const errores = []
-
-    if (!constantes.nombreRegex.test(nombre)) {
-        errores.push("El nombre debe tener entre 2 y 50 caracteres, solo letras y espacios.")
-    }
-
-    return errores
-}
-
-const validacionGmail = (gmail) => {
-    const errores = []
-
-    if (!constantes.gmailRegex.test(gmail)) {
-        errores.push("El correo debe ser un correo válido de email ( ejemplo@ej.ej ).")
-    }
-
-    return errores
-}
-
-const validacionContrasena = (contrasena) => {
-    const errores = []
-
-    if (!/.{8,}/.test(contrasena)) {
-        errores.push("Debe tener al menos 8 caracteres.")
-    }
-    if (!/[A-Z]/.test(contrasena)) {
-        errores.push("Debe contener al menos una letra mayúscula.")
-    }
-    if (!/[a-z]/.test(contrasena)) {
-        errores.push("Debe contener al menos una letra minúscula.")
-    }
-    if (!/\d/.test(contrasena)) {
-        errores.push("Debe contener al menos un número.")
-    }
-    if (!/[\W_]/.test(contrasena)) {
-        errores.push("Debe contener al menos un carácter especial (por ejemplo: !, @, #, ...).")
-    }
-
-    return errores
-}
-
-const mostrarErrores = (errores, input) => {
-    let errorMessage = input.nextElementSibling
-
-    if (errorMessage && errorMessage.classList && errorMessage.classList.contains('error-message')) {
-        errorMessage.remove()
-    }
-
-    if (errores.length > 0) {
-        errorMessage = document.createElement('div')
-        errorMessage.classList.add('error-message')
-        errorMessage.style.color = 'red'
-        errorMessage.innerHTML = errores.join('<br>')
-        input.insertAdjacentElement('afterend', errorMessage)
-    }
-}
 
 const registro = async () => {
     const form = document.getElementById('registro')
@@ -97,34 +40,25 @@ const registro = async () => {
         const confirm_contrasena = formData.get('confirm_contrasena')
         const casasSeleccionadas = formData.getAll('prioridad')
 
+        let erroresContrasena = []
+        let erroresCasas = []
+
         if (contrasena !== confirm_contrasena) {
-            if (!errorMessage) {
-                errorMessage = document.createElement('span')
-                errorMessage.style.color = 'red'
-                errorMessage.textContent = 'Las contraseñas no coinciden.'
-                confirm_contrasenaInput.insertAdjacentElement('afterend', errorMessage)
-            }
-            return
+            erroresContrasena.push("Las contraseñas no coinciden.")
+            mostrarErrores(erroresContrasena, confirm_contrasenaInput)
         } else {
-            if (errorMessage) {
-                form.removeChild(errorMessage)
-                errorMessage = null
-            }
+            mostrarErrores([], confirm_contrasenaInput)
         }
 
         if (casasSeleccionadas.length > 0 && casasSeleccionadas.length < 4) {
-            if (!errorMessage) {
-                errorMessage = document.createElement('span')
-                errorMessage.style.color = 'red'
-                errorMessage.textContent = 'Seleccione todas las casas en orden de prioridad de mayor ↑ a menor ↓ o quite todas y que el sombrero seleccionador decida tu destino.'
-                prioridadInput.insertAdjacentElement('afterend', errorMessage)
-            }
-            return
+            erroresCasas.push("Seleccione todas las casas en orden de prioridad de mayor ↑ a menor ↓ o quite todas y que el sombrero seleccionador decida tu destino.")
+            mostrarErrores(erroresCasas, prioridadInput)
         } else {
-            if (errorMessage) {
-                form.removeChild(errorMessage)
-                errorMessage = null
-            }
+            mostrarErrores([], prioridadInput)
+        }
+
+        if (erroresContrasena.length > 0 || erroresCasas.length > 0) {
+            return
         }
 
         const usuarioCreado = {
@@ -232,13 +166,6 @@ const gorroSeleccionador = async () => {
         }
     }
     return casaSeleccionada
-}
-
-export {
-    validacionNombre,
-    validacionGmail,
-    validacionContrasena,
-    mostrarErrores
 }
 
 const init = () => {
