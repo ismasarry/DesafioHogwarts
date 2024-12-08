@@ -3,6 +3,11 @@
 #pociones{
   color: aliceblue;
 }
+
+td  {
+color: aliceblue  !important;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background-color: #23272a;

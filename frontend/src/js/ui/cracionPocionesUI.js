@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const nombresEstadisticas = [
             'Sanación', 'Envenenamiento', 'Analgesia', 'Dolor',
-            'Curativo', 'Enfermante', 'Inflamatorio', 'Desinflamatorio'
+            'Curativo', 'Enfermante',  'Desinflamatorio', 'Inflamatorio'
         ];
 
         listaEstadisticas.innerHTML = '';
@@ -117,70 +117,86 @@ document.addEventListener('DOMContentLoaded', async () => {
             mostrarMensaje('Error: No se pudo obtener el usuario. Asegúrate de haber iniciado sesión.', 'danger');
             return;
         }
-
+    
         try {
             const rolesData = await mostrarRolesUsuario(usuario);
             console.log("Roles obtenidos para el usuario:", rolesData);
-
+    
             const rolesArray = rolesData.roles.map(role => role.nombre);
             console.log("Roles como arreglo de nombres:", rolesArray);
-
+    
             const veri = rolesArray.includes('profesor') || rolesArray.includes('admin') || rolesArray.includes('Dumbledore') ? 1 : 0;
             console.log("Valor de 'veri' calculado:", veri);
-
+    
             const nombrePocion = document.getElementById('nombrePocion').value.trim();
             const descripcionPocion = document.getElementById('descripcionPocion').value.trim();
-
+    
             console.log("Nombre de la poción ingresado:", nombrePocion);
             console.log("Descripción de la poción ingresada:", descripcionPocion);
-
+    
             if (!nombrePocion || !descripcionPocion) {
                 mostrarMensaje('Por favor, completa el nombre y la descripción de la poción.', 'danger');
                 return;
             }
-
+    
             const ingredientesUtilizados = [...tablaIngredientesUtilizados.querySelectorAll('tr')].map(row =>
                 row.querySelector('button[data-id]').getAttribute('data-id')
             );
-
+    
             console.log("Ingredientes utilizados seleccionados:", ingredientesUtilizados);
-
+    
             if (ingredientesUtilizados.length === 0) {
                 mostrarMensaje('Selecciona al menos un ingrediente para crear la poción.', 'danger');
                 return;
             }
-
+    
             const estadisticasTotales = ingredientesUtilizados.reduce((totales, idIngrediente) => {
                 const fila = document.querySelector(`button[data-id="${idIngrediente}"]`);
                 const estadisticas = fila.getAttribute('data-estadisticas').split(',').map(Number);
                 console.log(`Estadísticas del ingrediente (ID ${idIngrediente}):`, estadisticas);
                 return totales.map((total, index) => total + (estadisticas[index] || 0));
             }, Array(8).fill(0));
-
+    
             console.log("Estadísticas totales calculadas para la poción:", estadisticasTotales);
-
+    
+            const primerasEstadisticas = estadisticasTotales.slice(0, 4); 
+            const segundasEstadisticas = estadisticasTotales.slice(4, 8); 
+    
+            const mediaPrimeras = primerasEstadisticas.reduce((a, b) => a + b, 0) / primerasEstadisticas.length;
+            const mediaSegundas = segundasEstadisticas.reduce((a, b) => a + b, 0) / segundasEstadisticas.length;
+    
+            console.log("Media de las primeras estadísticas:", mediaPrimeras);
+            console.log("Media de las segundas estadísticas:", mediaSegundas);
+    
+            let descripcionFinal = descripcionPocion;
+            if (mediaPrimeras > mediaSegundas) {
+                descripcionFinal = `Es una poción beneficiosa que ${descripcionPocion}`;
+            } else if (mediaSegundas > mediaPrimeras) {
+                descripcionFinal = `Es una poción perjudicial que ${descripcionPocion}`;
+            }
+    
             const nuevaPocion = {
                 nombre: nombrePocion,
-                descripcion: descripcionPocion,
-                estadisticas: estadisticasTotales.join(','),  
+                descripcion: descripcionFinal,
+                estadisticas: estadisticasTotales.join(','),
                 idUsuario: usuario,
                 veri: veri,
             };
-
+    
             console.log("Datos enviados para la creación de la poción:", nuevaPocion);
-
+    
             const respuesta = await postPocion(nuevaPocion);
             console.log("Respuesta de la creación de la poción:", respuesta);
-
+    
             const idPocionCreada = respuesta.pocion.id;
             console.log("ID de la poción creada:", idPocionCreada);
-
+    
             for (const idIngrediente of ingredientesUtilizados) {
                 const recetaData = { idPocion: idPocionCreada, idIngrediente: idIngrediente };
                 console.log("Datos enviados para la receta:", recetaData);
                 await postReceta(recetaData);
             }
-
+    
             mostrarMensaje('Poción creada exitosamente.', 'success');
         } catch (error) {
             console.error('Error al crear la poción:', error);
