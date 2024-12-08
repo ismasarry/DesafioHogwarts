@@ -150,6 +150,31 @@ export const getDueloEnCurso = async (id_usuario) => {
     }
 }
 
+export const calcularGanador = async (id_hechizo, id_usuario) => {
+    const rutaDuelo = constantes.urlApi + constantes.turnoDuelo + 'calcularGanador/'
+
+    try {
+        const respuesta = await fetch(rutaDuelo + id_hechizo + '/' + id_usuario, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok){
+            throw new Error(`Error al obtener la eleccion del bot. Código de estado: ${respuesta.status}`);
+        }
+
+        const duelo = await respuesta.json()
+        console.log(duelo)
+        return duelo
+
+    } catch (error) {
+        console.error('Error en la función eleccionBot:', error.message);
+        throw error;
+    }
+}
+
 export const getDueloPorUsuario = async (id_usuario) => {
     const rutaDuelo = constantes.urlApi + constantes.duelo + 'usuario/'
 

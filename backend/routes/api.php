@@ -15,6 +15,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\IngredientesController;
 use App\Http\Controllers\PocionesController;
 use App\Http\Controllers\RecetasController;
+use App\Http\Middleware\RolMiddleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -56,7 +57,6 @@ Route::prefix('usuarioRoles')->group(function () {
     Route::post('/', [usuarioRolController::class, 'postUsuarioRol']);
     Route::put('{id}', [usuarioRolController::class, 'putUsuarioRol']);
     Route::delete('{id}', [usuarioRolController::class, 'deleteUsuarioRol']);
-
     //Raul Gutierrez
     Route::delete('{idUsuario}/{idRol}', [usuarioRolController::class, 'deleteUsuarioRolPorIds']);
 
@@ -66,11 +66,11 @@ Route::prefix('usuarioRoles')->group(function () {
 Route::prefix('usuario')->group(function () {
     Route::get('/', [UsuarioController::class, 'getTodosUsuarios']);
     Route::get('{id}', [UsuarioController::class, 'getUsuarioPorId']);
+    Route::get('gmail/{gmail}', [UsuarioController::class, 'getUsuarioPorGmail']);
     Route::post('/', [UsuarioController::class, 'postUsuario']);
     Route::put('{id}', [UsuarioController::class, 'putUsuario']);
     Route::delete('{id}', [UsuarioController::class, 'deleteUsuario']);
 });
-
 
 //Raul Gutierrez
 Route::prefix('asignatura')->group(function () {
@@ -180,6 +180,9 @@ Route::prefix('turnoDuelo')->group(function () {
     Route::post('/', [turnoDueloController::class, 'postTurnoDuelo']);
     Route::put('{id}', [turnoDueloController::class, 'putTurnoDuelo']);
     Route::delete('{id}', [turnoDueloController::class, 'deleteTurnoDuelo']);
+    
+    Route::get('eleccionBot/{id}', [turnoDueloController::class, 'eleccionHechizoBot']);
+    Route::get('calcularGanador/{idHechizo}/{id}', [turnoDueloController::class, 'calculoGanador']);
 });
 
 
@@ -203,3 +206,5 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('/nologin', function () {
     return response()->json("No autorizado", 203);
 });
+
+

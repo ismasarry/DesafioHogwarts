@@ -48,6 +48,29 @@ export const getBuscarUsuario = async (id_usuario) => {
     }
 }
 
+export const getBuscarUsuarioPorGmail = async (gmail) => {
+    const rutaUsuario = constantes.urlApi + constantes.usu
+
+    try {
+        const respuesta = await fetch(rutaUsuario + 'gmail/' + gmail, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok) {
+            throw new Error(`Error al obtener el usuario. Código de estado: ${respuesta.status}`)
+        }
+
+        const usuario = await respuesta.json()
+        return usuario
+    } catch (error) {
+        console.error('Error en la función getBuscarUsuario:', error.message)
+        throw error
+    }
+}
+
 export const postUsuario = async (usuarioCreado) => {
     const rutaUsuario = constantes.urlApi + constantes.usu
 
