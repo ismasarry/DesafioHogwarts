@@ -28,7 +28,7 @@ export const constantes ={
 
 
     nombreRegex: /^[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]{2,50}$/,
-    gmailRegex: /^[a-zA-Z0-9._%+-]+@gmail\.com$/,
+    gmailRegex: /^[\w.%+-]{2,}@[\w.-]{2,}\.\w{2,}$/,
     contrasenaRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
 
     asignatura: 'asignatura/',

@@ -23,7 +23,7 @@ const validacionGmail = (gmail) => {
     const errores = []
 
     if (!constantes.gmailRegex.test(gmail)) {
-        errores.push("El correo debe ser un correo válido de Gmail ( ejemplo@gmail.com ).")
+        errores.push("El correo debe ser un correo válido de email ( ejemplo@ej.ej ).")
     }
 
     return errores
