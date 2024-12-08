@@ -180,6 +180,9 @@ Route::prefix('turnoDuelo')->group(function () {
     Route::post('/', [turnoDueloController::class, 'postTurnoDuelo']);
     Route::put('{id}', [turnoDueloController::class, 'putTurnoDuelo']);
     Route::delete('{id}', [turnoDueloController::class, 'deleteTurnoDuelo']);
+    
+    Route::get('eleccionBot/{id}', [turnoDueloController::class, 'eleccionHechizoBot']);
+    Route::get('calcularGanador/{idHechizo}/{id}', [turnoDueloController::class, 'calculoGanador']);
 });
 
 
@@ -203,3 +206,5 @@ Route::post('register', [AuthController::class, 'register']);
 Route::get('/nologin', function () {
     return response()->json("No autorizado", 203);
 });
+
+
