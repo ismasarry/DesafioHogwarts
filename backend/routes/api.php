@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 // AQUI EMPIEZAN LAS RUTAS AGRUPADAS POR REL AUTH SANCTUM
 //Route::middleware(['auth:sanctum'])->group(function () {
+
+//todos--------------------------------------------
 Route::prefix('rol')->group(function () {
     Route::get('/', [rolController::class, 'getAllRoles']);
     Route::get('/{id}', [rolController::class, 'getRol']);
@@ -29,6 +31,8 @@ Route::prefix('rol')->group(function () {
     Route::delete('/{id}', [rolController::class, 'deleteRol']);
 });
 //});
+
+
 Route::prefix('casa')->group(function () {
     Route::get('/', [casaController::class, 'getAllCasas']);
     Route::get('/{id}', [casaController::class, 'getCasa']);
@@ -39,6 +43,7 @@ Route::prefix('casa')->group(function () {
 });
 
 //Ismael Sarrion
+
 Route::get('/usuarioRoles', [usuarioRolController::class, 'getTodosUsuarioRoles']);
 Route::get('/usuarioRoles/{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
 //Jaime Ortega
@@ -55,6 +60,8 @@ Route::get('usuario/{id}', [UsuarioController::class, 'getUsuarioPorId']);
 Route::post('usuario', [UsuarioController::class, 'postUsuario']);
 Route::put('usuario/{id}', [UsuarioController::class, 'putUsuario']);
 Route::delete('usuario/{id}', [UsuarioController::class, 'deleteUsuario']);
+
+
 
 //Raul Gutierrez
 Route::get('/asignatura', [asignaturaController::class, 'getTodosAsignaturas']);
@@ -77,6 +84,7 @@ Route::delete('asignaturaAlumno/{idAsignatura}/{idAlumno}', [asignaturaAlumnoCon
 Route::get('/asignaturaAlumno/alumnoPorId/{id}',[asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorIdAlumno']);
 
 //Raul Gutierrez
+//todos menos alumno 
 Route::get('/asignaturaProfesor', [asignaturaProfesorController::class, 'getTodosAsignaturaProfesores']);
 Route::get('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'getAsignaturaProfesorPorId']);
 Route::get('asignaturaProfesor/profesor/{id}', [asignaturaProfesorController::class, 'getAsignaturaProfesorPorIdProfesor']);
@@ -87,7 +95,7 @@ Route::delete('asignaturaProfesor/{id}', [asignaturaProfesorController::class, '
 Route::delete('asignaturaProfesor/{idAsignatura}/{idProfesor}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesorEspecifico']);
 
 
-
+// todos menos admin 
 //Raul Gutierrez
 Route::get('hechizos', [hechizosController::class, 'getTodosHechizos']);
 Route::get('hechizos/{id}', [hechizosController::class, 'getHechizoPorId']);
