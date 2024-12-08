@@ -86,12 +86,12 @@ Route::prefix('asignaturaAlumno')->group(function () {
     // Raul Gutierrez
     Route::get('/', [asignaturaAlumnoController::class, 'getTodosAsignaturaAlumnos']);
     Route::get('{id}', [asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorId']);
-
-    // Jaime Ortega (getAsignaturaAlumnoPorIdAlumno)
-    Route::get('alumno/{id}', [asignaturaAlumnoController::class, 'getAsignaturaProfesorPorIdAlumno']);
     Route::post('/', [asignaturaAlumnoController::class, 'postAsignaturaAlumno']);
     Route::put('{id}', [asignaturaAlumnoController::class, 'putAsignaturaAlumno']);
     Route::delete('{id}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumno']);
+
+    // Jaime Ortega (getAsignaturaAlumnoPorIdAlumno)
+    Route::get('alumno/{id}', [asignaturaAlumnoController::class, 'getAsignaturaProfesorPorIdAlumno']);
 
     // Jaime Ortega
     Route::delete('{idAsignatura}/{idAlumno}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumnoEspecifico']);

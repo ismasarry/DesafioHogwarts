@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   
     const idUsuario = sessionStorage.getItem("userId")
     usuario = await getBuscarUsuario(idUsuario)
-    console.log(usuario.Usuario)
 
     if (usuario) {
       headerContainer.innerHTML = `
@@ -91,8 +90,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("header-container").addEventListener("click", (event) => {
     if (event.target && event.target.id === "botonCerrarSesion") {
-      console.log("Sesión cerrada")
-      window.location.href = "./../index.html";
+      window.location.href = "http://localhost:5173/";
     }
   });
 
