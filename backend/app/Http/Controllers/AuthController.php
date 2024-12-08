@@ -40,6 +40,7 @@ class AuthController extends Controller
         try {
             $input = $request->all();
             $input['contrasena'] = bcrypt($input['contrasena']);
+            $input['activo'] = 0;
 
             $user = Usuario::create($input);
             $user->remember_token = $user->createToken('LaravelSanctumAuth', ['alumno'])->plainTextToken;
@@ -62,6 +63,7 @@ class AuthController extends Controller
                     'nombre' => $user->nombre,
                     'id' => $user->id,
                     'foto' => $user->foto ?? null,
+                    'activo' => $user->activo,
                 ],
                 "message" => "Usuario registrado correctamente",
             ], 201);

@@ -1,7 +1,8 @@
 //Jaime Ortega
 import { postFormUsuario } from "../api/usuarioAPI.js"
 import { getTodosCasas, getBuscarIntegrantesCasa } from "../api/casaAPI.js"
-import { constantes } from "../classes/constantes.js"
+import { validacionNombre, validacionGmail, validacionContrasena, mostrarErrores } from "../classes/validaciones.js"
+import { getTodosUsuarios } from "../api/usuarioAPI.js"
 
 const nombreInput = document.getElementById('nombre')
 const gmailInput = document.getElementById('gmail')
@@ -9,67 +10,8 @@ const contrasenaInput = document.getElementById('contrasena')
 const confirm_contrasenaInput = document.getElementById('confirm_contrasena')
 const prioridadInput = document.getElementById('prioridad')
 
-const validacionNombre = (nombre) => {
-    const errores = []
-
-    if (!constantes.nombreRegex.test(nombre)) {
-        errores.push("El nombre debe tener entre 2 y 50 caracteres, solo letras y espacios.")
-    }
-
-    return errores
-}
-
-const validacionGmail = (gmail) => {
-    const errores = []
-
-    if (!constantes.gmailRegex.test(gmail)) {
-        errores.push("El correo debe ser un correo válido de Gmail ( ejemplo@gmail.com ).")
-    }
-
-    return errores
-}
-
-const validacionContrasena = (contrasena) => {
-    const errores = []
-
-    if (!/.{8,}/.test(contrasena)) {
-        errores.push("Debe tener al menos 8 caracteres.")
-    }
-    if (!/[A-Z]/.test(contrasena)) {
-        errores.push("Debe contener al menos una letra mayúscula.")
-    }
-    if (!/[a-z]/.test(contrasena)) {
-        errores.push("Debe contener al menos una letra minúscula.")
-    }
-    if (!/\d/.test(contrasena)) {
-        errores.push("Debe contener al menos un número.")
-    }
-    if (!/[\W_]/.test(contrasena)) {
-        errores.push("Debe contener al menos un carácter especial (por ejemplo: !, @, #, ...).")
-    }
-
-    return errores
-}
-
-const mostrarErrores = (errores, input) => {
-    let errorMessage = input.nextElementSibling
-
-    if (errorMessage && errorMessage.classList && errorMessage.classList.contains('error-message')) {
-        errorMessage.remove()
-    }
-
-    if (errores.length > 0) {
-        errorMessage = document.createElement('div')
-        errorMessage.classList.add('error-message')
-        errorMessage.style.color = 'red'
-        errorMessage.innerHTML = errores.join('<br>')
-        input.insertAdjacentElement('afterend', errorMessage)
-    }
-}
-
 const registro = async () => {
     const form = document.getElementById('registro')
-    let errorMessage
 
     nombreInput.addEventListener('input', () => {
         const nombre = nombreInput.value
@@ -92,56 +34,101 @@ const registro = async () => {
     form.addEventListener('submit', async (e) => {
         e.preventDefault()
 
-        const formData = new FormData(form)
-        const contrasena = formData.get('contrasena')
-        const confirm_contrasena = formData.get('confirm_contrasena')
-        const casasSeleccionadas = formData.getAll('prioridad')
-
-        if (contrasena !== confirm_contrasena) {
-            if (!errorMessage) {
-                errorMessage = document.createElement('span')
-                errorMessage.style.color = 'red'
-                errorMessage.textContent = 'Las contraseñas no coinciden.'
-                confirm_contrasenaInput.insertAdjacentElement('afterend', errorMessage)
-            }
-            return
-        } else {
-            if (errorMessage) {
-                form.removeChild(errorMessage)
-                errorMessage = null
-            }
-        }
-
-        if (casasSeleccionadas.length > 0 && casasSeleccionadas.length < 4) {
-            if (!errorMessage) {
-                errorMessage = document.createElement('span')
-                errorMessage.style.color = 'red'
-                errorMessage.textContent = 'Seleccione todas las casas en orden de prioridad de mayor ↑ a menor ↓ o quite todas y que el sombrero seleccionador decida tu destino.'
-                prioridadInput.insertAdjacentElement('afterend', errorMessage)
-            }
-            return
-        } else {
-            if (errorMessage) {
-                form.removeChild(errorMessage)
-                errorMessage = null
-            }
-        }
-
-        const usuarioCreado = {
-            nombre: formData.get('nombre'),
-            gmail: formData.get('gmail'),
-            contrasena: contrasena,
-            confirm_contrasena: confirm_contrasena,
-            idCasa: await gorroSeleccionador(),
-            foto: formData.get('foto')
-        }
+        let erroresSubmit = false
 
         try {
-            const resultado = await postFormUsuario(usuarioCreado)
-            window.location.href = '../html/login.html'
-            form.reset()
+            const todosUsuarios = await getTodosUsuarios()
+            const usuarios = todosUsuarios.Usuario || []
+            const erroresGmail = []
+            usuarios.forEach(usu => {
+                if (usu.gmail === gmailInput.value) {
+                    erroresGmail.push('El correo electrónico ya está en uso.')
+                }
+            })
+            mostrarErrores(erroresGmail, gmailInput)
+            if (erroresGmail.length > 0) erroresSubmit = true
+
+            const formData = new FormData(form)
+
+            const contrasena = formData.get('contrasena')
+            const confirm_contrasena = formData.get('confirm_contrasena')
+            let erroresContrasena = []
+            if (contrasena !== confirm_contrasena) {
+                erroresContrasena.push("Las contraseñas no coinciden.")
+            }
+            mostrarErrores(erroresContrasena, confirm_contrasenaInput)
+            if (erroresContrasena.length > 0) erroresSubmit = true
+
+            const casasSeleccionadas = formData.getAll('prioridad')
+            let erroresCasas = []
+            if (casasSeleccionadas.length > 0 && casasSeleccionadas.length < 4) {
+                erroresCasas.push("Seleccione todas las casas en orden de prioridad de mayor ↑ a menor ↓ o quite todas y que el sombrero seleccionador decida tu destino.")
+            }
+            mostrarErrores(erroresCasas, prioridadInput)
+            if (erroresCasas.length > 0) erroresSubmit = true
+
+            if (erroresSubmit) return
+
+            const usuarioCreado = {
+                nombre: formData.get('nombre'),
+                gmail: formData.get('gmail'),
+                contrasena: contrasena,
+                confirm_contrasena: confirm_contrasena,
+                idCasa: await gorroSeleccionador(),
+                foto: formData.get('foto')
+            }
+
+            try {
+                const resultado = await postFormUsuario(usuarioCreado)
+
+                const modal = document.createElement('div')
+                modal.style.position = 'fixed'
+                modal.style.left = '0'
+                modal.style.top = '0'
+                modal.style.width = '100%'
+                modal.style.height = '100%'
+                modal.style.backgroundColor = 'rgba(0,0,0,0.5)'
+                modal.style.display = 'flex'
+                modal.style.justifyContent = 'center'
+                modal.style.alignItems = 'center'
+                modal.style.zIndex = '1000'
+
+                const modalContent = document.createElement('div')
+                modalContent.style.backgroundColor = '#fff'
+                modalContent.style.padding = '20px'
+                modalContent.style.borderRadius = '5px'
+                modalContent.style.textAlign = 'center'
+
+                const message = document.createElement('p')
+                message.textContent = '¡Te has registrado correctamente! Estás a la espera de que un profesor active tu cuenta.'
+                message.style.color = 'black'
+                message.style.marginBottom = '20px'
+
+                const closeButton = document.createElement('button')
+                closeButton.textContent = 'Entendido'
+                closeButton.style.padding = '10px 20px'
+                closeButton.style.backgroundColor = '#007bff'
+                closeButton.style.color = '#fff'
+                closeButton.style.border = 'none'
+                closeButton.style.borderRadius = '3px'
+                closeButton.style.cursor = 'pointer'
+
+                closeButton.addEventListener('click', () => {
+                    document.body.removeChild(modal)
+                    window.location.href = 'http://localhost:5173/'
+                })
+
+                modalContent.appendChild(message)
+                modalContent.appendChild(closeButton)
+                modal.appendChild(modalContent)
+                document.body.appendChild(modal)
+
+                form.reset()
+            } catch (err) {
+                console.error('Error al registrar el usuario:', err.message)
+            }
         } catch (err) {
-            console.error('Error al registrar el usuario:', err.message)
+            console.error('Error al cargar los usuarios:', err.message)
         }
     })
 }
@@ -232,13 +219,6 @@ const gorroSeleccionador = async () => {
         }
     }
     return casaSeleccionada
-}
-
-export {
-    validacionNombre,
-    validacionGmail,
-    validacionContrasena,
-    mostrarErrores
 }
 
 const init = () => {
