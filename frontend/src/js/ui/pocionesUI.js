@@ -644,13 +644,13 @@ async function editarPocionUI(id) {
         
                         const modalElement = document.getElementById(`veriModal${id}`);
                         const pocion = await getBuscarPocion(id);
-                        console.log(pocion.pociones.nombre);
+                        console.log(pocion.pocion.nombre); 
         
                         const pocionObjeto = {
-                            nombre: pocion.pociones.nombre,
-                            descripcion: pocion.pociones.descripcion, 
-                            estadisticas: pocion.pociones.estadisticas,
-                            idUsuario: pocion.pociones.idUsuario,
+                            nombre: pocion.pocion.nombre, 
+                            descripcion: pocion.pocion.descripcion,
+                            estadisticas: pocion.pocion.estadisticas,
+                            idUsuario: pocion.pocion.idUsuario,
                             veri: 1, 
                         };
         
@@ -665,6 +665,7 @@ async function editarPocionUI(id) {
                 });
             }
         }
+        
         
         rellenarPociones()
     })
