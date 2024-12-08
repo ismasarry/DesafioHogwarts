@@ -419,5 +419,50 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     }
+
+    async function crearUsuarioUI(usuario) {
+        const anadirBtn = document.getElementById(`anadirBtn`)
+        console.log(usuario.id)
+        if (anadirBtn) {
+
+            anadirBtn.addEventListener('click', async () => {
+                try {
+
+                    const modalElement = document.getElementById(`anadirModal`)
+                    const nombre = modalElement.querySelector(`#nombre`).value
+                    const gmail = modalElement.querySelector(`#gmail`).value
+                    const idCasa = modalElement.querySelector(`#casa`).value
+                    const contrasena = modalElement.querySelector(`#contrasena`).value
+                    const foto = modalElement.querySelector(`#foto`).value
+
+                    const usuario = {
+                        nombre: nombre,
+                        gmail: gmail,
+                        contrasena: contrasena,
+                        idCasa: idCasa,
+                        nivel: 1,
+                        exp: 0,
+                        foto: foto,
+                        activo: 0
+                    }
+
+                    await postUsuario(usuario)
+
+                    // const rolUsu = {
+                    //     idRol: 4,
+                    //     idUsuario: 
+                    // }
+
+                    
+
+                    const modal = new bootstrap.Modal(modalElement)
+                    modal.hide();
+                    location.reload()
+                } catch (error) {
+                    console.error('Error al confirmar la modificación:', error)
+                }
+            });
+        }
+    }
     rellenarUsuarios()
 })
