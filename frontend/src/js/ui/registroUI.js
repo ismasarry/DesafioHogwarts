@@ -72,7 +72,49 @@ const registro = async () => {
 
         try {
             const resultado = await postFormUsuario(usuarioCreado)
-            window.location.href = '../html/login.html'
+
+            const modal = document.createElement('div')
+            modal.style.position = 'fixed'
+            modal.style.left = '0'
+            modal.style.top = '0'
+            modal.style.width = '100%'
+            modal.style.height = '100%'
+            modal.style.backgroundColor = 'rgba(0,0,0,0.5)'
+            modal.style.display = 'flex'
+            modal.style.justifyContent = 'center'
+            modal.style.alignItems = 'center'
+            modal.style.zIndex = '1000'
+
+            const modalContent = document.createElement('div')
+            modalContent.style.backgroundColor = '#fff'
+            modalContent.style.padding = '20px'
+            modalContent.style.borderRadius = '5px'
+            modalContent.style.textAlign = 'center'
+
+            const message = document.createElement('p')
+            message.textContent = '¡Te has registrado correctamente! Estás a la espera de que un profesor active tu cuenta.'
+            message.style.color = 'black'
+            message.style.marginBottom = '20px'
+
+            const closeButton = document.createElement('button')
+            closeButton.textContent = 'Entendido'
+            closeButton.style.padding = '10px 20px'
+            closeButton.style.backgroundColor = '#007bff'
+            closeButton.style.color = '#fff'
+            closeButton.style.border = 'none'
+            closeButton.style.borderRadius = '3px'
+            closeButton.style.cursor = 'pointer'
+
+            closeButton.addEventListener('click', () => {
+                document.body.removeChild(modal)
+                window.location.href = 'http://localhost:5173/'
+            })
+
+            modalContent.appendChild(message)
+            modalContent.appendChild(closeButton)
+            modal.appendChild(modalContent)
+            document.body.appendChild(modal)
+            
             form.reset()
         } catch (err) {
             console.error('Error al registrar el usuario:', err.message)
