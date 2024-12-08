@@ -4,7 +4,7 @@ import { getBuscarHechizo, getBuscarHechizoNivel } from "../api/hechizoAPI.js"
 import { getBuscarUsuario } from "../api/usuarioAPI.js"
 import { cargarSideBar } from "../components/cargarSideBar.js"
 
-cargarSideBar
+await cargarSideBar()
 document.addEventListener("DOMContentLoaded", function () {
     async function rellenarHechizos() {
         const idUsuario = sessionStorage.getItem("userId")

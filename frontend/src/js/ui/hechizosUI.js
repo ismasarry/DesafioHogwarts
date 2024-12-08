@@ -5,7 +5,7 @@ import { getBuscarHechizo, getBuscarHechizoNivel, postHechizo, putHechizo, delet
 import { mostrarRolesUsuario } from "../api/usuarioRolAPI.js"
 import { postDuelo, getDueloEnCurso, getWinRate } from "../api/duelosAPI.js"
 
-
+await cargarSideBar()
 document.addEventListener("DOMContentLoaded", function () {
     async function rellenarHechizos() {
         const usuario = sessionStorage.getItem('userId')
@@ -640,7 +640,7 @@ const eliminarHechizo = `
                     }
                 }
                 let row
-                if (hec.idUsuario) {
+                if (hec.idUsuario == 0 && hec.idUsuario != usuarioInfo.Usuario.id) {
                     row = tabla.row.add([
                         hec.nombre,
                         esta[0],
@@ -975,6 +975,5 @@ const eliminarHechizo = `
             });
         }
     }
-    cargarSideBar()
     rellenarHechizos()
 })

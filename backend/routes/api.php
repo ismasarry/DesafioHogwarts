@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Route;
 
 //Jaime Ortega
 
+
+
+
 // AQUI EMPIEZAN LAS RUTAS AGRUPADAS POR REL AUTH SANCTUM
 //Route::middleware(['auth:sanctum'])->group(function () {
 Route::prefix('rol')->group(function () {
@@ -42,82 +45,156 @@ Route::prefix('casa')->group(function () {
 });
 
 //Ismael Sarrion
-Route::get('/usuarioRoles', [usuarioRolController::class, 'getTodosUsuarioRoles']);
-Route::get('/usuarioRoles/{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
-//Jaime Ortega
-Route::get('/usuarioRoles/integrantes/{id}', [usuarioRolController::class, 'getTodosUsuarioRolPorIdRol']);
-Route::post('/usuarioRoles', [usuarioRolController::class, 'postUsuarioRol']);
-Route::put('/usuarioRoles/{id}', [usuarioRolController::class, 'putUsuarioRol']);
-Route::delete('/usuarioRoles/{id}', [usuarioRolController::class, 'deleteUsuarioRol']);
-//Raul Gutierrez
-Route::delete('/usuarioRoles/{idUsuario}/{idRol}', [usuarioRolController::class, 'deleteUsuarioRolPorIds']);
+Route::prefix('usuarioRoles')->group(function () {
+    Route::get('/', [usuarioRolController::class, 'getTodosUsuarioRoles']);
+    Route::get('{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
+});
 
-//Raul Gutierrez
-Route::get('usuario', [UsuarioController::class, 'getTodosUsuarios']);
-Route::get('usuario/{id}', [UsuarioController::class, 'getUsuarioPorId']);
-Route::post('usuario', [UsuarioController::class, 'postUsuario'])->middleware('roles:admin|Dumbledore');
-Route::put('usuario/{id}', [UsuarioController::class, 'putUsuario'])->middleware('roles:admin|Dumbledore');
-Route::delete('usuario/{id}', [UsuarioController::class, 'deleteUsuario'])->middleware('roles:admin|Dumbledore');
-
-//Raul Gutierrez
-Route::get('/asignatura', [asignaturaController::class, 'getTodosAsignaturas']);
-Route::get('asignatura/{id}', [asignaturaController::class, 'getAsignaturaPorId']);
-Route::post('asignatura', [asignaturaController::class, 'postAsignatura']);
-Route::put('asignatura/{id}', [asignaturaController::class, 'putAsignatura']);
-Route::delete('asignatura/{id}', [asignaturaController::class, 'deleteAsignatura']);
-
-//Raul Gutierrez
-Route::get('/asignaturaAlumno', [asignaturaAlumnoController::class, 'getTodosAsignaturaAlumnos']);
-Route::get('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorId']);
-Route::post('asignaturaAlumno', [asignaturaAlumnoController::class, 'postAsignaturaAlumno']);
-Route::put('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'putAsignaturaAlumno']);
-Route::delete('asignaturaAlumno/{id}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumno']);
-//Jaime Ortega (getAsignaturaAlumnoPorIdAlumno)
-Route::get('asignaturaAlumno/alumno/{id}', [asignaturaAlumnoController::class, 'getAsignaturaProfesorPorIdAlumno']);
 
 //Jaime Ortega
-Route::delete('asignaturaAlumno/{idAsignatura}/{idAlumno}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumnoEspecifico']);
+Route::prefix('usuarioRoles')->group(function () {
+    Route::get('integrantes/{id}', [usuarioRolController::class, 'getTodosUsuarioRolPorIdRol']);
+    Route::post('/', [usuarioRolController::class, 'postUsuarioRol']);
+    Route::put('{id}', [usuarioRolController::class, 'putUsuarioRol']);
+    Route::delete('{id}', [usuarioRolController::class, 'deleteUsuarioRol']);
+    //Raul Gutierrez
+    Route::delete('{idUsuario}/{idRol}', [usuarioRolController::class, 'deleteUsuarioRolPorIds']);
+
+});
+
+//Raul Gutierrez
+Route::prefix('usuario')->group(function () {
+    Route::get('/', [UsuarioController::class, 'getTodosUsuarios']);
+    Route::get('{id}', [UsuarioController::class, 'getUsuarioPorId']);
+    Route::get('gmail/{gmail}', [UsuarioController::class, 'getUsuarioPorGmail']);
+    Route::post('/', [UsuarioController::class, 'postUsuario']);
+    Route::put('{id}', [UsuarioController::class, 'putUsuario']);
+    Route::delete('{id}', [UsuarioController::class, 'deleteUsuario']);
+});
+
+//Raul Gutierrez
+Route::prefix('asignatura')->group(function () {
+    Route::get('/', [asignaturaController::class, 'getTodosAsignaturas']);
+    Route::get('{id}', [asignaturaController::class, 'getAsignaturaPorId']);
+    Route::post('/', [asignaturaController::class, 'postAsignatura']);
+    Route::put('{id}', [asignaturaController::class, 'putAsignatura']);
+    Route::delete('{id}', [asignaturaController::class, 'deleteAsignatura']);
+});
+
+
+Route::prefix('asignaturaAlumno')->group(function () {
+    // Raul Gutierrez
+    Route::get('/', [asignaturaAlumnoController::class, 'getTodosAsignaturaAlumnos']);
+    Route::get('{id}', [asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorId']);
+
+    // Jaime Ortega (getAsignaturaAlumnoPorIdAlumno)
+    Route::get('alumno/{id}', [asignaturaAlumnoController::class, 'getAsignaturaProfesorPorIdAlumno']);
+    Route::post('/', [asignaturaAlumnoController::class, 'postAsignaturaAlumno']);
+    Route::put('{id}', [asignaturaAlumnoController::class, 'putAsignaturaAlumno']);
+    Route::delete('{id}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumno']);
+
+    // Jaime Ortega
+    Route::delete('{idAsignatura}/{idAlumno}', [asignaturaAlumnoController::class, 'deleteAsignaturaAlumnoEspecifico']);
+
+    // Ismael Sarrion
+    Route::get('alumnoPorId/{id}', [asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorIdAlumno']);
+});
+
+
+Route::prefix('asignaturaProfesor')->group(function () {
+    // Raul Gutierrez
+    Route::get('/', [asignaturaProfesorController::class, 'getTodosAsignaturaProfesores']);
+    Route::get('{id}', [asignaturaProfesorController::class, 'getAsignaturaProfesorPorId']);
+    Route::get('profesor/{id}', [asignaturaProfesorController::class, 'getAsignaturaProfesorPorIdProfesor']);
+    Route::post('/', [asignaturaProfesorController::class, 'postAsignaturaProfesor']);
+    Route::put('{id}', [asignaturaProfesorController::class, 'putAsignaturaProfesor']);
+    Route::delete('{id}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesor']);
+
+    // Jaime Ortega
+    Route::delete('{idAsignatura}/{idProfesor}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesorEspecifico']);
+});
+
+
+
+
+//Raul Gutierrez
+Route::prefix('hechizos')->group(function () {
+    Route::get('/', [hechizosController::class, 'getTodosHechizos']);
+    Route::get('{id}', [hechizosController::class, 'getHechizoPorId']);
+    Route::get('nivel/{nivel}', [hechizosController::class, 'getHechizoPorNivelMenor']);
+    Route::post('/', [hechizosController::class, 'postHechizo']);
+    Route::put('{id}', [hechizosController::class, 'putHechizo']);
+    Route::delete('{id}', [hechizosController::class, 'deleteHechizo']);
+});
+
+
 //ismael sarrion
-Route::get('/asignaturaAlumno/alumnoPorId/{id}',[asignaturaAlumnoController::class, 'getAsignaturaAlumnoPorIdAlumno']);
+Route::prefix('ingredientes')->group(function () {
+    Route::get('/', [IngredientesController::class, 'getTodosIngredientes']);
+    Route::get('{id}', [IngredientesController::class, 'getIngredientePorId']);
+    Route::post('/', [IngredientesController::class, 'postIngrediente']);
+    Route::put('{id}', [IngredientesController::class, 'putIngrediente']);
+    Route::delete('{id}', [IngredientesController::class, 'deleteIngrediente']);
+});
+
+Route::prefix('pociones')->group(function () {
+    Route::get('/', [PocionesController::class, 'getTodasPociones']);
+    Route::get('{id}', [PocionesController::class, 'getPocionPorId']);
+    Route::post('/', [PocionesController::class, 'postPocion']);
+    Route::put('{id}', [PocionesController::class, 'putPocion']);
+    Route::delete('{id}', [PocionesController::class, 'deletePocion']);
+});
+
+Route::prefix('recetas')->group(function () {
+    Route::get('/', [RecetasController::class, 'getTodasRecetas']);
+    Route::get('{id}', [RecetasController::class, 'getRecetaPorId']);
+    Route::post('/', [RecetasController::class, 'postReceta']);
+    Route::put('{id}', [RecetasController::class, 'putReceta']);
+    Route::delete('{id}', [RecetasController::class, 'deleteReceta']);
+});
+
+
+
 
 //Raul Gutierrez
-Route::get('/asignaturaProfesor', [asignaturaProfesorController::class, 'getTodosAsignaturaProfesores']);
-Route::get('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'getAsignaturaProfesorPorId']);
-Route::get('asignaturaProfesor/profesor/{id}', [asignaturaProfesorController::class, 'getAsignaturaProfesorPorIdProfesor']);
-Route::post('asignaturaProfesor', [asignaturaProfesorController::class, 'postAsignaturaProfesor']);
-Route::put('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'putAsignaturaProfesor']);
-Route::delete('asignaturaProfesor/{id}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesor']);
-//Jaime Ortega
-Route::delete('asignaturaProfesor/{idAsignatura}/{idProfesor}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesorEspecifico']);
-
+Route::prefix('duelo')->group(function () {
+    Route::get('/', [dueloController::class, 'getTodosDuelos']);
+    Route::get('{id}', [dueloController::class, 'getDueloPorId']);
+    Route::get('usuario/{id}', [dueloController::class, 'getDueloPorIdUsuario']);
+    Route::get('curso/{id}', [dueloController::class, 'getDueloEnCurso']);
+    Route::get('winRate/{id}', [dueloController::class, 'getWinRatePorIdUsuario']);
+    Route::post('/', [dueloController::class, 'postDuelo']);
+    Route::put('{id}', [dueloController::class, 'putDuelo']);
+    Route::delete('{id}', [dueloController::class, 'deleteDuelo']);
+});
 
 
 //Raul Gutierrez
-Route::get('hechizos', [hechizosController::class, 'getTodosHechizos']);
-Route::get('hechizos/{id}', [hechizosController::class, 'getHechizoPorId']);
-Route::get('hechizos/nivel/{nivel}', [hechizosController::class, 'getHechizoPorNivelMenor']);
-Route::post('hechizos', [hechizosController::class, 'postHechizo']);
-Route::put('hechizos/{id}', [hechizosController::class, 'putHechizo']);
-Route::delete('hechizos/{id}', [hechizosController::class, 'deleteHechizo']);
+Route::prefix('turnoDuelo')->group(function () {
+    Route::get('/', [turnoDueloController::class, 'getTodosTurnoDuelos']);
+    Route::get('{id}', [turnoDueloController::class, 'getTurnoDueloPorId']);
+    Route::get('duelo/{id}', [turnoDueloController::class, 'getTurnoDuelosPorDuelo']);
+    Route::get('dueloNormal/{id}', [turnoDueloController::class, 'getTurnoDuelosPorDueloNormales']);
+    Route::get('hechizosUsablesUsuario/{id}', [turnoDueloController::class, 'getHechizosDisponiblesUsuarioDuelo']);
+    Route::get('hechizosUsablesBot/{id}', [turnoDueloController::class, 'getHechizosDisponiblesBotDuelo']);
+    Route::post('/', [turnoDueloController::class, 'postTurnoDuelo']);
+    Route::put('{id}', [turnoDueloController::class, 'putTurnoDuelo']);
+    Route::delete('{id}', [turnoDueloController::class, 'deleteTurnoDuelo']);
+    
+    Route::get('eleccionBot/{id}', [turnoDueloController::class, 'eleccionHechizoBot']);
+    Route::get('calcularGanador/{idHechizo}/{id}', [turnoDueloController::class, 'calculoGanador']);
+});
+
 
 //ismael sarrion
-Route::get('/ingredientes', [IngredientesController::class, 'getTodosIngredientes']);
-Route::get('/ingredientes/{id}', [IngredientesController::class, 'getIngredientePorId']);
-Route::post('/ingredientes', [IngredientesController::class, 'postIngrediente']);
-Route::put('/ingredientes/{id}', [IngredientesController::class, 'putIngrediente']);
-Route::delete('/ingredientes/{id}', [IngredientesController::class, 'deleteIngrediente']);
 
-Route::get('/pociones', [pocionesController::class, 'getTodasPociones']);
-Route::get('/pociones/{id}', [PocionesController::class, 'getPocionPorId']);
-Route::post('/pociones', [PocionesController::class, 'postPocion']);
-Route::put('/pociones/{id}', [PocionesController::class, 'putPocion']);
-Route::delete('/pociones/{id}', [PocionesController::class, 'deletePocion']);
+//Route::middleware('guest')->group(function () {
+Route::get('formulario', function () {
+    return view('formularioRecuperacion');
+});
 
-Route::get('/recetas', [RecetasController::class, 'getTodasRecetas']);
-Route::get('/recetas/{id}', [RecetasController::class, 'getRecetaPorId']);
-Route::post('/recetas', [RecetasController::class, 'postReceta']);
-Route::put('/recetas/{id}', [RecetasController::class, 'putReceta']);
-Route::delete('/recetas/{id}', [RecetasController::class, 'deleteReceta']);
+Route::post('enviar', [gmailController::class, 'enviar']);
+//});
 
 //ismael sarrion
 Route::post('login', [AuthController::class, 'login']);
@@ -130,34 +207,4 @@ Route::get('/nologin', function () {
     return response()->json("No autorizado", 203);
 });
 
-//Raul Gutierrez
-Route::get('duelo', [dueloController::class, 'getTodosDuelos']);
-Route::get('duelo/{id}', [dueloController::class, 'getDueloPorId']);
-Route::get('duelo/usuario/{id}', [dueloController::class, 'getDueloPorIdUsuario']);
-Route::get('duelo/curso/{id}', [dueloController::class, 'getDueloEnCurso']);
-Route::get('duelo/winRate/{id}', [dueloController::class, 'getWinRatePorIdUsuario']);
-Route::post('duelo', [dueloController::class, 'postDuelo']);
-Route::put('duelo/{id}', [dueloController::class, 'putDuelo']);
-Route::delete('duelo/{id}', [dueloController::class, 'deleteDuelo']);
-
-//Raul Gutierrez
-Route::get('turnoDuelo', [turnoDueloController::class, 'getTodosTurnoDuelos']);
-Route::get('turnoDuelo/{id}', [turnoDueloController::class, 'getTurnoDueloPorId']);
-Route::get('turnoDuelo/duelo/{id}', [turnoDueloController::class, 'getTurnoDuelosPorDuelo']);
-Route::get('turnoDuelo/dueloNormal/{id}', [turnoDueloController::class, 'getTurnoDuelosPorDueloNormales']);
-Route::get('turnoDuelo/hechizosUsablesUsuario/{id}', [turnoDueloController::class, 'getHechizosDisponiblesUsuarioDuelo']);
-Route::get('turnoDuelo/hechizosUsablesBot/{id}', [turnoDueloController::class, 'getHechizosDisponiblesBotDuelo']);
-Route::post('turnoDuelo', [turnoDueloController::class, 'postTurnoDuelo']);
-Route::put('turnoDuelo/{id}', [turnoDueloController::class, 'putTurnoDuelo']);
-Route::delete('turnoDuelo/{id}', [turnoDueloController::class, 'deleteTurnoDuelo']);
-
-//ismael sarrion
-
-//Route::middleware('guest')->group(function () {
-Route::get('formulario', function () {
-    return view('formularioRecuperacion');
-});
-
-Route::post('enviar', [gmailController::class, 'enviar']);
-//});
 

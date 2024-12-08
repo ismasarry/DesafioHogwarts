@@ -54,7 +54,7 @@ const validacionContrasena = (contrasena) => {
 const mostrarErrores = (errores, input) => {
     let errorMessage = input.nextElementSibling
 
-    if (errorMessage && errorMessage.classList.contains('error-message')) {
+    if (errorMessage && errorMessage.classList && errorMessage.classList.contains('error-message')) {
         errorMessage.remove()
     }
 
@@ -67,7 +67,7 @@ const mostrarErrores = (errores, input) => {
     }
 }
 
-const registro = () => {
+const registro = async () => {
     const form = document.getElementById('registro')
     let errorMessage
 
@@ -210,7 +210,7 @@ const gorroSeleccionador = async () => {
                 casasEmpatadas.push(c.value)
             }
         }
-        
+
         if (casasEmpatadas.length > 0) {
             casaSeleccionada = casasEmpatadas[Math.floor(Math.random() * casasEmpatadas.length)]
         } else {
@@ -231,7 +231,6 @@ const gorroSeleccionador = async () => {
             casaSeleccionada = seleccionados[3].value
         }
     }
-    console.log(casaSeleccionada)
     return casaSeleccionada
 }
 
