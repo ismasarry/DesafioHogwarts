@@ -67,9 +67,9 @@ Route::prefix('usuario')->group(function () {
     Route::get('/', [UsuarioController::class, 'getTodosUsuarios']);
     Route::get('{id}', [UsuarioController::class, 'getUsuarioPorId']);
     Route::get('gmail/{gmail}', [UsuarioController::class, 'getUsuarioPorGmail']);
-    Route::post('/', [UsuarioController::class, 'postUsuario']);
-    Route::put('{id}', [UsuarioController::class, 'putUsuario']);
-    Route::delete('{id}', [UsuarioController::class, 'deleteUsuario']);
+    Route::post('/', [UsuarioController::class, 'postUsuario'])->middleware('roles:admin|Dumbledore');
+    Route::put('{id}', [UsuarioController::class, 'putUsuario'])->middleware('roles:admin|Dumbledore');
+    Route::delete('{id}', [UsuarioController::class, 'deleteUsuario'])->middleware('roles:admin|Dumbledore');
 });
 
 //Raul Gutierrez
