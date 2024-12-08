@@ -16,12 +16,11 @@ class Pociones extends Model
     protected $fillable = [
         
         'nombre',
-        'estadisticas',
         'descripcion',
+        'estadisticas',
         'idUsuario',
-       // 'foto',
-        'veri',
-        'veriD'
+        'veri'
+        
     ];
     public function recetas()
     {

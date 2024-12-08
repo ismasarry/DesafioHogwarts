@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 
 // AQUI EMPIEZAN LAS RUTAS AGRUPADAS POR REL AUTH SANCTUM
 //Route::middleware(['auth:sanctum'])->group(function () {
+
+//todos--------------------------------------------
 Route::prefix('rol')->group(function () {
     Route::get('/', [rolController::class, 'getAllRoles']);
     Route::get('/{id}', [rolController::class, 'getRol']);
@@ -35,6 +37,8 @@ Route::prefix('rol')->group(function () {
     Route::delete('/{id}', [rolController::class, 'deleteRol']);
 });
 //});
+
+
 Route::prefix('casa')->group(function () {
     Route::get('/', [casaController::class, 'getAllCasas']);
     Route::get('/{id}', [casaController::class, 'getCasa']);
@@ -45,10 +49,12 @@ Route::prefix('casa')->group(function () {
 });
 
 //Ismael Sarrion
+
 Route::prefix('usuarioRoles')->group(function () {
     Route::get('/', [usuarioRolController::class, 'getTodosUsuarioRoles']);
     Route::get('{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
 });
+
 
 
 //Jaime Ortega
@@ -62,14 +68,16 @@ Route::prefix('usuarioRoles')->group(function () {
 
 });
 
+
+
 //Raul Gutierrez
 Route::prefix('usuario')->group(function () {
     Route::get('/', [UsuarioController::class, 'getTodosUsuarios']);
     Route::get('{id}', [UsuarioController::class, 'getUsuarioPorId']);
     Route::get('gmail/{gmail}', [UsuarioController::class, 'getUsuarioPorGmail']);
-    Route::post('/', [UsuarioController::class, 'postUsuario'])/*->middleware('roles:admin|Dumbledore')*/;
-    Route::put('{id}', [UsuarioController::class, 'putUsuario'])/*->middleware('roles:admin|Dumbledore')*/;
-    Route::delete('{id}', [UsuarioController::class, 'deleteUsuario'])/*->middleware('roles:admin|Dumbledore')*/;
+    Route::post('/', [UsuarioController::class, 'postUsuario']);
+    Route::put('{id}', [UsuarioController::class, 'putUsuario']);
+    Route::delete('{id}', [UsuarioController::class, 'deleteUsuario']);
 });
 
 //Raul Gutierrez
@@ -114,9 +122,7 @@ Route::prefix('asignaturaProfesor')->group(function () {
     Route::delete('{idAsignatura}/{idProfesor}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesorEspecifico']);
 });
 
-
-
-
+// todos menos admin 
 //Raul Gutierrez
 Route::prefix('hechizos')->group(function () {
     Route::get('/', [hechizosController::class, 'getTodosHechizos']);
@@ -128,7 +134,6 @@ Route::prefix('hechizos')->group(function () {
         Route::put('{id}', [hechizosController::class, 'putHechizo']);
     });
 });
-
 
 //ismael sarrion
 Route::prefix('ingredientes')->group(function () {
@@ -154,9 +159,6 @@ Route::prefix('recetas')->group(function () {
     Route::put('{id}', [RecetasController::class, 'putReceta']);
     Route::delete('{id}', [RecetasController::class, 'deleteReceta']);
 });
-
-
-
 
 //Raul Gutierrez
 Route::prefix('duelo')->group(function () {
