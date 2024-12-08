@@ -48,29 +48,30 @@ export const obtenerMapaPorSegundo = async (segundo) => {
 }
 
 export const iniciarSimulacion = async (segundoSimulacion) => {
-    const rutaMapa = constantes.urlApi + constantes.mapa + constantes.simulacion
+    const rutaMapa = constantes.urlApi + constantes.mapa + constantes.simulacion;
 
     try {
         const respuesta = await fetch(rutaMapa, {
-            method: 'GET',
+            method: 'POST', 
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json'
+                'Accept': 'application/json',
             },
-            body: JSON.stringify(segundoSimulacion),
-        })
+            body: JSON.stringify({ segundo: segundoSimulacion }), 
+        });
 
         if (!respuesta.ok) {
-            throw new Error(`Error al iniciar simulación: ${respuesta.status}`)
+            throw new Error(`Error al iniciar simulación: ${respuesta.status}`);
         }
 
-        const simulacion = await respuesta.json()
-        return simulacion
+        const simulacion = await respuesta.json();
+        return simulacion;
     } catch (e) {
-        console.error('Error en la funcion iniciarSimulacion: ', e.message)
-        throw e
+        console.error('Error en la funcion iniciarSimulacion: ', e.message);
+        throw e;
     }
-}
+};
+
 
 export const resetSimulacion = async () => {
     const rutaMapa = constantes.urlApi + constantes.mapa + constantes.simulacion + 'reset'

@@ -1,44 +1,53 @@
-// import { cargarSideBar } from "../components/cargarSideBar.js"
+import { iniciarSimulacion, obtenerMapaPorSegundo } from '../api/mapaMerodeadorAPI';
 
+document.addEventListener('DOMContentLoaded', () => {
+    const iniciarSimulacionBtn = document.getElementById('iniciarSimulacionBtn');
+    const segundosSelect = document.getElementById('segundos');
+    const mapaContenedor = document.getElementById('mapaContenedor');
 
+    // Función para mostrar el mapa en el frontend
+    const renderizarMapa = (mapa) => {
+        mapaContenedor.innerHTML = ''; // Limpiar el contenedor
 
-const mapa = [
-    ['X', 'X', 'X', 'X', 'X', 'P', 'X', 'X'],
-    ['X', 'S', 'S', 'S', 'S', 'S', 'S', 'X'],
-    ['P', 'S', 'S', 'S', 'S', 'S', 'S', 'X'],
-    ['X', 'S', 'S', 'S', 'S', 'S', 'S', 'X'],
-    ['X', 'S', 'S', 'S', 'S', 'S', 'S', 'P'],
-    ['X', 'S', 'S', 'S', 'S', 'S', 'S', 'X'],
-    ['X', 'X', 'P', 'X', 'X', 'X', 'X', 'X']
-];
+        mapa.forEach((fila) => {
+            const filaDiv = document.createElement('div');
+            filaDiv.className = 'fila';
 
-const renderizarMapa = (mapa) => {
-    const tabla = document.querySelector('.mapa-table');
-    tabla.innerHTML = ''; 
-    mapa.forEach((fila, filaIndex) => {
-        const filaElemento = document.createElement('tr');
-        fila.forEach((celda, colIndex) => {
-            const celdaElemento = document.createElement('td');
-            switch (celda) {
-                case 'X':
-                    celdaElemento.classList.add('celda-muro');
-                    celdaElemento.textContent = '🧱';
-                    break;
-                case 'P':
-                    celdaElemento.classList.add('celda-puerta');
-                    celdaElemento.textContent = '🚪';
-                    break;
-                case 'S':
-                    celdaElemento.classList.add('celda-suelo');
-                    celdaElemento.textContent = ' ';
-                    break;
-                default:
-                    celdaElemento.textContent = celda;
-            }
-            filaElemento.appendChild(celdaElemento);
+            // Decodificar las celdas de cada fila
+            const celdas = JSON.parse(fila.contenidofila);
+            celdas.forEach((celda) => {
+                const celdaDiv = document.createElement('div');
+                celdaDiv.className = 'celda';
+                celdaDiv.textContent = celda.persona ? `👤 ${celda.persona}` : celda.tipo;
+                filaDiv.appendChild(celdaDiv);
+            });
+
+            mapaContenedor.appendChild(filaDiv);
         });
-        tabla.appendChild(filaElemento);
-    });
-};
+    };
 
-renderizarMapa(mapa);
+    // Función para iniciar la simulación
+    const iniciarSimulacionHandler = async () => {
+        const segundos = parseInt(segundosSelect.value, 10);
+
+        try {
+            // Iniciar simulación en el backend
+            await iniciarSimulacion({ segundo: segundos });
+            console.log('Simulación iniciada.');
+
+            // Traer los mapas para cada segundo
+            for (let i = 1; i <= segundos; i++) {
+                const mapaSegundo = await obtenerMapaPorSegundo(i);
+                console.log(`Mapa del segundo ${i}:`, mapaSegundo.mapaSegundo);
+
+                // Mostrar cada mapa con un delay de 1 segundo entre cada actualización
+                setTimeout(() => renderizarMapa(mapaSegundo.mapaSegundo), i * 1000);
+            }
+        } catch (error) {
+            console.error('Error al iniciar la simulación:', error);
+        }
+    };
+
+    // Evento para el botón
+    iniciarSimulacionBtn.addEventListener('click', iniciarSimulacionHandler);
+});
