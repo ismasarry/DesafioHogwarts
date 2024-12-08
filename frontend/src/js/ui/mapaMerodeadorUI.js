@@ -1,53 +1,99 @@
-import { iniciarSimulacion, obtenerMapaPorSegundo } from '../api/mapaMerodeadorAPI';
+import { obtenerMapaBase, obtenerMapaPorSegundo, iniciarSimulacion, resetSimulacion } from "../api/mapaMerodeadorAPI.js";
 
-document.addEventListener('DOMContentLoaded', () => {
-    const iniciarSimulacionBtn = document.getElementById('iniciarSimulacionBtn');
-    const segundosSelect = document.getElementById('segundos');
-    const mapaContenedor = document.getElementById('mapaContenedor');
+document.addEventListener("DOMContentLoaded", () => {
+    const tablaMapa = document.querySelector(".mapa-table");
+    const iniciarSimulacionBtn = document.getElementById("iniciarSimulacionBtn");
+    const resetSimulacionBtn = document.getElementById("resetSimulacionBtn");
+    const segundosSelect = document.getElementById("segundos");
 
-    // Función para mostrar el mapa en el frontend
+    /**
+     *
+     * @param {Array} mapa 
+     */
+
     const renderizarMapa = (mapa) => {
-        mapaContenedor.innerHTML = ''; // Limpiar el contenedor
-
+        const tablaMapa = document.querySelector('.mapa-table');
+        tablaMapa.innerHTML = ''; 
+    
         mapa.forEach((fila) => {
-            const filaDiv = document.createElement('div');
-            filaDiv.className = 'fila';
-
-            // Decodificar las celdas de cada fila
             const celdas = JSON.parse(fila.contenidofila);
+    
+            const filaMapa = document.createElement('tr');
+    
             celdas.forEach((celda) => {
-                const celdaDiv = document.createElement('div');
-                celdaDiv.className = 'celda';
-                celdaDiv.textContent = celda.persona ? `👤 ${celda.persona}` : celda.tipo;
-                filaDiv.appendChild(celdaDiv);
+                const celdaMapa = document.createElement('td');
+    
+                if (celda.tipo === 'X') {
+                    celdaMapa.classList.add('celda-pared');
+                } else if (celda.tipo === 'P') {
+                    celdaMapa.classList.add('celda-puerta');
+                } else if (celda.tipo === 'S') {
+                    celdaMapa.classList.add('celda-suelo');
+                }
+    
+                filaMapa.appendChild(celdaMapa);
             });
-
-            mapaContenedor.appendChild(filaDiv);
+    
+            tablaMapa.appendChild(filaMapa); 
         });
     };
 
-    // Función para iniciar la simulación
+  
     const iniciarSimulacionHandler = async () => {
-        const segundos = parseInt(segundosSelect.value, 10);
+        const segundos = segundosSelect.value;
+
+        if (!segundos || segundos < 1 || segundos > 10) {
+            alert("Selecciona un número de segundos válido entre 1 y 10.");
+            return;
+        }
 
         try {
-            // Iniciar simulación en el backend
-            await iniciarSimulacion({ segundo: segundos });
-            console.log('Simulación iniciada.');
+            console.log("Iniciando simulación...");
+            const resultado = await iniciarSimulacion(segundos);
 
-            // Traer los mapas para cada segundo
-            for (let i = 1; i <= segundos; i++) {
-                const mapaSegundo = await obtenerMapaPorSegundo(i);
-                console.log(`Mapa del segundo ${i}:`, mapaSegundo.mapaSegundo);
+            console.log("Simulación iniciada:", resultado.message);
 
-                // Mostrar cada mapa con un delay de 1 segundo entre cada actualización
-                setTimeout(() => renderizarMapa(mapaSegundo.mapaSegundo), i * 1000);
+            for (let segundo = 1; segundo <= segundos; segundo++) {
+                const mapaPorSegundo = await obtenerMapaPorSegundo(segundo);
+                console.log(`Mapa del segundo ${segundo}:`, mapaPorSegundo.mapaSegundo);
+                renderizarMapa(mapaPorSegundo.mapaSegundo);
+                await new Promise((resolve) => setTimeout(resolve, 1000)); 
             }
         } catch (error) {
-            console.error('Error al iniciar la simulación:', error);
+            console.error("Error al iniciar la simulación:", error);
         }
     };
 
-    // Evento para el botón
-    iniciarSimulacionBtn.addEventListener('click', iniciarSimulacionHandler);
+    const resetSimulacionHandler = async () => {
+        try {
+            console.log("Reiniciando simulación...");
+            const resultado = await resetSimulacion();
+            console.log("Simulación reiniciada:", resultado.message);
+
+            const mapaBase = await obtenerMapaBase();
+            renderizarMapa(mapaBase.mapaBase);
+        } catch (error) {
+            console.error("Error al reiniciar la simulación:", error);
+        }
+    };
+
+    if (iniciarSimulacionBtn) {
+        iniciarSimulacionBtn.addEventListener("click", iniciarSimulacionHandler);
+    }
+
+    if (resetSimulacionBtn) {
+        resetSimulacionBtn.addEventListener("click", resetSimulacionHandler);
+    }
+
+    const cargarMapaBase = async () => {
+        try {
+            const mapaBase = await obtenerMapaBase();
+            console.log("Mapa base cargado:", mapaBase.mapaBase);
+            renderizarMapa(mapaBase.mapaBase);
+        } catch (error) {
+            console.error("Error al cargar el mapa base:", error);
+        }
+    };
+
+    cargarMapaBase();
 });

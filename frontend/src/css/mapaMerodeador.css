@@ -1,35 +1,27 @@
+.mapa-segundo {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 .mapa-table {
-    table-layout: fixed;
-    width: auto;
+    margin: 0 auto;
     border-collapse: collapse;
-    margin: auto;
 }
 
 .mapa-table td {
-    width: 2cm;
-    height: 2cm;
-    text-align: center;
-    vertical-align: middle;
-    border: 1px solid #000;
-    font-size: 1.2rem;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
 }
 
-.celda-muro {
-    background-color: #333;
-    color: white;
+.celda-pared {
+    background-color: #000;
 }
 
 .celda-puerta {
-    background-color: #ffc107;
-    color: black;
+    background-color: #ddd;
 }
 
 .celda-suelo {
-    background-color: #f8f9fa;
-    color: black;
-}
-
-.celda-persona {
-    background-color: #0d6efd;
-    color: white;
+    background-color: #f0f0f0;
 }
