@@ -27,9 +27,15 @@ class UsuarioController extends Controller
         return response()->json(['Usuario' => $usuario]);
     }
 
-    /*public function getUsuarioPorCasa(){
+    public function getUsuarioPorGmail($gmail){
+        $usuario = Usuario::where('gmail', $gmail)->first();
 
-    }*/
+        if (!$usuario) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        return response()->json(['Usuario' => $usuario]);
+    }
 
     public function postUsuario(Request $request){
         // $validator = Validator::make($request->all(), [
