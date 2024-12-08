@@ -21,8 +21,7 @@
         <div id="divForm">
             <form id="registro" enctype="multipart/form-data">
                 <input type="text" id="nombre" name="nombre" placeholder="Nombre" value="" required><br>
-                <div class="icono"><span
-                    class="fa fa-user"></span></div>
+                
                 <input type="email" id="gmail" name="gmail" placeholder="Correo electrónico" value="" required><br></div>
                 
                 <input type="password" id="contrasena" name="contrasena" placeholder="Contraseña" value="" required><br>
@@ -31,11 +30,10 @@
                 
                 <label for="foto">Seleccione una foto de perfil:</label>
                 <br><br><div class="input-group">
-                    <!-- <span class="input-group-text"><i class="fa fa-image"></i></span> -->
-                    <input type="text" id="foto-registro" name="foto" class="form-control" accept="image/*">
+                    <input type="file" id="foto-registro" name="foto" class="form-control" accept="image/*">
                 </div><br>
 
-                <label for="casa">Seleccione en orden las casas a las que le gustaria pertenecer:</label>
+                <label for="casa">Seleccione en orden de prioridad de las casas a las que le gustaria pertenecer:</label>
                 <select id="casa" name="casa" multiple>
                     
                 </select>
@@ -44,7 +42,7 @@
                 <select id="prioridad" name="prioridad" multiple>
                 </select><br><br>
 
-                <div class="btnRegistro"></div>
+                <div class="btnRegistro">
                     <input type="submit" id='btnSubmit' value="Registrar">
                     <input type="reset" id='btnReset' value="Borrar Datos">
                 </div>

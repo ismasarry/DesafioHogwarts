@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\asignatura;
 use App\Models\asignaturaAlumno;
+use App\Models\turnoDuelo;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,6 +25,8 @@ class DatabaseSeeder extends Seeder
             asignaturaAlumnoSeeder::class,
             asignaturaProfesorSeeder::class,
             hechizosSeeder::class,
+            dueloSeeder::class,
+            turnoDueloSeeder::class,
             PocionesSeeder::class,
             IngredienteSeeder::class,
             RecetaSeeder::class

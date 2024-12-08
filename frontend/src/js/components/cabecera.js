@@ -18,12 +18,12 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="d-flex align-items-center">
             <button id="openSidebar" class="icon-desplegable btn btn-outline-light me-3" style="font-size: 1.2em;">☰</button>
             <a class="h4 mb-0 me-3 text-white" href="inicio.html">Hogwarts</a>
-            <a class="btn" href="ranking.html" style="background-color: #0056b3; color: white;">Ranking de Casas</a>
+            <button class="btn" onclick="location.href='ranking.html'" style="background-color: #0056b3; color: white;">Ranking de Casas</button>
           </div>
           
           <div class="dropdown">
             <span class="me-2 text-white">${usuario.Usuario.nombre}</span>
-            <img src="./../assets/pruebaHarry.webp" alt="Imagen de usuario" class="user-img dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; cursor: pointer;">
+            <img src="${usuario.Usuario.foto}" alt="Imagen de usuario" class="user-img dropdown-toggle" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid white; cursor: pointer;">
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
               <li><a class="dropdown-item" href="#" id="botonPerfil">Perfil</a></li>
               <li><a class="dropdown-item" href="#" id="botonCerrarSesion">Cerrar sesión</a></li>
@@ -90,8 +90,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   document.getElementById("header-container").addEventListener("click", (event) => {
     if (event.target && event.target.id === "botonCerrarSesion") {
-      console.log("Sesión cerrada")
-      window.location.href = "./../index.html";
+      window.location.href = "http://localhost:5173/";
     }
   });
 
@@ -113,11 +112,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 let usuarioObjeto
 
-                if (contraUsu.type == undefined) {
+                if (contraUsu.trim() === "") {
                   usuarioObjeto = {
                     nombre: nombreUsu,
                     gmail: gmailUsu,
-                    contrasena: usuarioU.contrasena,
                     idCasa: usuarioU.idCasa,
                     nivel: usuarioU.nivel,
                     exp: usuarioU.exp,
