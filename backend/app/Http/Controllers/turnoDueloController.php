@@ -307,6 +307,6 @@ class turnoDueloController extends Controller
             }
         }
 
-        return response()->json(['ganador' => $ganador, 'idHechizoBot' => $hechizoBot[0]['id']], Response::HTTP_CREATED);
+        return response()->json(['ganador' => $ganador, 'idHechizoBot' => $hechizoBot[0]['id'], 'DanoUsuario' => $estaUsuario[0], 'DanoBot' => $estaBot[0]], Response::HTTP_CREATED);
     }
 }

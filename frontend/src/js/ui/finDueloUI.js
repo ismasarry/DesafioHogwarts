@@ -21,19 +21,20 @@ const html = document.getElementById('mensaje');
 const boton = document.getElementById('boton');
 
 async function mensaje() {
-    if (finUsuario == 3) {
+    if (finUsuario == 3 || sessionStorage.getItem("vidaBot") <= 0) {
         html.innerHTML = `
-                <img src="./../assets/bravoShinji.jpg" alt="Felicitaciones">
+                <img src="./../assets/gana.webp" alt="Felicitaciones">
                 <h2>¡Felicidades!</h2>
-                <p>Bravo shinji. ¡Sigue así!</p>
+                <p>Bravo alumno. ¡Sigue así!</p>
+                <audio src="HogwartsMarch.mp3" controls autoplay></audio>
             `;
         await modificarDuelo(finUsuario, idUsuario)
         await sumarPuntos(idUsuario, 2, 3)
-    } else if (finBot == 3) {
+    } else if (finBot == 3 || sessionStorage.getItem("vidaUsu") <= 0) {
         html.innerHTML = `
-                <img src="./../assets/pusheen-harry-potter.gif" alt="Lo siento">
+                <img src="./../assets/perder.webp" alt="Lo siento">
                 <h2>Lo siento</h2>
-                <p>AAAAAAAAAAAAAAAAAAAAAAA</p>
+                <p>Has perdido, mejor suerte la proxima vez</p>
             `;
         await modificarDuelo(finUsuario, idUsuario)
     }
