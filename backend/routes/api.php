@@ -67,9 +67,9 @@ Route::prefix('usuario')->group(function () {
     Route::get('/', [UsuarioController::class, 'getTodosUsuarios']);
     Route::get('{id}', [UsuarioController::class, 'getUsuarioPorId']);
     Route::get('gmail/{gmail}', [UsuarioController::class, 'getUsuarioPorGmail']);
-    Route::post('/', [UsuarioController::class, 'postUsuario'])->middleware('roles:admin|Dumbledore');
-    Route::put('{id}', [UsuarioController::class, 'putUsuario'])->middleware('roles:admin|Dumbledore');
-    Route::delete('{id}', [UsuarioController::class, 'deleteUsuario'])->middleware('roles:admin|Dumbledore');
+    Route::post('/', [UsuarioController::class, 'postUsuario'])/*->middleware('roles:admin|Dumbledore')*/;
+    Route::put('{id}', [UsuarioController::class, 'putUsuario'])/*->middleware('roles:admin|Dumbledore')*/;
+    Route::delete('{id}', [UsuarioController::class, 'deleteUsuario'])/*->middleware('roles:admin|Dumbledore')*/;
 });
 
 //Raul Gutierrez
@@ -122,9 +122,11 @@ Route::prefix('hechizos')->group(function () {
     Route::get('/', [hechizosController::class, 'getTodosHechizos']);
     Route::get('{id}', [hechizosController::class, 'getHechizoPorId']);
     Route::get('nivel/{nivel}', [hechizosController::class, 'getHechizoPorNivelMenor']);
-    Route::post('/', [hechizosController::class, 'postHechizo']);
-    Route::put('{id}', [hechizosController::class, 'putHechizo']);
     Route::delete('{id}', [hechizosController::class, 'deleteHechizo']);
+    Route::middleware('valiHechizos')->group(function () {
+        Route::post('/', [hechizosController::class, 'postHechizo']);
+        Route::put('{id}', [hechizosController::class, 'putHechizo']);
+    });
 });
 
 
