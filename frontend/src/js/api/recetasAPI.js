@@ -1,6 +1,29 @@
 // ismael sarrion
 import { constantes } from "../classes/constantes.js";
 
+export const obtenerRecetasPorPocion = async (idPocion) => {
+    const rutaReceta = `${constantes.urlApi}${constantes.recetas}/pocion/${idPocion}`;
+
+    try {
+        const respuesta = await fetch(rutaReceta, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!respuesta.ok) {
+            throw new Error(`Error al obtener las recetas de la poción. Código de estado: ${respuesta.status}`);
+        }
+
+        const recetas = await respuesta.json();
+        console.log('Recetas asociadas a la poción:', recetas);
+        return recetas;
+    } catch (error) {
+        console.error('Error en la función obtenerRecetasPorPocion:', error.message);
+        throw error;
+    }
+};
 
 export const getTodasRecetas = async () => {
     const rutaReceta = constantes.urlApi + constantes.recetas;

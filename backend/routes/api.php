@@ -114,6 +114,8 @@ Route::get('/recetas/{id}', [RecetasController::class, 'getRecetaPorId']);
 Route::post('/recetas', [RecetasController::class, 'postReceta']);
 Route::put('/recetas/{id}', [RecetasController::class, 'putReceta']);
 Route::delete('/recetas/{id}', [RecetasController::class, 'deleteReceta']);
+Route::get('recetas/pocion/{idPocion}', [RecetasController::class, 'obtenerRecetasPorPocion']);
+
 
 //ismael sarrion
 Route::post('login', [AuthController::class, 'login']);

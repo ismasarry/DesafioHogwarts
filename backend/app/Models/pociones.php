@@ -20,7 +20,6 @@ class Pociones extends Model
         'descripcion',
         'idUsuario',
         'valoracion',
-        'foto',
         'veri'
         
     ];
