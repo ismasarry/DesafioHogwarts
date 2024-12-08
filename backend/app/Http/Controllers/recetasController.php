@@ -26,13 +26,15 @@ class RecetasController extends Controller
     }
 
     public function postReceta(Request $request) {
+     
         $receta = Recetas::create([
             'idPocion' => $request['idPocion'],
             'idIngrediente' => $request['idIngrediente']
         ]);
-
+    
         return response()->json(['receta' => $receta], Response::HTTP_CREATED);
     }
+    
 
     public function putReceta(Request $request, $id) {
         $receta = Recetas::find($id);

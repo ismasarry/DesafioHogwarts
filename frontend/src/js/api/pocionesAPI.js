@@ -87,6 +87,8 @@ export const postPocion = async (pocionCreada) => {
         });
 
         if (!respuesta.ok) {
+            const errorDetails = await respuesta.json();  
+            console.error('Detalles del error:', errorDetails); 
             throw new Error(`Error al añadir la poción. Código de estado: ${respuesta.status}`);
         }
 
@@ -97,6 +99,8 @@ export const postPocion = async (pocionCreada) => {
         throw error;
     }
 };
+
+
 
 export const putPocion = async (id_pocion, pocion) => {
     const rutaPocion = constantes.urlApi + constantes.pociones;

@@ -16,10 +16,9 @@ class Pociones extends Model
     protected $fillable = [
         
         'nombre',
-        'estadisticas',
         'descripcion',
+        'estadisticas',
         'idUsuario',
-        'valoracion',
         'veri'
         
     ];
