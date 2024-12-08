@@ -1,5 +1,5 @@
 //Raul Gutierrez
-import { getBuscarUsuario, getTodosUsuarios, postUsuario, putUsuario } from "../api/usuarioAPI.js";
+import { getBuscarUsuario, getBuscarUsuarioPorGmail, getTodosUsuarios, postUsuario, putUsuario } from "../api/usuarioAPI.js";
 import { getTodosCasas } from "../api/casaAPI.js";
 import { getTodosUsuariosRoles, mostrarRolesUsuario, deleteUsuarioRol, postUsuarioRol } from "../api/usuarioRolAPI.js";
 import { cargarSideBar } from "../components/cargarSideBar.js"
@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const casas = await getTodosCasas()
         const roles = await getTodosUsuariosRoles()
         console.log(roles)
+
+        crearUsuarioUI()
         const tabla = $('#usuarios').DataTable()
         tabla.clear().draw()
         usuarios.Usuario.forEach(usu => {
@@ -409,6 +411,54 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                         await postUsuarioRol(rolObjeto)
                     }
+
+                    const modal = new bootstrap.Modal(modalElement)
+                    modal.hide();
+                    location.reload()
+                } catch (error) {
+                    console.error('Error al confirmar la modificación:', error)
+                }
+            });
+        }
+    }
+
+    async function crearUsuarioUI() {
+        const anadirBtn = document.getElementById(`anadirBtn`)
+        if (anadirBtn) {
+
+            anadirBtn.addEventListener('click', async () => {
+                try {
+
+                    const modalElement = document.getElementById(`anadirModal`)
+                    const nombre = modalElement.querySelector(`#nombre`).value
+                    const gmail = modalElement.querySelector(`#gmail`).value
+                    const idCasa = modalElement.querySelector(`#casa`).value
+                    const contrasena = modalElement.querySelector(`#contrasena`).value
+                    const foto = modalElement.querySelector(`#foto`).value
+
+                    console.log(foto)
+
+                    const usuario = {
+                        nombre: nombre,
+                        gmail: gmail,
+                        contrasena: contrasena,
+                        idCasa: idCasa,
+                        nivel: 1,
+                        exp: 0,
+                        foto: foto,
+                        activo: 0
+                    }
+
+                    await postUsuario(usuario)
+
+                    const idUsuarioNuevo = await getBuscarUsuarioPorGmail(gmail)
+
+                    const rolUsu = {
+                        idRol: 4,
+                        idUsuario: idUsuarioNuevo
+                    }
+
+                    await postUsuarioRol(rolUsu)
 
                     const modal = new bootstrap.Modal(modalElement)
                     modal.hide();

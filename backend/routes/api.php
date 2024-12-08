@@ -66,6 +66,7 @@ Route::prefix('usuarioRoles')->group(function () {
 Route::prefix('usuario')->group(function () {
     Route::get('/', [UsuarioController::class, 'getTodosUsuarios']);
     Route::get('{id}', [UsuarioController::class, 'getUsuarioPorId']);
+    Route::get('gmail/{gmail}', [UsuarioController::class, 'getUsuarioPorGmail']);
     Route::post('/', [UsuarioController::class, 'postUsuario']);
     Route::put('{id}', [UsuarioController::class, 'putUsuario']);
     Route::delete('{id}', [UsuarioController::class, 'deleteUsuario']);
