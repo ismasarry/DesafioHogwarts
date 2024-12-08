@@ -21,14 +21,14 @@ class hechizosTest extends TestCase
 
     public function test_post_hechizo()
     {
-        $payload = [
+        $hechizoPrueba = [
             'nombre' => 'Bola de fuego',
             'estadisticas' => '10,20,30,40,50,60',
             'idUsuario' => 1,
             'nivel' => 5
         ];
 
-        $response = $this->post('/api/hechizos', $payload);
+        $response = $this->post('/api/hechizos', $hechizoPrueba);
         $response->assertStatus(201);
         $response->assertJsonFragment(['nombre' => 'Bola de fuego']);
         $this->assertDatabaseHas('hechizos', ['nombre' => 'Bola de fuego']);
@@ -36,14 +36,14 @@ class hechizosTest extends TestCase
 
     public function test_post_hechizo_con_fallo()
     {
-        $payload = [
+        $hechizoPrueba = [
             'nombre' => 'Hechizo inválido',
             'estadisticas' => '10,20,-5,40,50,200',
             'idUsuario' => 1,
             'nivel' => 5
         ];
 
-        $response = $this->post('/api/hechizos', $payload);
+        $response = $this->post('/api/hechizos', $hechizoPrueba);
         $response->assertStatus(400);
     }
 
@@ -70,7 +70,7 @@ class hechizosTest extends TestCase
             'nivel' => 3
         ]);
 
-        $payload = [
+        $hechizoPrueba = [
             'nombre' => 'Rayo mejorado',
             'estadisticas' => '30,30,30,30,30,30',
             'idUsuario' => 1,
@@ -79,7 +79,7 @@ class hechizosTest extends TestCase
             'veriD' => 0
         ];
 
-        $response = $this->put("/api/hechizos/{$hechizo->id}", $payload);
+        $response = $this->put("/api/hechizos/{$hechizo->id}", $hechizoPrueba);
         $response->assertStatus(201);
         $response->assertJsonFragment(['nombre' => 'Rayo mejorado']);
         $this->assertDatabaseHas('hechizos', ['nombre' => 'Rayo mejorado']);
