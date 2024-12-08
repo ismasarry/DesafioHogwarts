@@ -28,7 +28,7 @@ async function mensaje() {
                 <p>Bravo alumno. ¡Sigue así!</p>
                 <audio src="HogwartsMarch.mp3" controls autoplay></audio>
             `;
-        await modificarDuelo(finUsuario, idUsuario)
+        await modificarDuelo(true, idUsuario)
         await sumarPuntos(idUsuario, 2, 3)
     } else if (finBot == 3 || sessionStorage.getItem("vidaUsu") <= 0) {
         html.innerHTML = `
@@ -36,7 +36,7 @@ async function mensaje() {
                 <h2>Lo siento</h2>
                 <p>Has perdido, mejor suerte la proxima vez</p>
             `;
-        await modificarDuelo(finUsuario, idUsuario)
+        await modificarDuelo(false, idUsuario)
     }
 }
 
@@ -44,18 +44,10 @@ boton.addEventListener('click', () => {
     window.location.href = 'inicio.html';
 });
 
-async function modificarDuelo(finUsuario, idUsuario) {
-    let dueloM
-    if (finUsuario == 3) {
-        dueloM = {
-            idUsuario: idUsuario,
-            ganador: true
-        }
-    } else {
-        dueloM = {
-            idUsuario: idUsuario,
-            ganador: false
-        }
+async function modificarDuelo(ganador, idUsuario) {
+    const dueloM = {
+        idUsuario: idUsuario,
+        ganador: ganador
     }
     const dueloEnCurso = await getDueloEnCurso(idUsuario)
     await putDuelo(dueloEnCurso.id, dueloM)
