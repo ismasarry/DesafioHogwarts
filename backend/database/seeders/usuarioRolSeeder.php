@@ -28,15 +28,31 @@ class usuarioRolSeeder extends Seeder
             ],
             [
                 'idRol' => 3,
+                'idUsuario' => 2
+            ],
+            [
+                'idRol' => 3,
                 'idUsuario' => 3
             ],
             [
-                'idRol' => 4,
+                'idRol' => 3,
                 'idUsuario' => 4
             ],
             [
-                'idRol' => 2,
-                'idUsuario' => 3
+                'idRol' => 4,
+                'idUsuario' => 5
+            ],
+            [
+                'idRol' => 4,
+                'idUsuario' => 6
+            ],
+            [
+                'idRol' => 4,
+                'idUsuario' => 7
+            ],
+            [
+                'idRol' => 4,
+                'idUsuario' => 8
             ],
         ];
 

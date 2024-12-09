@@ -1,0 +1,162 @@
+/*ismael sarrion*/
+
+
+
+  /*NO TOCAR*/
+  header.header {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    z-index: 1000; 
+    margin-left: 0; 
+}
+
+.main-content {
+    margin-top: 100px; 
+    color: aliceblue;
+}
+
+.user-container {
+  margin-top: 20px; 
+}
+  /*ya puedes tocar*/
+
+ 
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 100px); 
+    text-align: center;
+    background-color: #23272a;
+    color: aliceblue;
+  }
+  
+  .m-2 {
+    text-align: center;
+  }
+  
+  
+    .main-content p {
+      font-size: 0.9em;
+    }
+  
+  
+  /*Raul Gutierrez*/
+
+  /*Isma, no toques este css que es para la sideBar xD*/
+  
+#sidebar-wrapper {
+  width: 250px;
+  position: fixed;
+  top: 0;
+  left: -250px;
+  height: 100%;
+  background-color: #343a40;
+  color: white;
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+#wrapper.sidebar-open #sidebar-wrapper {
+  left: 0;
+}
+
+#wrapper.sidebar-open .main-content {
+  margin-left: 250px;
+}
+
+#wrapper.sidebar-open header.header {
+  margin-left: 250px;
+  transition: margin-left 0.3s ease;
+}
+
+header.header {
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+.icon-desplegable:hover {
+  color: black !important;
+}
+/* Ismael Sarrion */
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #23272a;
+  color: aliceblue;
+  margin: 0;
+  padding: 0;
+}
+
+header.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.main-content {
+  margin-top: 100px;
+  padding: 20px;
+}
+
+#pociones {
+  color: aliceblue;
+}
+
+td {
+  color: aliceblue !important;
+}
+
+/* Botón de añadir poción */
+.btn-primary {
+  background-color: #0056b3;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #004494;
+}
+
+/* Tabla */
+.table {
+  margin-top: 20px;
+  color: aliceblue;
+  background-color: #2d3237;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #2b3035;
+}
+
+.table-striped tbody tr:hover {
+  background-color: #3c444b;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 10px;
+  }
+
+  .btn-primary {
+    padding: 8px 16px;
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: 5px;
+  }
+
+  .btn-primary {
+    padding: 6px 12px;
+    font-size: 0.8em;
+  }
+}

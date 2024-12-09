@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="./../css/inicio.css" />
+    <link rel="stylesheet" href="./../css/inicioGestionAsig.css" />
     <link rel="stylesheet" href="./../css/asignatura.css" />
 </head>
 
@@ -18,15 +18,15 @@
     <div class="d-flex" id="wrapper">
         <div id="header-container"></div>
     </div>
-
     <main class="main-content">
         <div class="row m-2">
             <h3 class="fs-3 mb-3">Lista de asignaturas</h3>
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearAsignaturaModal">Crear Asignatura</button>
+            <button class="btn-crear btn btn-success" data-bs-toggle="modal" data-bs-target="#crearAsignaturaModal"><i class="fas fa-edit"></i>Crear Asignatura</button>
             <div class="col-table">
                 <table id="asignaturas" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Asignatura</th>
                             <th>Profesor/es</th>
                             <th>Alumnos</th>

@@ -4,24 +4,64 @@ import { getTodosAsignaturas, postAsignatura, putAsignatura, deleteAsignatura } 
 import { getTodosAsignaturaProfesores, postAsignaturaProfesor, deleteAsignaturaProfesorEspecifico } from "../api/asignaturaProfesorAPI.js"
 import { getTodosAsignaturaAlumnos, postAsignaturaAlumno, deleteAsignaturaAlumnoEspecifico } from "../api/asignaturaAlumnoAPI.js"
 import { cargarSideBar } from "../components/cargarSideBar.js"
+import languageES from '../local-DataTables/es-ES.json'
 
 await cargarSideBar()
 
 const init = async () => {
-    const tabla = $('#asignaturas').DataTable()
+    const tabla = $('#asignaturas').DataTable({
+        columns: [
+            { title: 'ID', data: 'id' },
+            { title: 'Asignatura', data: 'nombre' },
+            { title: 'Profesor/es', data: 'profesores' },
+            { title: 'Alumnos', data: 'alumnos' },
+            { title: 'Acciones', data: 'acciones', orderable: false }
+        ],
+        language: languageES,
+        responsive: true,
+        scrollX: true,
+        pagingType: 'full_numbers',
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
+    })
 
-    const asignaturas = await getTodosAsignaturas() || []
+    const [asignaturas, profesoresData, profesorAsignatura, alumnosData, alumnosAsignatura] = await Promise.all([
+        getTodosAsignaturas(),
+        mostrarUsuariosRolPorIdRol(3),
+        getTodosAsignaturaProfesores(),
+        mostrarUsuariosRolPorIdRol(4),
+        getTodosAsignaturaAlumnos(),
+    ])
 
-    const profesoresData = await mostrarUsuariosRolPorIdRol(3) || {}
     const profesores = profesoresData.usuarios || []
-    const profesorAsignatura = await getTodosAsignaturaProfesores() || []
-
-    const alumnosData = await mostrarUsuariosRolPorIdRol(4) || {}
     const alumnos = alumnosData.usuarios || []
-    const alumnosAsignatura = await getTodosAsignaturaAlumnos() || []
-    console.log(`alumnosData:`, alumnosData)
-    console.log(`alumnos:`, alumnos)
-    console.log(`alumnosAsignatura:`, alumnosAsignatura)
+
+    const crearModal = `
+            <div class="modal fade" id="crearAsignaturaModal" tabindex="-1" aria-labelledby="crearAsignaturaLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="crearAsignaturaLabel">Crear Nueva Asignatura</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="crearAsignaturaForm">
+                                <div class="mb-3">
+                                    <label for="nombreAsignatura" class="form-label">Nombre de la Asignatura</label>
+                                    <input type="text" class="form-control" id="nombreAsignatura" placeholder="Introduce el nombre" required>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" id="guardarAsignatura">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+    document.body.insertAdjacentHTML('beforeend', crearModal)
+
+    tabla.clear()
 
     for (const asig of asignaturas) {
         const profesoresImparten = []
@@ -61,47 +101,50 @@ const init = async () => {
             }
         }
 
-        const row = tabla.row.add([
-            asig.nombre,
-            profesoresImparten.map(profe => profe.nombre).join(','),
-            // conteoProfesores,
-            // alumnosAsisten.map(alumn => alumn.nombre).join(','),
-            conteoAlumnos,
-            `<button class='btn-editar btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal${asig.id}'><i class='fas fa-edit'></i>Editar</button>` +
-            `<button class='btn-eliminar btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal${asig.id}'><i class='fas fa-trash-alt'></i>Eliminar</button>`
-        ]).draw()
+        const acciones = `  
+                            <button class='btn-editar btn btn-primary btn-sm' data-bs-toggle='modal' data-bs-target='#editModal${asig.id}'>
+                                <i class='fas fa-edit'></i>Editar
+                            </button> 
+                            <button class='btn-eliminar btn btn-danger btn-sm' data-bs-toggle='modal' data-bs-target='#deleteModal${asig.id}'>
+                                <i class='fas fa-trash-alt'></i>Eliminar
+                            </button>
+                        `
 
-        const crearModal = `
-            <div class="modal fade" id="crearAsignaturaModal" tabindex="-1" aria-labelledby="crearAsignaturaLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="crearAsignaturaLabel">Crear Nueva Asignatura</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="crearAsignaturaForm">
-                                <div class="mb-3">
-                                    <label for="nombreAsignatura" class="form-label">Nombre de la Asignatura</label>
-                                    <input type="text" class="form-control" id="nombreAsignatura" placeholder="Introduce el nombre" required>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" id="guardarAsignatura">Guardar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `
+        const exixteFila = tabla.row(`#row-${asig.id}`)
+        if (exixteFila.node()) {
+            exixteFila.data({
+                id: asig.id,
+                nombre: asig.nombre,
+                profesores: profesoresImparten.map(profe => profe.nombre).join(',') || '-',
+                // profesores: conteoProfesores,
+                // alumnos: alumnosAsisten.map(alumn => alumn.nombre).join(','),
+                alumnos: conteoAlumnos,
+                acciones: acciones
+            })
+        }
+
+        const newFila = tabla.row.add({
+            id: asig.id,
+            nombre: asig.nombre,
+            profesores: profesoresImparten.map(profe => profe.nombre).join(',') || '-',
+            // profesores: conteoProfesores,
+            // alumnos: alumnosAsisten.map(alumn => alumn.nombre).join(','),
+            alumnos: conteoAlumnos,
+            acciones: acciones
+        }).node()
+
+        if (newFila) {
+            newFila.id = `row-${asig.id}`
+        }
+
+        tabla.draw(false)
 
         const editarModal = `
             <div class="modal" id="editModal${asig.id}">
                 <div class="modal-dialog modal-md">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Editar asignatura ${asig.nombre}</h4>
+                            <h4 id='titulo-modal' class="modal-title">Editar asignatura ${asig.nombre}</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <div class="modal-body">
@@ -132,7 +175,7 @@ const init = async () => {
                                             ${profesoresImparten.length > 0 ? profesoresImparten.map(prof => `
                                                 <li class='profesor' data-id='${prof.id}'>
                                                     ${prof.nombre ? prof.nombre : 'Nombre no disponible'}
-                                                </li>`).join('') : '<li>Libre</li>'}
+                                                </li>`).join('') : ''}
                                             </ul>
                                         </div>
 
@@ -142,7 +185,7 @@ const init = async () => {
                                             ${profesoresNoImparten.length > 0 ? profesoresNoImparten.map(prof => `
                                                 <li class="profesor" data-id="${prof.id}">
                                                     ${prof.nombre ? prof.nombre : 'Nombre no disponible'}
-                                                </li>`).join('') : '<li>Libre</li>'}
+                                                </li>`).join('') : ''}
                                             </ul>
                                         </div>
                                     </div>
@@ -157,7 +200,7 @@ const init = async () => {
                                             ${alumnosAsisten.length > 0 ? alumnosAsisten.map(al => `
                                                 <li class='alumno' data-id='${al.id}'>
                                                     ${al.nombre ? al.nombre : 'Nombre no disponible'}
-                                                </li>`).join('') : '<li>Libre</li>'}
+                                                </li>`).join('') : ''}
                                             </ul>
                                         </div>
 
@@ -167,7 +210,7 @@ const init = async () => {
                                             ${alumnosNoAsisten.length > 0 ? alumnosNoAsisten.map(al => `
                                                 <li class="alumno" data-id="${al.id}">
                                                     ${al.nombre ? al.nombre : 'Nombre no disponible'}
-                                                </li>`).join('') : '<li>Libre</li>'}
+                                                </li>`).join('') : ''}
                                             </ul>
                                         </div>
                                     </div>
@@ -181,6 +224,7 @@ const init = async () => {
                 </div>
             </div>
         `
+        document.body.insertAdjacentHTML('beforeend', editarModal)
 
         const eliminarModal = `
             <div class="modal" id="deleteModal${asig.id}">
@@ -202,9 +246,6 @@ const init = async () => {
                 </div>
             </div>
         `
-
-        // document.body.insertAdjacentHTML('beforeend', crearModal)
-        document.body.insertAdjacentHTML('beforeend', editarModal)
         document.body.insertAdjacentHTML('beforeend', eliminarModal)
 
         const listaImparten = document.getElementById(`imparten${asig.id}`)
@@ -213,32 +254,14 @@ const init = async () => {
         const listaNoAsisten = document.getElementById(`noAsisten${asig.id}`)
 
         if (listaImparten && listaNoImparten) {
-            addClickEventToProfesores(listaImparten, listaNoImparten, asig.id)
-            addClickEventToProfesores(listaNoImparten, listaImparten, asig.id)
+            addClickEventToProfesores(listaImparten, listaNoImparten, asig.id, tabla)
+            addClickEventToProfesores(listaNoImparten, listaImparten, asig.id, tabla)
         }
 
         if (listaAsisten && listaNoAsisten) {
-            addClickEventToAlumnos(listaAsisten, listaNoAsisten, asig.id)
-            addClickEventToAlumnos(listaNoAsisten, listaAsisten, asig.id)
+            addClickEventToAlumnos(listaAsisten, listaNoAsisten, asig.id, tabla)
+            addClickEventToAlumnos(listaNoAsisten, listaAsisten, asig.id, tabla)
         }
-
-        // crearModal.addEventListener('click', async () => {
-        //     const nombreAsignatura = document.getElementById('nombreAsignatura').value.trim()
-        
-        //     if (nombreAsignatura) {
-        //         try {
-        //             await postAsignatura(nombreAsignatura) 
-        //             console.log("Asignatura creada con éxito")
-        
-        //             location.reload()
-        //         } catch (error) {
-        //             console.error("Error al crear la asignatura:", error)
-        //             alert("Hubo un error al crear la asignatura. Inténtalo nuevamente.")
-        //         }
-        //     } else {
-        //         alert("El nombre de la asignatura no puede estar vacío.")
-        //     }
-        // })
 
         document.querySelector(`#guardarBtn${asig.id}`).addEventListener('click', async () => {
             const nombreInput = document.querySelector(`#nombre${asig.id}`)
@@ -248,14 +271,19 @@ const init = async () => {
             if (nombreActual !== nombreOriginal) {
                 try {
                     const respuesta = await putAsignatura(asig.id, { nombre: nombreActual })
-                    if (respuesta.ok) {
-                        console.log("Nombre de la asignatura actualizado correctamente")
+                    if (respuesta) {
                         nombreInput.dataset.original = nombreActual
-                        const rowIndex = tabla.row(`#editModal${asig.id}`).index()
-                        tabla.cell(rowIndex, 0).data(nombreActual).draw()
+
+                        const fila = tabla.row(`#row-${asig.id}`).data()
+                        fila.nombre = nombreActual
+                        tabla.row(`#row-${asig.id}`).data(fila).invalidate().draw(false)
+
+                        const tituloModal = document.querySelector(`#editModal${asig.id} .modal-title`)
+                        if (tituloModal) {
+                            tituloModal.textContent = `Editar asignatura ${nombreActual}`
+                        }
                     } else {
                         console.error("Error al actualizar el nombre de la asignatura")
-                        alert("No se pudo actualizar el nombre. Intenta nuevamente.")
                     }
                 } catch (error) {
                     console.error("Error en la solicitud PUT", error)
@@ -269,14 +297,19 @@ const init = async () => {
             if (confirmarEliminacion) {
                 confirmarEliminacion.addEventListener('click', async () => {
                     try {
-                        await deleteAsignatura(id)
+                        const respuesta = await deleteAsignatura(id)
 
-                        const modalElement = document.getElementById(`deleteModal${id}`)
-                        const modal = new bootstrap.Modal(modalElement)
-                        modal.hide()
-                        location.reload()
+                        if (respuesta) {
+                            const row = $(`#asignaturas tbody tr`).filter(function () {
+                                return $(this).find('td').eq(0).text() == id
+                            })
 
-
+                            if (row.length > 0) {
+                                tabla.row(row).remove().draw(false)
+                            }
+                        } else {
+                            console.error("Error al eliminar la asignatura")
+                        }
                     } catch (error) {
                         console.error('Error al confirmar la eliminación:', error)
                     }
@@ -285,9 +318,32 @@ const init = async () => {
         }
         eliminarAsignatura(asig.id)
     }
+
+    const crearAsignatura = document.getElementById('guardarAsignatura')
+    crearAsignatura.addEventListener('click', async () => {
+        const nombreAsignatura = document.getElementById('nombreAsignatura')
+        if (nombreAsignatura.value) {
+            try {
+                await postAsignatura(nombreAsignatura.value)
+                location.reload()
+            } catch (error) {
+                console.error("Error al crear la asignatura:", error)
+            }
+        } else {
+            const existeError = document.querySelector('.error-message')
+            if (!existeError) {
+                let errorMessage = document.createElement('span')
+                errorMessage.innerHTML = 'El nombre de la asignatura no puede estar vacío'
+
+                errorMessage.classList.add('error-message')
+
+                nombreAsignatura.insertAdjacentElement('afterend', errorMessage)
+            }
+        }
+    })
 }
 
-const addClickEventToProfesores = (lista, listaContraria, idAsignatura) => {
+const addClickEventToProfesores = (lista, listaContraria, idAsignatura, tabla) => {
     lista.querySelectorAll('.profesor').forEach(i => {
         const manejarClick = async () => {
             const profesorId = i.getAttribute('data-id')
@@ -317,6 +373,13 @@ const addClickEventToProfesores = (lista, listaContraria, idAsignatura) => {
 
                 addClickEventToProfesores(listaContraria, lista, idAsignatura)
             }
+            const profesoresActualizados = Array.from(document.getElementById(`imparten${idAsignatura}`).querySelectorAll('li'))
+                .map(profe => profe.textContent)
+                .join(', ')
+
+            const fila = tabla.row(`#row-${idAsignatura}`).data()
+            fila.profesores = profesoresActualizados || '-'
+            tabla.row(`#row-${idAsignatura}`).data(fila).invalidate().draw(false)
         }
 
         i.removeEventListener('click', manejarClick)
@@ -330,7 +393,6 @@ const addClickEventToProfesores = (lista, listaContraria, idAsignatura) => {
 const addProfesores = async (idAsignatura, idProfesor) => {
     try {
         await postAsignaturaProfesor(idAsignatura, idProfesor)
-        console.log(`Profesor con ID ${idProfesor} añadido a la asignatura ${idAsignatura}`)
     } catch (error) {
         console.error('Error al agregar el profesor:', error)
     }
@@ -339,13 +401,12 @@ const addProfesores = async (idAsignatura, idProfesor) => {
 const removeProfesores = async (idAsignatura, idProfesor) => {
     try {
         await deleteAsignaturaProfesorEspecifico(idAsignatura, idProfesor)
-        console.log(`Profesor con ID ${idProfesor} eliminado de la asignatura ${idAsignatura}`)
     } catch (error) {
         console.error('Error al eliminar el profesor:', error)
     }
 }
 
-const addClickEventToAlumnos = (lista, listaContraria, idAsignatura) => {
+const addClickEventToAlumnos = (lista, listaContraria, idAsignatura, tabla) => {
     lista.querySelectorAll('.alumno').forEach(i => {
         const manejarClick = async () => {
             const alumnoId = i.getAttribute('data-id')
@@ -375,6 +436,11 @@ const addClickEventToAlumnos = (lista, listaContraria, idAsignatura) => {
 
                 addClickEventToAlumnos(listaContraria, lista, idAsignatura)
             }
+            const alumnosActualizados = Array.from(document.getElementById(`asisten${idAsignatura}`).querySelectorAll('li')).length
+
+            const fila = tabla.row(`#row-${idAsignatura}`).data()
+            fila.alumnos = alumnosActualizados
+            tabla.row(`#row-${idAsignatura}`).data(fila).invalidate().draw(false)
         }
 
         i.removeEventListener('click', manejarClick)
@@ -382,11 +448,9 @@ const addClickEventToAlumnos = (lista, listaContraria, idAsignatura) => {
     })
 }
 
-
 const addAlumnos = async (idAsignatura, idAlumno) => {
     try {
         await postAsignaturaAlumno(idAsignatura, idAlumno)
-        console.log(`Alumno con ID ${idAlumno} añadido a la asignatura ${idAsignatura}`)
     } catch (error) {
         console.error('Error al agregar el alumno:', error)
     }
@@ -395,7 +459,6 @@ const addAlumnos = async (idAsignatura, idAlumno) => {
 const removeAlumnos = async (idAsignatura, idAlumno) => {
     try {
         await deleteAsignaturaAlumnoEspecifico(idAsignatura, idAlumno)
-        console.log(`Alumno con ID ${idAlumno} eliminado de la asignatura ${idAsignatura}`)
     } catch (error) {
         console.error('Error al eliminar el alumno:', error)
     }

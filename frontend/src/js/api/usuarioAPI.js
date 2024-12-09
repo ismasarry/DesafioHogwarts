@@ -12,16 +12,16 @@ export const getTodosUsuarios = async () => {
             }
         })
 
-        if (!respuesta.ok){
-            throw new Error(`Error al obtener la lista de usuarios. Código de estado: ${respuesta.status}`);
+        if (!respuesta.ok) {
+            throw new Error(`Error al obtener la lista de usuarios. Código de estado: ${respuesta.status}`)
         }
 
         const usuarios = await respuesta.json()
         return usuarios
 
     } catch (error) {
-        console.error('Error en la función getTodosUsuarios:', error.message);
-        throw error;
+        console.error('Error en la función getTodosUsuarios:', error.message)
+        throw error
     }
 }
 
@@ -37,11 +37,34 @@ export const getBuscarUsuario = async (id_usuario) => {
         })
 
         if (!respuesta.ok) {
-            throw new Error(`Error al obtener el usuario. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al obtener el usuario. Código de estado: ${respuesta.status}`)
         }
 
-        const usuario = await respuesta.json();
-        return usuario;
+        const usuario = await respuesta.json()
+        return usuario
+    } catch (error) {
+        console.error('Error en la función getBuscarUsuario:', error.message)
+        throw error
+    }
+}
+
+export const getBuscarUsuarioPorGmail = async (gmail) => {
+    const rutaUsuario = constantes.urlApi + constantes.usu
+
+    try {
+        const respuesta = await fetch(rutaUsuario + 'gmail/' + gmail, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        if (!respuesta.ok) {
+            throw new Error(`Error al obtener el usuario. Código de estado: ${respuesta.status}`)
+        }
+
+        const usuario = await respuesta.json()
+        return usuario
     } catch (error) {
         console.error('Error en la función getBuscarUsuario:', error.message)
         throw error
@@ -50,7 +73,7 @@ export const getBuscarUsuario = async (id_usuario) => {
 
 export const postUsuario = async (usuarioCreado) => {
     const rutaUsuario = constantes.urlApi + constantes.usu
-    
+
     try {
         const respuesta = await fetch(rutaUsuario, {
             method: 'POST',
@@ -61,39 +84,45 @@ export const postUsuario = async (usuarioCreado) => {
             body: JSON.stringify(usuarioCreado),
         })
         if (!respuesta.ok) {
-            throw new Error(`Error al añadir el usuario. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al añadir el usuario. Código de estado: ${respuesta.status}`)
         }
 
-        const resultado = await respuesta.json();
-        return resultado;
+        const resultado = await respuesta.json()
+        return resultado
     } catch (error) {
-        console.error('Error en la función postUsuario:', error.message);
-        throw error;
+        console.error('Error en la función postUsuario:', error.message)
+        throw error
     }
 }
 
 //Jaime Ortega (postFormUsuario)
 export const postFormUsuario = async (usuarioCreado) => {
     const rutaUsuario = constantes.urlApi + constantes.registro
-    
+
+    const formData = new FormData()
+    formData.append('nombre', usuarioCreado.nombre)
+    formData.append('gmail', usuarioCreado.gmail)
+    formData.append('contrasena', usuarioCreado.contrasena)
+    formData.append('confirm_contrasena', usuarioCreado.confirm_contrasena)
+    formData.append('idCasa', usuarioCreado.idCasa)
+    if (usuarioCreado.foto) {
+        formData.append('foto', usuarioCreado.foto)
+    }
+
     try {
         const respuesta = await fetch(rutaUsuario, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(usuarioCreado),
-            // body: usuarioCreado,
+            body: formData,
         })
         if (!respuesta.ok) {
-            throw new Error(`Error al añadir el usuario. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al añadir el usuario. Código de estado: ${respuesta.status}`)
         }
 
-        const resultado = await respuesta.json();
-        return resultado;
+        const resultado = await respuesta.json()
+        return resultado
     } catch (error) {
-        console.error('Error en la función postFormUsuario:', error.message);
-        throw error;
+        console.error('Error en la función postFormUsuario:', error.message)
+        throw error
     }
 }
 
@@ -107,18 +136,18 @@ export const putUsuario = async (id_usuario, usuario) => {
                 'Access-Control-Allow-Origin': '*'
             },
             body: JSON.stringify(usuario),
-        });
+        })
 
         if (!respuesta.ok) {
 
-            throw new Error(`Error al editar el usuario. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al editar el usuario. Código de estado: ${respuesta.status}`)
         }
 
         const resultado = await respuesta.json()
-        return resultado;
+        return resultado
     } catch (error) {
-        console.error('Error en la función putUsuario:', error.message);
-        throw error;
+        console.error('Error en la función putUsuario:', error.message)
+        throw error
     }
 }
 
@@ -131,14 +160,14 @@ export const deleteUsuario = async (id_usuario) => {
             headers: {
                 'Content-Type': 'application/json'
             }
-        });
+        })
 
         if (!respuesta.ok) {
-            throw new Error(`Error al eliminar el usuario. Código de estado: ${respuesta.status}`);
+            throw new Error(`Error al eliminar el usuario. Código de estado: ${respuesta.status}`)
         }
 
-        const resultado = await respuesta.json();
-        return resultado;
+        const resultado = await respuesta.json()
+        return resultado
     } catch (error) {
         console.error('Error en la función deleteUsuario:', error.message)
         throw error
