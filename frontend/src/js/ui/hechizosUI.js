@@ -173,7 +173,7 @@ const eliminarHechizo = `
                         </div>
                     `
                 document.body.insertAdjacentHTML('beforeend', editarHechizo)
-                editarHechizoUI(hec.id)
+                editarHechizoUI(hec.id, usuarioInfo.Usuario)
     
                 document.body.insertAdjacentHTML('beforeend', eliminarHechizo)
                 eliminarHechizoUI(hec.id)
@@ -330,7 +330,7 @@ const eliminarHechizo = `
                         </div>
                     `
                 document.body.insertAdjacentHTML('beforeend', editarHechizo)
-                editarHechizoUI(hec.id)
+                editarHechizoUI(hec.id, usuarioInfo.Usuario)
     
                 document.body.insertAdjacentHTML('beforeend', eliminarHechizo)
                 eliminarHechizoUI(hec.id)
@@ -462,7 +462,7 @@ const eliminarHechizo = `
 `;
 
                 document.body.insertAdjacentHTML('beforeend', editarHechizo)
-                editarHechizoUI(hec.id)
+                editarHechizoUI(hec.id, usuarioInfo.Usuario)
     
                 document.body.insertAdjacentHTML('beforeend', eliminarHechizo)
                 eliminarHechizoUI(hec.id)
@@ -591,7 +591,7 @@ const eliminarHechizo = `
         
 
                 document.body.insertAdjacentHTML('beforeend', editarHechizo)
-                editarHechizoUI(hec.id)
+                editarHechizoUI(hec.id, usuarioInfo.Usuario)
     
                 document.body.insertAdjacentHTML('beforeend', eliminarHechizo)
                 eliminarHechizoUI(hec.id)
@@ -640,7 +640,7 @@ const eliminarHechizo = `
                     }
                 }
                 let row
-                if (hec.idUsuario == 0 && hec.idUsuario != usuarioInfo.Usuario.id) {
+                if (hec.idUsuario == 0 || hec.idUsuario != usuarioInfo.Usuario.id) {
                     row = tabla.row.add([
                         hec.nombre,
                         esta[0],
@@ -746,7 +746,7 @@ const eliminarHechizo = `
             </div>
             `;
                 document.body.insertAdjacentHTML('beforeend', editarHechizo)
-                editarHechizoUI(hec.id)
+                editarHechizoUI(hec.id, usuarioInfo.Usuario)
     
                 document.body.insertAdjacentHTML('beforeend', eliminarHechizo)
                 eliminarHechizoUI(hec.id)
@@ -758,7 +758,7 @@ const eliminarHechizo = `
         
     }
 
-    async function editarHechizoUI(id) {
+    async function editarHechizoUI(id, usuario) {
         const modificarBtn = document.getElementById(`editarBtn${id}`)
         if (modificarBtn) {
 
@@ -777,15 +777,19 @@ const eliminarHechizo = `
                     const esta = [ataqueHec,defensaHec,sanacionHec,danoHec,invocacionHec,accionHec]
                     const estadisticas = esta.toString(", ")
 
+                    const hechizoAntesEditar = await getBuscarHechizo(id)
+                    console.log(hechizoAntesEditar.hechizos.nivel)
+                    
 
                     const hechizoObjeto = {
                         nombre: nombreHec,
                         estadisticas: estadisticas,
                         idUsuario: usuario.id.toString(),
-                        nivel: nivelHec,
+                        nivel: hechizoAntesEditar.hechizos.nivel,
                         veri: 0,
                         veriD: 0
                     }
+                    console.log(hechizoObjeto)
 
                     await putHechizo(id, hechizoObjeto)
 
