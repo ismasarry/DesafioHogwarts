@@ -103,7 +103,7 @@ Route::prefix('asignaturaProfesor')->group(function () {
     Route::delete('{idAsignatura}/{idProfesor}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesorEspecifico']);
 });
 
-// todos menos admin 
+// todos menos admin
 //Raul Gutierrez
 Route::prefix('hechizos')->group(function () {
     Route::get('/', [hechizosController::class, 'getTodosHechizos']);
@@ -139,6 +139,7 @@ Route::prefix('recetas')->group(function () {
     Route::post('/', [RecetasController::class, 'postReceta']);
     Route::put('{id}', [RecetasController::class, 'putReceta']);
     Route::delete('{id}', [RecetasController::class, 'deleteReceta']);
+});
 
 Route::prefix('mapa')->group(function () {
     // Route::get('/', [MapaMerodeadorController::class, 'getTodosMapas']);
