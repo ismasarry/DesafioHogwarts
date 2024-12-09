@@ -773,25 +773,15 @@ const eliminarHechizo = `
                     const danoHec = modalElement.querySelector(`#dano${id}`).value
                     const invocacionHec = modalElement.querySelector(`#invocacion${id}`).value
                     const accionHec = modalElement.querySelector(`#accion${id}`).value
-                    const creadorHec = modalElement.querySelector(`#creador${id}`).value
-                    const nivelHec = modalElement.querySelector(`#nivel${id}`).value
 
                     const esta = [ataqueHec,defensaHec,sanacionHec,danoHec,invocacionHec,accionHec]
                     const estadisticas = esta.toString(", ")
 
-                    let creador = ''
-
-                    if(creadorHec == 'Desconocido'){
-                        creador = 0
-                    }else{
-                        const creadores = await getTodosUsuarios()
-                        creador = (creadores.Usuario.find((nombre) => nombre.nombre = creadorHec)).id
-                    }
 
                     const hechizoObjeto = {
                         nombre: nombreHec,
                         estadisticas: estadisticas,
-                        idUsuario: creador.toString(),
+                        idUsuario: usuario.id.toString(),
                         nivel: nivelHec,
                         veri: 0,
                         veriD: 0
