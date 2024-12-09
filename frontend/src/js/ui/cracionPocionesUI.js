@@ -81,37 +81,84 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function mostrarDetallesIngrediente(boton) {
-        console.log("Mostrando detalles para el ingrediente:", boton);
-
-        const estadisticas = boton.getAttribute('data-estadisticas');
-        const nombreIngrediente = boton.getAttribute('data-nombre');
-
-        const estadisticasArray = estadisticas.split(',');
-        const listaEstadisticas = document.getElementById('estadisticasIngrediente');
-
-        const nombresEstadisticas = [
-            'Sanación', 'Envenenamiento', 'Analgesia', 'Dolor',
-            'Curativo', 'Enfermante',  'Desinflamatorio', 'Inflamatorio'
-        ];
-
-        listaEstadisticas.innerHTML = '';
-
-        const titulo = document.createElement('h5');
-        titulo.textContent = `Estadísticas de ${nombreIngrediente}`;
-        listaEstadisticas.appendChild(titulo);
-
-        for (let i = 0; i < nombresEstadisticas.length; i++) {
-            const li = document.createElement('li');
-
-            const valorEstadistica = estadisticasArray[i] ? estadisticasArray[i].trim() : 'No disponible';
-
-            li.textContent = `${nombresEstadisticas[i]}: ${valorEstadistica}`;
-            listaEstadisticas.appendChild(li);
+        try {
+            console.log("Mostrando detalles para el ingrediente:", boton);
+    
+            // Validar que el botón no sea null o undefined
+            if (!boton) {
+                console.error("El botón proporcionado es null o undefined.");
+                return;
+            }
+    
+            // Obtener atributos data-estadisticas y data-nombre
+            const estadisticas = boton.getAttribute('data-estadisticas');
+            const nombreIngrediente = boton.getAttribute('data-nombre');
+    
+            if (!estadisticas) {
+                console.error("No se encontró el atributo 'data-estadisticas' en el botón.");
+                return;
+            }
+    
+            if (!nombreIngrediente) {
+                console.error("No se encontró el atributo 'data-nombre' en el botón.");
+                return;
+            }
+    
+            console.log("Estadísticas obtenidas:", estadisticas);
+            console.log("Nombre del ingrediente obtenido:", nombreIngrediente);
+    
+            // Procesar las estadísticas
+            const estadisticasArray = estadisticas.split(',').map(valor => valor.trim());
+            console.log("Estadísticas procesadas como array:", estadisticasArray);
+    
+            // Validar que el modal y la lista de estadísticas existan en el DOM
+            const listaEstadisticas = document.getElementById('estadisticasIngrediente');
+            if (!listaEstadisticas) {
+                console.error("No se encontró el elemento con ID 'estadisticasIngrediente' en el DOM.");
+                return;
+            }
+    
+            // Definir nombres de estadísticas
+            const nombresEstadisticas = [
+                'Sanación', 'Envenenamiento', 'Analgesia', 'Dolor',
+                'Curativo', 'Enfermante', 'Desinflamatorio', 'Inflamatorio'
+            ];
+    
+            // Limpiar el contenido previo del modal
+            listaEstadisticas.innerHTML = '';
+    
+            // Agregar título con el nombre del ingrediente
+            const titulo = document.createElement('h5');
+            titulo.textContent = `Estadísticas de ${nombreIngrediente}`;
+            listaEstadisticas.appendChild(titulo);
+    
+            // Iterar sobre las estadísticas y mostrarlas con etiquetas
+            for (let i = 0; i < nombresEstadisticas.length; i++) {
+                const li = document.createElement('li');
+                const valorEstadistica = estadisticasArray[i] !== undefined ? estadisticasArray[i] : 'No disponible';
+                li.textContent = `${nombresEstadisticas[i]}: ${valorEstadistica}`;
+                listaEstadisticas.appendChild(li);
+            }
+    
+            console.log("Lista de estadísticas creada exitosamente.");
+    
+            // Mostrar el modal
+            const modalElement = document.getElementById('modalDetalles');
+            if (!modalElement) {
+                console.error("No se encontró el elemento con ID 'modalDetalles' en el DOM.");
+                return;
+            }
+    
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+    
+            console.log("Modal mostrado correctamente.");
+        } catch (error) {
+            console.error("Ocurrió un error inesperado:", error);
         }
-
-        const modal = new bootstrap.Modal(document.getElementById('modalDetalles'));
-        modal.show();
     }
+    
+    
 
     async function crearPocion() {
         if (!usuario) {
@@ -227,24 +274,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
     
-        // Crear el objeto ingrediente
         const nuevoIngrediente = {
             nombre: nombre,
             estadisticas: estadisticas
         };
     
         try {
-            // Enviar el ingrediente a la API
             const respuesta = await postIngrediente(nuevoIngrediente);
             console.log('Ingrediente creado:', respuesta);
             
-            // Cerrar el modal
             const modal = new bootstrap.Modal(document.getElementById('modalCrearIngrediente'));
             modal.hide();
             
-            // Opcional: Actualizar la lista de ingredientes disponibles
-            // Aquí podrías volver a cargar los ingredientes de la API para reflejar el cambio.
-            cargarIngredientesDisponibles(); // Asegúrate de tener esta función para recargar los ingredientes
+            cargarIngredientesDisponibles();
         } catch (error) {
             console.error('Error al crear el ingrediente:', error);
             alert('Ocurrió un error al crear el ingrediente.');
