@@ -28,7 +28,15 @@ class asignaturaProfesorSeeder extends Seeder
             ],
             [
                 'idAsignatura' => 2,
+                'idProfesor' => 2
+            ],
+            [
+                'idAsignatura' => 1,
                 'idProfesor' => 3
+            ],
+            [
+                'idAsignatura' => 2,
+                'idProfesor' => 4
             ]
         ];
 

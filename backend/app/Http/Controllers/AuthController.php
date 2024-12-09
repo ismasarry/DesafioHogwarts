@@ -9,61 +9,64 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 
 class AuthController extends Controller
 {
     public function register(Request $request)
     {
+        $rules = [
+            'nombre' => 'required|string|max:50',
+            'gmail' => 'required|email|max:255|unique:usuario',
+            'contrasena' => 'required|min:8',
+            'confirm_contrasena' => 'required|same:contrasena',
+            'foto' => 'nullable|image|mimetypes:image/jpeg,image/png,image/jpg,image/gif,image/webp,image/svg+xml|max:2048',
+        ];
+        $messages = [
+            'unique' => 'El :attribute ya está registrado.',
+            'email' => 'Debe ser un correo electrónico válido.',
+            'same' => 'Las contraseñas no coinciden.',
+            'required' => 'El campo :attribute es obligatorio.',
+            'image' => 'Debe ser una imagen válida.',
+            'mimetypes' => 'Formato de archivo no permitido.',
+            'max' => 'Excede el tamaño máximo permitido.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
         try {
             $input = $request->all();
-            $rules = [
-                'nombre' => 'required|string|max:50',
-                'gmail' => 'required|email|max:255|unique:usuario',
-                'contrasena' => 'required|min:8',
-                'confirm_contrasena' => 'required|same:contrasena',
-                'foto' => 'nullable|string'
-            ];
-            $messages = [
-                'unique' => 'El :attribute ya está registrado en la base de datos.',
-                'email' => 'El campo :attribute debe ser un correo electrónico válido.',
-                'same' => 'El campo :attribute y :other deben coincidir.',
-                'max' => 'El campo :attribute no debe exceder el tamaño máximo permitido.',
-                'between' => 'El campo :attribute debe estar entre :min y :max años.',
-                'integer' => 'El campo :attribute debe ser un número entero.',
-                'required' => 'El campo :attribute es obligatorio.',
-                'image' => 'El campo :attribute debe ser una imagen válida.',
-                'mimes' => 'El campo :attribute debe ser un archivo de tipo: :values.'
-            ];
-
-            $validator = Validator::make($request->all(), $rules, $messages);
-
-            if($validator->fails()){
-                return response()->json($validator->errors(),400);
-            }
-            $input = $request->all();
             $input['contrasena'] = bcrypt($input['contrasena']);
+            $input['activo'] = 0;
+
             $user = Usuario::create($input);
             $user->remember_token = $user->createToken('LaravelSanctumAuth', ['alumno'])->plainTextToken;
-            $user->save();
 
             DB::table('usuario_rol')->insert([
                 'idRol' => 4,
                 'idUsuario' => $user->id,
             ]);
 
-            $success = [
-                'token' => $user->remember_token,
-                'nombre' => $user->nombre,
-                'id' => $user->id
-            ];
+            if ($request->hasFile('foto') && $request->file('foto')->isValid()) {
+                $fotoUrl = $request->file('foto')->storeOnCloudinary('desafioHogwarts')->getSecurePath();
+                $user->foto = $fotoUrl;
+                $user->save();
+            }
 
-            // if ($request->hasFile('foto')) {
-            //     $filePath = $request->file('foto')->store('fotos', 'public');
-            //     $input['foto'] = $filePath;
-            // }
-
-            return response()->json(["success"=>true,"data"=>$success, "message" => "Usuario registrado correctamente"],201);
+            return response()->json([
+                "success" => true,
+                "data" => [
+                    'token' => $user->remember_token,
+                    'nombre' => $user->nombre,
+                    'id' => $user->id,
+                    'foto' => $user->foto ?? null,
+                    'activo' => $user->activo,
+                ],
+                "message" => "Usuario registrado correctamente",
+            ], 201);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Error en el registro: ' . $e->getMessage()], 500);
         }
@@ -90,7 +93,7 @@ class AuthController extends Controller
         }
     }
 
-//ismael sarrion
+    //ismael sarrion
     public function login(Request $request)
     {
         $request->validate([
@@ -101,28 +104,29 @@ class AuthController extends Controller
         $user = Usuario::where('gmail', $request->gmail)->first();
 
         if ($user && Hash::check($request->contrasena, $user->contrasena)) {
-            $usuarioRol = DB::table('usuario_rol')
+            $usuarioRoles = DB::table('usuario_rol')
                 ->where('idUsuario', $user->id)
-                ->first();
+                ->pluck('idRol')
+                ->toArray();
 
             $abilities = [];
 
-            if ($usuarioRol) {
-                switch ($usuarioRol->idRol) {
+            foreach ($usuarioRoles as $rol) {
+                switch ($rol) {
                     case 1:
-                        $abilities = ['Dumbledore'];
+                        $abilities[] = 'Dumbledore';
                         break;
                     case 2:
-                        $abilities = ['admin'];
+                        $abilities[] = 'admin';
                         break;
                     case 3:
-                        $abilities = ['profesor'];
+                        $abilities[] = 'profesor';
                         break;
                     case 4:
-                        $abilities = ['alumno'];
+                        $abilities[] = 'alumno';
                         break;
                     default:
-                        $abilities = [];
+                        break;
                 }
             }
 
@@ -131,7 +135,8 @@ class AuthController extends Controller
             $success = [
                 'token' => $token,
                 'id' => $user->id,
-                'nombre' => $user->nombre
+                'nombre' => $user->nombre,
+                'abilities' => $abilities
             ];
 
             return response()->json(["success" => true, "data" => $success, "message" => "¡Has iniciado sesión!"]);
@@ -139,5 +144,4 @@ class AuthController extends Controller
             return response()->json(["success" => false, "message" => "No autorizado"], 401);
         }
     }
-
 }

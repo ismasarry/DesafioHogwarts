@@ -2,6 +2,6 @@
     color: white !important;
 }
 
-i, li a, h4, .modal-body label {
+i, li a, h4, .modal-body label,.modal-body p,.card-title,.card-text, a, input, select, option {
     color: black !important;
 }

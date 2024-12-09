@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Middleware\CheckRoleAndAbilities;
+use App\Http\Middleware\maxHechizoMiddleware;
+use App\Http\Middleware\RolMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -12,8 +15,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        
+
         $middleware->redirectGuestsTo('/api/nologin');
+        $middleware->alias([
+            'roles' => RolMiddleware::class,
+            'role_abilities' => CheckRoleAndAbilities::class,
+            'valiHechizos' => maxHechizoMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
