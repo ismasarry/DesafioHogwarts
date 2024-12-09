@@ -104,28 +104,29 @@ class AuthController extends Controller
         $user = Usuario::where('gmail', $request->gmail)->first();
 
         if ($user && Hash::check($request->contrasena, $user->contrasena)) {
-            $usuarioRol = DB::table('usuario_rol')
+            $usuarioRoles = DB::table('usuario_rol')
                 ->where('idUsuario', $user->id)
-                ->first();
+                ->pluck('idRol')
+                ->toArray();
 
             $abilities = [];
 
-            if ($usuarioRol) {
-                switch ($usuarioRol->idRol) {
+            foreach ($usuarioRoles as $rol) {
+                switch ($rol) {
                     case 1:
-                        $abilities = ['Dumbledore'];
+                        $abilities[] = 'Dumbledore';
                         break;
                     case 2:
-                        $abilities = ['admin'];
+                        $abilities[] = 'admin';
                         break;
                     case 3:
-                        $abilities = ['profesor'];
+                        $abilities[] = 'profesor';
                         break;
                     case 4:
-                        $abilities = ['alumno'];
+                        $abilities[] = 'alumno';
                         break;
                     default:
-                        $abilities = [];
+                        break;
                 }
             }
 
@@ -134,7 +135,8 @@ class AuthController extends Controller
             $success = [
                 'token' => $token,
                 'id' => $user->id,
-                'nombre' => $user->nombre
+                'nombre' => $user->nombre,
+                'abilities' => $abilities
             ];
 
             return response()->json(["success" => true, "data" => $success, "message" => "¡Has iniciado sesión!"]);

@@ -17,11 +17,27 @@ class asignaturaAlumnoSeeder extends Seeder
         $datos = [
             [
                 'idAsignatura' => 1,
-                'idAlumno' => 4
+                'idAlumno' => 5
             ],
             [
                 'idAsignatura' => 2,
-                'idAlumno' => 4
+                'idAlumno' => 5
+            ],
+            [
+                'idAsignatura' => 1,
+                'idAlumno' => 6
+            ],
+            [
+                'idAsignatura' => 2,
+                'idAlumno' => 6
+            ],
+            [
+                'idAsignatura' => 2,
+                'idAlumno' => 7
+            ],
+            [
+                'idAsignatura' => 1,
+                'idAlumno' => 8
             ]
         ];
 
