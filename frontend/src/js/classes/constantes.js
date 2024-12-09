@@ -9,12 +9,16 @@ export const constantes = {
     ],
 
     urlApi: 'http://127.0.0.1:8000/api/',
+
     usu: 'usuario/',
-    casa: 'casa/',
     usuRol: 'usuarioRoles/',
+  
+    casa: 'casa/',
+
     hechizo: 'hechizos/',
     duelo: 'duelo/',
     turnoDuelo: 'turnoDuelo/',
+
     registro: 'register',
     log: 'login/',
     logout: 'logout/',
@@ -25,7 +29,6 @@ export const constantes = {
     ingredientes: 'ingredientes/',
     recetas: 'recetas/',
 
-
     nombreRegex: /^[a-zA-ZÁÉÍÓÚáéíóúÑñ\s]{2,50}$/,
     gmailRegex: /^[\w.%+-]{2,}@[\w.-]{2,}\.\w{2,}$/,
     contrasenaRegex: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/,
@@ -33,6 +36,10 @@ export const constantes = {
     asignatura: 'asignatura/',
     asignaturaAlumno: 'asignaturaAlumno/',
     asignaturaProfesor: 'asignaturaProfesor/',
+  
+    mapa: 'mapa/',
+    segundo: 'segundo/',
+    simulacion: 'simulacion/',
 }
 
 //Raul Gutierrez

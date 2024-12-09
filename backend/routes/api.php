@@ -15,6 +15,8 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\IngredientesController;
 use App\Http\Controllers\PocionesController;
 use App\Http\Controllers\RecetasController;
+use App\Http\Controllers\MapaMerodeadorController;
+use App\Http\Controllers\simulacionController;
 use App\Http\Middleware\CheckRoleAndAbilities;
 use App\Http\Middleware\RolMiddleware;
 use Illuminate\Http\Request;
@@ -54,8 +56,6 @@ Route::prefix('usuarioRoles')->group(function () {
     //Raul Gutierrez
     Route::delete('{idUsuario}/{idRol}', [usuarioRolController::class, 'deleteUsuarioRolPorIds']);
 });
-
-
 
 //Raul Gutierrez
 Route::prefix('usuario')->group(function () {
@@ -139,6 +139,18 @@ Route::prefix('recetas')->group(function () {
     Route::post('/', [RecetasController::class, 'postReceta']);
     Route::put('{id}', [RecetasController::class, 'putReceta']);
     Route::delete('{id}', [RecetasController::class, 'deleteReceta']);
+
+Route::prefix('mapa')->group(function () {
+    // Route::get('/', [MapaMerodeadorController::class, 'getTodosMapas']);
+    // Route::get('{id}', [MapaMerodeadorController::class, 'getMapaPorId']);
+    // Route::post('/', [MapaMerodeadorController::class, 'postMapa']);
+    // Route::put('{id}', [MapaMerodeadorController::class, 'putMapa']);
+    // Route::delete('{id}', [MapaMerodeadorController::class, 'deleteMapa']);
+    Route::get('/segundo/{segundo}', [MapaMerodeadorController::class, 'getMapaPorSegundo']);
+    //Jaime Ortega
+    Route::get('/base', [MapaMerodeadorController::class, 'getMapaBase']);
+    Route::post('/simulacion', [simulacionController::class, 'iniciarSimulacion']);
+    Route::delete('/simulacion/reset', [simulacionController::class, 'resetSimulacion']);
 });
 
 //Raul Gutierrez
@@ -177,9 +189,7 @@ Route::get('formulario', function () {
 Route::post('enviar', [gmailController::class, 'enviar']);
 //});
 
-//ismael sarrion
 Route::post('login', [AuthController::class, 'login']);
-
 //Jaime Ortega (register)
 Route::post('register', [AuthController::class, 'register']);
 Route::post('logout', [AuthController::class, 'logout']);

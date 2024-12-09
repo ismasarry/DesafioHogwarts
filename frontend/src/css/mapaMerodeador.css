@@ -1,0 +1,27 @@
+.mapa-segundo {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.mapa-table {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.mapa-table td {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+}
+
+.celda-pared {
+    background-color: #000;
+}
+
+.celda-puerta {
+    background-color: #ddd;
+}
+
+.celda-suelo {
+    background-color: #f0f0f0;
+}
