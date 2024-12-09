@@ -1,5 +1,3 @@
-//Raul Gutierrez
-
 import { getBuscarUsuario, putUsuario } from "../api/usuarioAPI.js"
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -36,10 +34,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="modalPerfilLabel">Perfil de ${usuario.Usuario.nombre}</h5>
+                <h5 class="modal-title" style="color: black;" id="modalPerfilLabel">Perfil de ${usuario.Usuario.nombre}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
               </div>
-              <div class="modal-body">
+              <div class="modal-body" style="color: black;"> 
                 <form id="perfilUsuarioForm">
                   <div class="col-md-6">
                     <label for="nombre" class="form-label">Nombre:</label>

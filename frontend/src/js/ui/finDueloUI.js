@@ -26,7 +26,6 @@ async function mensaje() {
                 <img src="./../assets/gana.webp" alt="Felicitaciones">
                 <h2>¡Felicidades!</h2>
                 <p>Bravo alumno. ¡Sigue así!</p>
-                <audio src="HogwartsMarch.mp3" controls autoplay></audio>
             `;
         await modificarDuelo(true, idUsuario)
         await sumarPuntos(idUsuario, 2, 3)

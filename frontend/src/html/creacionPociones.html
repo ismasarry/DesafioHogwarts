@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="./../css/inicio.css"/>
+  <link rel="stylesheet" href="./../css/inicioCreacionPociones.css"/>
 
 </head>
 
@@ -42,7 +42,6 @@
                     <thead>
                       <tr>
                         <th>Nombre</th>
-                        <th>Foto</th>
                         <th>Acción</th>
                       </tr>
                     </thead>
@@ -59,13 +58,45 @@
                     <thead>
                       <tr>
                         <th>Nombre</th>
-                        <th>Foto</th>
                         <th>Acción</th>
                       </tr>
                     </thead>
                     <tbody>
                     </tbody>
                   </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="row justify-content-center mb-4">
+              <div class="col-md-6 text-center">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCrearIngrediente">Crear Ingrediente</button>
+              </div>
+            </div>
+
+            <div class="modal fade" id="modalCrearIngrediente" tabindex="-1" aria-labelledby="modalCrearIngredienteLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="modalCrearIngredienteLabel">Crear Nuevo Ingrediente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                  </div>
+                  <div class="modal-body">
+                    <form id="formCrearIngrediente">
+                      <div class="mb-3">
+                        <label for="nombreIngrediente" class="form-label">Nombre del Ingrediente</label>
+                        <input type="text" class="form-control" id="nombreIngrediente" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="estadisticasIngrediente" class="form-label">Estadísticas del Ingrediente</label>
+                        <textarea class="form-control" id="estadisticasIngrediente" rows="3" required></textarea>
+                      </div>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="guardarIngrediente">Guardar Ingrediente</button>
+                  </div>
                 </div>
               </div>
             </div>
