@@ -84,13 +84,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             console.log("Mostrando detalles para el ingrediente:", boton);
     
-            // Validar que el botón no sea null o undefined
             if (!boton) {
                 console.error("El botón proporcionado es null o undefined.");
                 return;
             }
     
-            // Obtener atributos data-estadisticas y data-nombre
             const estadisticas = boton.getAttribute('data-estadisticas');
             const nombreIngrediente = boton.getAttribute('data-nombre');
     
