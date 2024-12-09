@@ -45,7 +45,12 @@ class dueloController extends Controller
     {
         $duelos = duelo::where('idUsuario', $idUsuario)->count();
         $duelosGanados = duelo::where('idUsuario', $idUsuario)->where('ganador', true)->count();
-        $winRate = ($duelosGanados / $duelos) * 100;
+        
+        if ($duelos > 0) {
+            $winRate = ($duelosGanados / $duelos) * 100;
+        } else {
+            $winRate = 0;
+        }
 
         return response()->json([
             'idUsuario' => $idUsuario,
