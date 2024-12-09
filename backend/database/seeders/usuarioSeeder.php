@@ -96,6 +96,16 @@ class usuarioSeeder extends Seeder
                 'exp' => 150,
                 'foto' => './../assets/cho_chang.jpg',
                 'activo' => true,
+            ],
+            [
+                'nombre' => 'Ismael',
+                'gmail' => 'ismael22012004@gmail.com',
+                'contrasena' => bcrypt('ismael1234'),
+                'idCasa' => 1,
+                'nivel' => 3,
+                'exp' => 150,
+                'foto' => './../assets/cho_chang.jpg',
+                'activo' => true,
             ]
         ];
 
