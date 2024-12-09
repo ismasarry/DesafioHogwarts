@@ -1,6 +1,5 @@
 <?php
-//ismael sarrion
-
+// Ismael Sarrion
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
@@ -27,17 +26,16 @@ class PocionesController extends Controller
 
     public function postPocion(Request $request) {
         $pocion = Pociones::create([
-            'idUsuario' => $request['idUsuario'],
-            'Nombre' => $request['Nombre'],
-            'Descripcion' => $request['Descripcion'],
-            'Estadisticas' => $request['Estadisticas'],
-            //'foto' => $request['foto'],
-            'veri' => $request['veri'],
-            'veriD' => $request['veriD']
+            'idUsuario' => $request->input('idUsuario'),
+            'nombre' => $request->input('nombre'),      
+            'descripcion' => $request->input('descripcion'), 
+            'estadisticas' => $request->input('estadisticas'), 
+            'veri' => $request->input('veri'),            
         ]);
-
+    
         return response()->json(['pocion' => $pocion], Response::HTTP_CREATED);
     }
+    
 
     public function putPocion(Request $request, $id) {
         $pocion = Pociones::find($id);
@@ -51,9 +49,7 @@ class PocionesController extends Controller
             'Nombre' => $request['Nombre'],
             'Descripcion' => $request['Descripcion'],
             'Estadisticas' => $request['Estadisticas'],
-           // 'foto' => $request['foto'],
             'veri' => $request['veri'],
-            'veriD' => $request['veriD']
         ]);
 
         return response()->json(['pocion' => $pocion], Response::HTTP_OK);

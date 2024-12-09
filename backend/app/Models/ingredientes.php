@@ -16,6 +16,7 @@ class Ingredientes extends Model
     protected $fillable = [
         'Nombre',
         'Estadisticas',
+        'foto',
     ];
 
     /**

@@ -46,10 +46,7 @@ Route::prefix('casa')->group(function () {
 Route::prefix('usuarioRoles')->group(function () {
     Route::get('/', [usuarioRolController::class, 'getTodosUsuarioRoles']);
     Route::get('{id}', [usuarioRolController::class, 'getUsuarioRolPorId']);
-});
-
-//Jaime Ortega
-Route::prefix('usuarioRoles')->group(function () {
+    //Jaime Ortega
     Route::get('integrantes/{id}', [usuarioRolController::class, 'getTodosUsuarioRolPorIdRol']);
     Route::post('/', [usuarioRolController::class, 'postUsuarioRol']);
     Route::put('{id}', [usuarioRolController::class, 'putUsuarioRol']);
@@ -57,6 +54,8 @@ Route::prefix('usuarioRoles')->group(function () {
     //Raul Gutierrez
     Route::delete('{idUsuario}/{idRol}', [usuarioRolController::class, 'deleteUsuarioRolPorIds']);
 });
+
+
 
 //Raul Gutierrez
 Route::prefix('usuario')->group(function () {
@@ -104,14 +103,17 @@ Route::prefix('asignaturaProfesor')->group(function () {
     Route::delete('{idAsignatura}/{idProfesor}', [asignaturaProfesorController::class, 'deleteAsignaturaProfesorEspecifico']);
 });
 
+// todos menos admin 
 //Raul Gutierrez
 Route::prefix('hechizos')->group(function () {
     Route::get('/', [hechizosController::class, 'getTodosHechizos']);
     Route::get('{id}', [hechizosController::class, 'getHechizoPorId']);
     Route::get('nivel/{nivel}', [hechizosController::class, 'getHechizoPorNivelMenor']);
-    Route::post('/', [hechizosController::class, 'postHechizo']);
-    Route::put('{id}', [hechizosController::class, 'putHechizo']);
     Route::delete('{id}', [hechizosController::class, 'deleteHechizo']);
+    Route::middleware('valiHechizos')->group(function () {
+        Route::post('/', [hechizosController::class, 'postHechizo']);
+        Route::put('{id}', [hechizosController::class, 'putHechizo']);
+    });
 });
 
 //ismael sarrion
