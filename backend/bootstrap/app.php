@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckRoleAndAbilities;
 use App\Http\Middleware\RolMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -13,10 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        
+
         $middleware->redirectGuestsTo('/api/nologin');
         $middleware->alias([
-            'roles' => RolMiddleware::class
+            'roles' => RolMiddleware::class,
+            'role_abilities' => CheckRoleAndAbilities::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
