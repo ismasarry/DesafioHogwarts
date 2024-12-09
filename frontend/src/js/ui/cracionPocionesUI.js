@@ -1,5 +1,5 @@
 import { cargarSideBar } from "../components/cargarSideBar.js";
-import { getTodosIngredientes, postIngrediente } from '../api/ingredientesAPI.js';
+import { getTodosIngredientes, postIngrediente, getBuscarIngrediente } from '../api/ingredientesAPI.js';
 import { postReceta } from '../api/recetasAPI.js';
 import { postPocion } from '../api/pocionesAPI.js';
 import { mostrarRolesUsuario } from "../api/usuarioRolAPI.js";
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td>${ingrediente.nombre}</td>
                     <td>
                         <button class="btn btn-primary btn-sm mover-a-utilizados" data-id="${ingrediente.id}" data-estadisticas="${ingrediente.estadisticas}">Usar</button>
-                        <button class="btn btn-info btn-sm detalles" data-estadisticas="${ingrediente.estadisticas}" data-nombre="${ingrediente.nombre}">Detalles</button>
+<button class="btn btn-info btn-sm detalles" data-id="${ingrediente.id}" data-estadisticas="${ingrediente.estadisticas}" data-nombre="${ingrediente.nombre}">Detalles</button>
                     </td>
                 `;
                 tablaIngredientesDisponibles.appendChild(fila);
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         destino.appendChild(fila);
     }
 
-    function mostrarDetallesIngrediente(boton) {
+    async function mostrarDetallesIngrediente(boton) {
         try {
             console.log("Mostrando detalles para el ingrediente:", boton);
     
@@ -89,24 +89,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
     
-            const estadisticas = boton.getAttribute('data-estadisticas');
-            const nombreIngrediente = boton.getAttribute('data-nombre');
-    
-            if (!estadisticas) {
-                console.error("No se encontró el atributo 'data-estadisticas' en el botón.");
+            const idIngrediente = boton.getAttribute('data-id');
+            if (!idIngrediente) {
+                console.error("No se encontró el atributo 'data-id' en el botón.");
                 return;
             }
     
-            if (!nombreIngrediente) {
-                console.error("No se encontró el atributo 'data-nombre' en el botón.");
+            console.log("ID del ingrediente obtenido:", idIngrediente);
+    
+            const ingrediente = await getBuscarIngrediente(idIngrediente);
+    
+            console.log("Datos obtenidos del servidor para el ingrediente:", ingrediente);
+    
+            if (!ingrediente || !ingrediente.ingrediente || !ingrediente.ingrediente.estadisticas) {
+                console.error("El objeto 'ingrediente' o su propiedad 'estadisticas' no están disponibles:", ingrediente);
+                alert("No se pudieron cargar las estadísticas del ingrediente.");
                 return;
             }
     
-            console.log("Estadísticas obtenidas:", estadisticas);
-            console.log("Nombre del ingrediente obtenido:", nombreIngrediente);
-    
-            const estadisticasArray = estadisticas.split(',').map(valor => valor.trim());
-            console.log("Estadísticas procesadas como array:", estadisticasArray);
+            const estadisticasArray = ingrediente.ingrediente.estadisticas.split(',').map(valor => valor.trim());
+            const nombreIngrediente = ingrediente.ingrediente.nombre;
     
             const listaEstadisticas = document.getElementById('estadisticasIngrediente');
             if (!listaEstadisticas) {
@@ -125,6 +127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             titulo.textContent = `Estadísticas de ${nombreIngrediente}`;
             listaEstadisticas.appendChild(titulo);
     
+            // Agregar las estadísticas a la lista
             for (let i = 0; i < nombresEstadisticas.length; i++) {
                 const li = document.createElement('li');
                 const valorEstadistica = estadisticasArray[i] !== undefined ? estadisticasArray[i] : 'No disponible';
@@ -134,6 +137,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     
             console.log("Lista de estadísticas creada exitosamente.");
     
+            // Mostrar el modal
             const modalElement = document.getElementById('modalDetalles');
             if (!modalElement) {
                 console.error("No se encontró el elemento con ID 'modalDetalles' en el DOM.");
@@ -145,9 +149,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     
             console.log("Modal mostrado correctamente.");
         } catch (error) {
-            console.error("Ocurrió un error inesperado:", error);
+            console.error("Ocurrió un error al obtener los detalles del ingrediente:", error);
         }
     }
+    
+    
     
     
 
