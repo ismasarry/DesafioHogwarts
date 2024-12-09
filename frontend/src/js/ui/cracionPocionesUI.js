@@ -1,18 +1,20 @@
 import { cargarSideBar } from "../components/cargarSideBar.js";
-import { getTodosIngredientes } from '../api/ingredientesAPI.js';
+import { getTodosIngredientes, postIngrediente } from '../api/ingredientesAPI.js';
 import { postReceta } from '../api/recetasAPI.js';
 import { postPocion } from '../api/pocionesAPI.js';
 import { mostrarRolesUsuario } from "../api/usuarioRolAPI.js";
 
-
 cargarSideBar();
-
 
 document.addEventListener('DOMContentLoaded', async () => {
     const tablaIngredientesDisponibles = document.getElementById('tablaIngredientesDisponibles').querySelector('tbody');
     const tablaIngredientesUtilizados = document.getElementById('tablaIngredientesUtilizados').querySelector('tbody');
     const botonCrearPocion = document.getElementById('crearPocion');
     const usuario = sessionStorage.getItem('userId');
+    const guardarIngredienteBtn = document.getElementById('guardarIngrediente');
+    const formCrearIngrediente = document.getElementById('formCrearIngrediente');
+    const nombreIngredienteInput = document.getElementById('nombreIngrediente');
+    const estadisticasIngredienteInput = document.getElementById('estadisticasIngrediente');
     console.log("Usuario obtenido del sessionStorage:", usuario);
 
     try {
@@ -28,7 +30,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const fila = document.createElement('tr');
                 fila.innerHTML = `
                     <td>${ingrediente.nombre}</td>
-                    <td><img src="${ingrediente.foto || ''}" alt="${ingrediente.nombre}" width="50" height="50"></td>
                     <td>
                         <button class="btn btn-primary btn-sm mover-a-utilizados" data-id="${ingrediente.id}" data-estadisticas="${ingrediente.estadisticas}">Usar</button>
                         <button class="btn btn-info btn-sm detalles" data-estadisticas="${ingrediente.estadisticas}" data-nombre="${ingrediente.nombre}">Detalles</button>
@@ -216,4 +217,37 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     botonCrearPocion.addEventListener('click', crearPocion);
+    
+    guardarIngredienteBtn.addEventListener('click', async () => {
+        const nombre = nombreIngredienteInput.value.trim();
+        const estadisticas = estadisticasIngredienteInput.value.trim();
+    
+        if (!nombre || !estadisticas) {
+            alert('Por favor, completa todos los campos.');
+            return;
+        }
+    
+        // Crear el objeto ingrediente
+        const nuevoIngrediente = {
+            nombre: nombre,
+            estadisticas: estadisticas
+        };
+    
+        try {
+            // Enviar el ingrediente a la API
+            const respuesta = await postIngrediente(nuevoIngrediente);
+            console.log('Ingrediente creado:', respuesta);
+            
+            // Cerrar el modal
+            const modal = new bootstrap.Modal(document.getElementById('modalCrearIngrediente'));
+            modal.hide();
+            
+            // Opcional: Actualizar la lista de ingredientes disponibles
+            // Aquí podrías volver a cargar los ingredientes de la API para reflejar el cambio.
+            cargarIngredientesDisponibles(); // Asegúrate de tener esta función para recargar los ingredientes
+        } catch (error) {
+            console.error('Error al crear el ingrediente:', error);
+            alert('Ocurrió un error al crear el ingrediente.');
+        }
+    });
 });
