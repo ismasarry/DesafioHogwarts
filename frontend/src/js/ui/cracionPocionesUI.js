@@ -107,32 +107,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.log("Estadísticas obtenidas:", estadisticas);
             console.log("Nombre del ingrediente obtenido:", nombreIngrediente);
     
-            // Procesar las estadísticas
             const estadisticasArray = estadisticas.split(',').map(valor => valor.trim());
             console.log("Estadísticas procesadas como array:", estadisticasArray);
     
-            // Validar que el modal y la lista de estadísticas existan en el DOM
             const listaEstadisticas = document.getElementById('estadisticasIngrediente');
             if (!listaEstadisticas) {
                 console.error("No se encontró el elemento con ID 'estadisticasIngrediente' en el DOM.");
                 return;
             }
     
-            // Definir nombres de estadísticas
             const nombresEstadisticas = [
                 'Sanación', 'Envenenamiento', 'Analgesia', 'Dolor',
                 'Curativo', 'Enfermante', 'Desinflamatorio', 'Inflamatorio'
             ];
     
-            // Limpiar el contenido previo del modal
             listaEstadisticas.innerHTML = '';
     
-            // Agregar título con el nombre del ingrediente
             const titulo = document.createElement('h5');
             titulo.textContent = `Estadísticas de ${nombreIngrediente}`;
             listaEstadisticas.appendChild(titulo);
     
-            // Iterar sobre las estadísticas y mostrarlas con etiquetas
             for (let i = 0; i < nombresEstadisticas.length; i++) {
                 const li = document.createElement('li');
                 const valorEstadistica = estadisticasArray[i] !== undefined ? estadisticasArray[i] : 'No disponible';
@@ -142,7 +136,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
             console.log("Lista de estadísticas creada exitosamente.");
     
-            // Mostrar el modal
             const modalElement = document.getElementById('modalDetalles');
             if (!modalElement) {
                 console.error("No se encontró el elemento con ID 'modalDetalles' en el DOM.");
